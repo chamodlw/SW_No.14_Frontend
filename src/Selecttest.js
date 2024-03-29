@@ -1,11 +1,11 @@
 import Patienthead from './Components/Patienthead';
-import BasicSelect from './Components/BasicSelect';
+import BasicSelect from './Selecttest_Components/BasicSelect';
 import './maincss/Selecttest.css';
-import BackToTop from './Components/Scroll';
+import BackToTop from './Selecttest_Components/Scroll';
 import Footer from './Components/Footer';
 import Date from './Components/Date';
 import { Grid } from '@mui/material';
-//rename check
+
 function Selecttest() {
   return (
     <div className="Selecttest">

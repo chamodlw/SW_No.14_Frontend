@@ -5,7 +5,7 @@ import Patienthead from '../Components/Patienthead'; // Importing header compone
 import Footer from '../Components/Footer'; // Importing footer component
 import '../maincss/AddTest.css'; // Importing CSS file for styling
 import { Button, Grid, Snackbar } from '@mui/material'; // Importing Button and Grid components from Material-UI
-import BasicTextFields from '../Components/Entersection'; // Importing custom text field component
+import BasicTextFields from './Admin_Component/Entersection'; // Importing custom text field component
 
 function AddTest() {
   // State to manage form data
@@ -82,8 +82,8 @@ function AddTest() {
   return (
     <div className="AddTest">
       {/* Header component */}
-      <Patienthead /><br /><br /><br /><br /><br />
-      <Grid sx={{ align: 'center' }}>
+      <Patienthead /><br />
+      <Grid sx={{ align: 'center', paddingTop: '10%', height: '80vh'}}>
         {/* Custom text field component */}
         <BasicTextFields handleChange={handleChange} formData={formData} />
         {/* Button for form submission */}
