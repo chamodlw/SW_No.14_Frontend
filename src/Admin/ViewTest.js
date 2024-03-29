@@ -3,21 +3,16 @@ import Testlist from '../Components/Testlist';
 import Patienthead from '../Components/Patienthead'; // Importing header component
 import Footer from '../Components/Footer'; // Importing footer component
 import { Grid } from '@mui/material';
+import backgroundImage from '../images/2.png';
 
 function ViewTest() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' ,backgroundImage: `url(${backgroundImage})`}}>
       <Patienthead />
-      <Grid sx={{ backgroundColor: '#a6a6a6', flex: 1 }}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <Testlist />
-        <br />
-        <br />
+      <Grid sx={{flex: 1, paddingTop:'10%', paddingBottom:'3%'}}>
+        
+        <Testlist/>
+       
       </Grid>
       <Footer />
     </div>

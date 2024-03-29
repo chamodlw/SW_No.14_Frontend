@@ -4,15 +4,18 @@ import './maincss/Selecttest.css';
 import BackToTop from './Components/Scroll';
 import Footer from './Components/Footer';
 import Date from './Components/Date';
+import { Grid } from '@mui/material';
 
 function Selecttest() {
   return (
     <div className="Selecttest">
      
-      <Patienthead/><br/><br/><br/><br/><br/>
-      <BasicSelect/>
-      <BackToTop />
-      <Date/><br/>
+      <Patienthead/>
+      <Grid sx={{paddingTop:'12%'}}>
+        <BasicSelect/>
+        <BackToTop />
+        <Date/><br/>
+      </Grid>
       <Footer/>
     </div>
     
