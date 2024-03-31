@@ -1,3 +1,4 @@
+//Admininterface
 import Patienthead from '../Components/Patienthead';
 import Footer from '../Components/Footer';
 import { Grid } from '@mui/material';
@@ -9,8 +10,8 @@ function AdminInterface() {
   return (
     <div className="AdminInterface">
       <Patienthead />
-      <Grid sx={{paddingTop:'20%', paddingBottom:'8%'}}>
-        <AdminCards sx ={{ alignitems:'center' , width:'90%'}}/>
+      <Grid sx={{paddingTop:'20%', paddingBottom:'10%', alignitems:'center'}}>
+        <AdminCards sx ={{ alignitems:'center'}}/>
       </Grid>      
       <Footer />
     </div>
