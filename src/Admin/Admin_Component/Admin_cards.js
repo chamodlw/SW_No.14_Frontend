@@ -85,10 +85,14 @@ const CardSlider = ({ cards }) => {
       if (selectedCard.title === 'ADD NEW') {
         navigate(`/AddTest`);
       } else if (selectedCard.title === 'AVAILABLE TESTS') {
-        navigate(`/ViewTest/`);
-      } else if (selectedCard.title === 'APPOINTMENTS') {
-        // Handle appointments action
-      }
+        navigate(`/ViewTest`);
+      } 
+      else if (selectedCard.title === 'APPOINMENTS') {
+        navigate(`/ViewAppoinment`);
+      } 
+      else if (selectedCard.title === 'PATIENTS') {
+        navigate(`/ViewPatient`);
+      } 
     }
     handleCloseModal();
   };
