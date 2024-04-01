@@ -1,6 +1,10 @@
 import React from 'react'
 import {AppBar, Tab , Button, Tabs, Typography} from '@mui/material/'
 import LocalHospitalTwoToneIcon from '@mui/icons-material/LocalHospitalTwoTone';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import Login from './Login';
+import Signin from './Signin';
+
 export default function Head() {
   return (
     <AppBar sx={{ background: "#D9D9D9"}}>
@@ -14,8 +18,16 @@ export default function Head() {
           <Tab label ="About us"/>
           <Tab label ="Contact us"/>
         </Tabs>
-        <Button sx={{ marginLeft: 'auto', background:'#101754'}} variant="contained">Login</Button>
-        <Button sx={{ marginLeft: '10px', marginRight:'10px' , background:'#101754'}} variant="contained">Signup</Button>
+       <Link to="/login"> <Button sx={{ marginLeft: '430px', background:'#101754'}} variant="contained">Login</Button></Link>
+       <Routes>
+          <Route path="/login" component={Login} />
+          </Routes>
+        <Link to="/signin"><Button sx={{ marginLeft: '10px', marginRight:'10px' , background:'#101754'}} variant="contained">Signup</Button></Link>
+       <Routes>
+          <Route path="/signin" component={Signin} />
+          </Routes>
+
+
       </Typography>
         
     </AppBar>
