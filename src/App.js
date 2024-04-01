@@ -8,7 +8,7 @@ import Selecttest from './Selecttest';
 import AddTest from './Admin/AddTest';
 import ViewTest from './Admin/ViewTest';
 import ViewPatient from './Admin/ViewPatients';
-import ViewAppoinment from './Admin/ViewAppoinments';
+import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
@@ -30,7 +30,7 @@ function App() {
       <Route path='AddTest' element={<AddTest/>}/>
       <Route path='ViewTest' element={<ViewTest/>}/>
       <Route path='ViewPatient' element={<ViewPatient/>}/>
-      <Route path='ViewAppoinment' element={<ViewAppoinment/>}/>
+      <Route path='ViewAppointment' element={<ViewAppointment/>}/>
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>

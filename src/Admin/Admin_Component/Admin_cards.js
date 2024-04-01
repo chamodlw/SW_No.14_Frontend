@@ -87,8 +87,8 @@ const CardSlider = ({ cards }) => {
       } else if (selectedCard.title === 'AVAILABLE TESTS') {
         navigate(`/ViewTest`);
       } 
-      else if (selectedCard.title === 'APPOINMENTS') {
-        navigate(`/ViewAppoinment`);
+      else if (selectedCard.title === 'APPOINTMENTS') {
+        navigate(`/ViewAppointment`);
       } 
       else if (selectedCard.title === 'PATIENTS') {
         navigate(`/ViewPatient`);

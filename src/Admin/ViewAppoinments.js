@@ -1,5 +1,5 @@
 import React from 'react';
-//import Testlist from './Admin_Component/Testlist';
+import Appoinmentlist from './Admin_Component/Appoinmentlist';
 import Patienthead from '../Components/Patienthead'; // Importing header component
 import Footer from '../Components/Footer'; // Importing footer component
 import { Grid } from '@mui/material';
@@ -11,7 +11,7 @@ function ViewTest() {
       <Patienthead />
       <Grid sx={{flex: 1, paddingTop:'12%', paddingBottom:'3%'}}>
         
-        {/*<Testlist/>*/}
+        <Appoinmentlist/>
        
       </Grid>
       <Footer />
