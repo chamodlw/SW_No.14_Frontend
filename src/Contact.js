@@ -1,4 +1,4 @@
-/*import Footer from './Components/Footer';
+import Footer from './Components/Footer';
 import Patienthead from './Components/Patienthead';
 import Contact02 from './Contact02';
 
@@ -21,4 +21,4 @@ export default function Contact(){
            
         </div>
     );
-}*/
+}
