@@ -24,7 +24,7 @@ export default function Dhome02() {
       <Grid item xs={2}>
       <Dapproval02/>
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={7}sx={{ marginTop: '10px'}}>
 
       <TextField
          Report ID
@@ -33,7 +33,7 @@ export default function Dhome02() {
         />
         </Grid>
         
-        <Grid item xs={1}>
+        <Grid item xs={1}sx={{ marginTop: '10px'}}>
         <Button onClick={handleClick}sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'250px',height:'50px'}}>
           View Report
         </Button>
