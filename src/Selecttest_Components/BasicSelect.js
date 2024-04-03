@@ -35,6 +35,7 @@ function BasicSelect() {
     Axios.get('http://localhost:3100/api/tests')
       .then((response) => {
         setTests(response.data?.response || []);
+        
       })
       .catch((error) => {
         console.error('Axios Error : ', error);
@@ -55,7 +56,9 @@ function BasicSelect() {
         setSelectedTestDescription(selectedTest.description);
         Axios.get(`http://localhost:3100/api/tests/${selectedTestId}`)
           .then((response) => {
+            
             setTestDetails(response.data?.details || '');
+            console.log(selectedTestId);
           })
           .catch((error) => {
             console.error('Axios Error : ', error);

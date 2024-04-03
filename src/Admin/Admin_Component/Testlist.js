@@ -1,4 +1,5 @@
-import * as React from 'react';
+// Testlist.js
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,41 +8,41 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import axios from 'axios'; // Import axios for making HTTP requests
 
 const columns = [
   { id: 'id', label: 'id', minWidth: 170 },
   { id: 'name', label: 'name', minWidth: 100 },
-  {
-    id: 'description',
-    label: 'description',
-    minWidth: 170,
-    align: 'right',
-  }
-  
-  
-];
-
-function createData(id, name, description) {
- 
-  return { id, name, description };
-}
-
-const rows = [
-  createData(1,'Vit A Test','d1'),
-  createData(2,'Vit B Test','d2'),
-  createData(3,'Vit C Test','d3'),
-  createData(4,'Vit D Test','d4'),
-  createData(5,'Vit E Test','d5'),
-  createData(6,'Vit K Test','d6'),
-  createData(7,'Glucose Test','d7'),
-  createData(8,'Hemoglobin Test','d8'),
-  createData(9,'Test9','d9'),
-
+  { id: 'description', label: 'description', minWidth: 170, align: 'right' }
 ];
 
 export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rows, setRows] = useState([]);
+
+
+  useEffect(() => {
+    // Fetch data from backend when component mounts
+    axios.get('http://localhost:3100/api/tests')
+      .then(response => {
+        // Log the fetched data to see its structure
+        console.log('Response data:', response.data);
+        // Check if response data is an array before setting it to rows
+        if ((response.data)) {
+          setRows(response.data);
+          console.log('Data is an array. Setting rows.');
+          console.log('Type of rows:', typeof data);
+
+        } else {
+          console.error('Data received is not an array:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -70,25 +71,22 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+  {console.log('Rows:', rows)}
+  {rows.map((row, index) => (
+    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+      {columns.map((column) => {
+        const value = row[column.id];
+        return (
+          <TableCell key={column.id} align={column.align}>
+            {column.format && typeof value === 'number'
+              ? column.format(value)
+              : value}
+          </TableCell>
+        );
+      })}
+    </TableRow>
+  ))}
+</TableBody>
         </Table>
       </TableContainer>
       <TablePagination
