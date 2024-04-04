@@ -7,6 +7,7 @@ import '../maincss/AddTest.css'; // Importing CSS file for styling
 import { Button, Grid, Snackbar } from '@mui/material'; // Importing Button and Grid components from Material-UI
 import BasicTextFields from './Admin_Component/Entersection'; // Importing custom text field component
 
+
 function AddTest() {
   // State to manage form data
   const [formData, setFormData] = useState({
@@ -83,13 +84,15 @@ function AddTest() {
     <div className="AddTest">
       {/* Header component */}
       <Patienthead /><br />
-      <Grid sx={{ align: 'center', paddingTop: '10%', height: '80vh'}}>
+      
+      <Grid sx={{ align: 'center', paddingTop: '100px', minHeight: '85vh' ,}}>
         {/* Custom text field component */}
         <BasicTextFields handleChange={handleChange} formData={formData} />
         {/* Button for form submission */}
         <Button
           onClick={handleSubmit}
           sx={{
+            borderRadius:'20px',
             variant: 'contained',
             color: '#FFFFFF',
             background: '#101754',
@@ -97,6 +100,8 @@ function AddTest() {
             margin: 'auto',
             marginBottom: '40px',
             marginTop: '20px',
+            width:'22%',
+            minWidth:'20vh'
           }}>
           ADD
         </Button>

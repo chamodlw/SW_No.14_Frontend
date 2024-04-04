@@ -1,4 +1,4 @@
-// Testlist
+// Testlist.js
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -23,25 +23,24 @@ export default function StickyHeadTable() {
 
 
   useEffect(() => {
-    // Fetch data from backend when component mounts
     axios.get('http://localhost:3100/api/tests')
       .then(response => {
-        // Log the fetched data to see its structure
         console.log('Response data:', response.data);
-        // Check if response data is an array before setting it to rows
-        if ((response.data)) {
-          setRows(response.data);
+        const responseData = response.data && response.data.response; // Accessing the 'response' key
+        if (Array.isArray(responseData)) {
+          setRows(responseData);
           console.log('Data is an array. Setting rows.');
-          console.log('Type of rows:', typeof data);
-
         } else {
-          console.error('Data received is not an array:', response.data);
+          console.error('Data received is not an array:', responseData);
         }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []); // Empty dependency array ensures useEffect runs only once on mount
+  }, []);
+  
+  
+   // Empty dependency array ensures useEffect runs only once on mount
   
 
   const handleChangePage = (event, newPage) => {
@@ -71,22 +70,20 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-  {console.log('Rows:', rows)}
   {rows.map((row, index) => (
     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
       {columns.map((column) => {
-        const value = row[column.id];
+        const value = row[column.id]; // Accessing the value based on column id
         return (
           <TableCell key={column.id} align={column.align}>
-            {column.format && typeof value === 'number'
-              ? column.format(value)
-              : value}
+            {value}
           </TableCell>
         );
       })}
     </TableRow>
   ))}
 </TableBody>
+
         </Table>
       </TableContainer>
       <TablePagination

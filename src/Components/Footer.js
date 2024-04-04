@@ -6,7 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer" >
       <div className="footer-content">
         <div className="footer-social">
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
