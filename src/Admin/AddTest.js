@@ -100,7 +100,7 @@ function AddTest() {
             margin: 'auto',
             marginBottom: '40px',
             marginTop: '20px',
-            width:'22%',
+            width:'25%',
             minWidth:'20vh'
           }}>
           ADD
