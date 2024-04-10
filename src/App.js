@@ -14,8 +14,6 @@ import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact';
 
-
-
 function App() {
   return (
     <div>
@@ -47,3 +45,4 @@ function App() {
 }
 
 export default App;
+//
