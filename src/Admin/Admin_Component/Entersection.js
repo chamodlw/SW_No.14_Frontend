@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import AddToPhotosTwoToneIcon from '@mui/icons-material/AddToPhotosTwoTone';
 import { Grid, Typography } from '@mui/material';
+import axios from 'axios';
 
 function BasicTextFields({ handleChange, formData }) {
+  const [maxId, setMaxId] = useState(0);
+
+  useEffect(() => {
+    axios.get('http://localhost:3100/api/tests')
+  .then(response => {
+    const responseData = response.data && response.data.response; // Accessing the 'response' key
+    if (Array.isArray(responseData)) {
+      // Response data is an array, proceed as before
+      const maxTestId = Math.max(...responseData.map(test => test.id));
+      setMaxId(maxTestId);
+      console.log('max id is:' + maxTestId);
+    } else {
+      console.error('Invalid response format: ', responseData);
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching test details:', error);
+  });
+
+
+
+  }, []); // Empty dependency array to run the effect only once when the component mounts
+
+  useEffect(() => {
+    // Update the id field with the maximum id value
+    handleChange({ target: { id: 'id', value: maxId + 1 } });
+  }, [maxId]); // Run this effect whenever maxId changes
+
   return (
     <Grid container direction="column" alignItems="center" justifyContent="center">
       <Grid sx={{ alignItems: 'center', paddingBottom: '1%' }}>
@@ -35,7 +64,7 @@ function BasicTextFields({ handleChange, formData }) {
         <Grid container spacing={2} direction="column" >
           <Grid item container spacing={6}>
             <Grid item xs={6}>
-              <TextField id="id" label="id" variant="outlined" value={formData.id} onChange={handleChange} />
+              <TextField id="id" label="id" variant="outlined" value={formData.id} onChange={handleChange} disabled />
             </Grid>
             <Grid item xs={6}>
               <TextField id="name" label="name" variant="outlined" value={formData.name} onChange={handleChange} />
