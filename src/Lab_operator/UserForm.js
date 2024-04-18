@@ -9,6 +9,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
     const [testTubes, setTestTubes] = useState([]);
     const [bloodType, setBloodType] = useState('');
     const [selectedTube, setSelectedTube] = useState('');
+    const [testTubeId, setTestTubeId] = useState('');
 
     useEffect(() => {
         if (!submitted){
@@ -17,6 +18,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
             setTest('');
             setBloodType('');
             setSelectedTube('');
+            setTestTubeId('');
 
         }
     }, [submitted]);
@@ -28,6 +30,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
             setTest(data.test);
             setBloodType(data.test_tubes);
             setSelectedTube(data.blood_type);
+            setTestTubeId(data.test_tube_id);
         }
     }, [data]);
 
@@ -66,12 +69,18 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
         setBloodType(e.target.value);
     };
 
+    const handleTestTubeIdChange = (e) => {
+        setTestTubeId(e.target.value);
+    };
+    
+
     const handleSubmit = () => {
         setId('');
         setName('');
         setTest('');
         setBloodType('');
         setSelectedTube('');
+        setTestTubeId('');
     };
 
     return (
@@ -135,6 +144,16 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
+                <TextField
+                    fullWidth
+                    label="Test Tube ID"
+                    variant="outlined"
+                    value={testTubeId}
+                    onChange={handleTestTubeIdChange}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
                 <FormControl fullWidth variant="outlined">
                     <InputLabel>Blood Type</InputLabel>
                     <Select
@@ -174,6 +193,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
                             name, 
                             test, 
                             test_tubes: selectedTube, // Convert array to string
+                            test_tube_id: testTubeId,
                             blood_type: bloodType 
                         }) :
                         addUser({ 
@@ -181,6 +201,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
                             name, 
                             test, 
                             test_tubes: selectedTube, // Convert array to string
+                            test_tube_id: testTubeId,
                             blood_type: bloodType 
                         });
                     }}

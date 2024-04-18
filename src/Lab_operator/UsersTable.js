@@ -29,6 +29,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                         <TableCell>Name</TableCell>
                         <TableCell>Test</TableCell>
                         <TableCell>Test Tubes</TableCell>
+                        <TableCell>Test Tube ID</TableCell>
                         <TableCell>Blood Type</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
@@ -41,6 +42,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.test}</TableCell>
                                 <TableCell>{row.test_tubes}</TableCell>
+                                <TableCell>{row.test_tube_id}</TableCell>
                                 <TableCell>{row.blood_type}</TableCell>
                                 <TableCell>
                                     <IconButton
@@ -52,6 +54,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                                     name: row.name,
                                                     test: row.test,
                                                     test_tubes: row.test_tubes,
+                                                    test_tube_id: row.test_tube_id,
                                                     blood_type: row.blood_type,
                                                 }
                                             )} // Fix here: changed user.id to row.id

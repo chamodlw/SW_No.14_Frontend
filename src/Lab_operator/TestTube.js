@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import TestTubeForm from './TestTubeForm';
-import Head from "./Head"; 
-import Footer from './Footer';
+import Head from "../Head"; 
+import Footer from '../Footer';
 import TestTubesTable from './TestTubesTable';
 import Axios from 'axios';
 
