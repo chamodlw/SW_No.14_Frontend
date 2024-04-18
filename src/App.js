@@ -13,6 +13,7 @@ import AdminInterface from './Admin/AdminInterface';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact';
+import PatientInterface from './Patient/PatientInterface';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>
       <Route path='/HomePage' element={<HomePage/>}/>
+      <Route path='PatientInterface' element={<PatientInterface/>}/>
     </Routes>
   </BrowserRouter>
     </div>
