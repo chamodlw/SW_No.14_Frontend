@@ -27,15 +27,15 @@ function createData(id, name, description) {
 }
 
 const rows = [
-  createData(1,'Vit A Test','d1'),
-  createData(2,'Vit B Test','d2'),
-  createData(3,'Vit C Test','d3'),
-  createData(4,'Vit D Test','d4'),
-  createData(5,'Vit E Test','d5'),
-  createData(6,'Vit K Test','d6'),
-  createData(7,'Glucose Test','d7'),
-  createData(8,'Hemoglobin Test','d8'),
-  createData(9,'Test9','d9'),
+  createData(1,'app1','d1'),
+  createData(2,'app2','d2'),
+  createData(3,'app3','d3'),
+  createData(4,'app4','d4'),
+  createData(5,'app5','d5'),
+  createData(6,'app6','d6'),
+  createData(7,'app7','d7'),
+  createData(8,'app8','d8'),
+  createData(9,'app9','d9'),
 
 ];
 

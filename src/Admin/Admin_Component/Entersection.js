@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import AddToPhotosTwoToneIcon from '@mui/icons-material/AddToPhotosTwoTone';
 import { Grid, Typography } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+
 import axios from 'axios';
 
 function BasicTextFields({ handleChange, formData }) {
@@ -30,9 +32,9 @@ function BasicTextFields({ handleChange, formData }) {
   }, []); // Empty dependency array to run the effect only once when the component mounts
 
   useEffect(() => {
-    // Update the id field with the maximum id value
     handleChange({ target: { id: 'id', value: maxId + 1 } });
-  }, [maxId]); // Run this effect whenever maxId changes
+  }, [handleChange, maxId]);
+  
 
   return (
     <Grid container direction="column" alignItems="center" justifyContent="center">
@@ -81,7 +83,21 @@ function BasicTextFields({ handleChange, formData }) {
               <TextField id="max" label="max" variant="outlined" value={formData.max} onChange={handleChange} />
             </Grid>
             <Grid item xs={4}>
-              <TextField id="unit" label="unit" variant="outlined" value={formData.unit} onChange={handleChange} />
+              <Autocomplete
+                    id="unit"
+                    options={['mg/dL', 'g/dL', 'cs/μL', 'td/μL']}
+                    freeSolo
+                    renderInput={(params) => 
+                    (
+                          <TextField
+                            {...params}
+                            label="unit"
+                            variant="outlined"
+                            value={formData.unit}
+                            onChange={handleChange}
+                          />
+                    )}
+              />
             </Grid>
           </Grid>
           <Grid item >

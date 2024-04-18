@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FastForwardIcon from '@mui/icons-material/FastForward';
-import LibraryAddSharpIcon from '@mui/icons-material/LibraryAddSharp';
-import FormatListNumberedSharpIcon from '@mui/icons-material/FormatListNumberedSharp';
-import ListAltSharpIcon from '@mui/icons-material/ListAltSharp';
-import Groups2SharpIcon from '@mui/icons-material/Groups2Sharp';
+import WysiwygTwoToneIcon from '@mui/icons-material/WysiwygTwoTone';
+import AddToPhotosTwoToneIcon from '@mui/icons-material/AddToPhotosTwoTone';
+import PlagiarismTwoToneIcon from '@mui/icons-material/PlagiarismTwoTone';
+import FactCheckTwoToneIcon from '@mui/icons-material/FactCheckTwoTone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -154,10 +154,10 @@ const CardSlider = ({ cards }) => {
 // Usage
 const MyComponent = () => {
   const cards = [
-    { title: 'VIEW REPORTS', content: 'View old lab reports' , icon:LibraryAddSharpIcon},
-    { title: 'APPOINTMENTS', content: 'Add new blood tests appoinments' ,icon:FormatListNumberedSharpIcon},
-    { title: 'HISTORY', content: 'View old and pending blood reports', icon:ListAltSharpIcon},
-    { title: 'TYPES', content: 'View details available test types' , icon:Groups2SharpIcon},
+    { title: 'VIEW REPORTS', content: 'View old lab reports' , icon:WysiwygTwoToneIcon},
+    { title: 'APPOINTMENTS', content: 'Add new blood tests appoinments' ,icon:AddToPhotosTwoToneIcon},
+    { title: 'HISTORY', content: 'View old and pending blood reports', icon:PlagiarismTwoToneIcon},
+    { title: 'TYPES', content: 'View details available test types' , icon:FactCheckTwoToneIcon},
 // Add more cards as needed
   ];
 
