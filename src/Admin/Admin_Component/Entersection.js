@@ -14,13 +14,15 @@ function BasicTextFields({ handleChange, formData }) {
     axios.get('http://localhost:3100/api/tests')
   .then(response => {
     const responseData = response.data && response.data.response; // Accessing the 'response' key
-    if (Array.isArray(responseData)) {
-      // Response data is an array, proceed as before
+    if (Array.isArray(responseData) && responseData.length > 0) {
+      // Response data is an array and has elements
       const maxTestId = Math.max(...responseData.map(test => test.id));
       setMaxId(maxTestId);
-      console.log('max id is:' + maxTestId);
+      console.log('max id is:', maxTestId);
     } else {
-      console.error('Invalid response format: ', responseData);
+      // No data or invalid response format, set max ID to 1
+      setMaxId(0);
+      console.error('No data available or invalid response format: ', responseData);
     }
   })
   .catch(error => {

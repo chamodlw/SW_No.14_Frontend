@@ -1,3 +1,4 @@
+//viewtest.js
 import React from 'react';
 import Testlist from './Admin_Component/Testlist';
 import Patienthead from '../Components/Patienthead'; // Importing header component
