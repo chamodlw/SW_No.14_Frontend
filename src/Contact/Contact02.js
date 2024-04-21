@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
    
       <Grid container spacing={8} columns={16} >
         <Grid item xs={7}>
-          <Item style={{  border: '2px solid gray',boxShadow: '5px 5px 5px gray',borderRadius:'10px'  }}><Contact01/></Item>
+          <Item style={{  border: '2px solid gray',boxShadow: '5px 5px 5px gray',borderRadius:'10px' }}><Contact01/></Item>
         </Grid>
         <Grid item xs={5} >
           <Item style={{  border: '2px solid gray',boxShadow: '5px 5px 5px gray',borderRadius:'10px' }}><h3>Address:</h3>

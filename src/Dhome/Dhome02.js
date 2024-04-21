@@ -3,14 +3,14 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Dapproval02 from '../Dapproval/Dapproval02';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export default function Dhome02() {
-  const [test, setTest] = React.useState('');
 
-  const handleChange = (event) => {
-    setTest(event.target.value);
-  };
   const handleClick = () => {
     // Redirect to another page
     window.location.href = '/Dapproval';
@@ -22,7 +22,17 @@ export default function Dhome02() {
        <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
       <Grid item xs={2}>
-      <Dapproval02/>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DatePicker']}>
+        <DemoItem>
+          <DatePicker
+            
+          />
+        </DemoItem>
+      </DemoContainer>
+     
+    </LocalizationProvider>
+
       </Grid>
       <Grid item xs={7}sx={{ marginTop: '10px'}}>
 

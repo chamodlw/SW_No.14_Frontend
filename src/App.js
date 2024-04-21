@@ -10,7 +10,7 @@ import AddTest from './Admin/AddTest';
 import AdminInterface from './Admin/AdminInterface';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
-import Contact from './Contact';
+import Contact from './Contact/Contact';
 
 function App() {
   return (

@@ -26,7 +26,7 @@ export default function Contact01() {
    
     <FormProvider {...form}>
       
-      <Box sx={{ width: '80%',paddingLeft:'2rem'}}>
+      <Box sx={{ width: '80%',paddingLeft:'2rem',color:''}}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <h1>Contact Us</h1><hr/>
 
