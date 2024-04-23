@@ -83,12 +83,12 @@ const CardSlider = ({ cards }) => {
   const handleAction = () => {
     // Define actions based on the selected card
     if (selectedCard) {
-      if (selectedCard.title === 'ADD NEW') {
-        navigate(`/AddTest`);
-      } else if (selectedCard.title === 'AVAILABLE TESTS') {
-        navigate(`/ViewTest`);
+      if (selectedCard.title === 'APPOINTMENTS') {
+        navigate(`/ViewAppointment`);
+      } else if (selectedCard.title === 'NEW APPOINTMENT') {
+        navigate(`/Selecttest`);
       } 
-      else if (selectedCard.title === 'APPOINTMENTS') {
+      else if (selectedCard.title === 'HISTORY') {
         navigate(`/ViewAppointment`);
       } 
       else if (selectedCard.title === 'PATIENTS') {
@@ -154,8 +154,8 @@ const CardSlider = ({ cards }) => {
 // Usage
 const MyComponent = () => {
   const cards = [
-    { title: 'VIEW REPORTS', content: 'View old lab reports' , icon:WysiwygTwoToneIcon},
-    { title: 'APPOINTMENTS', content: 'Add new blood tests appoinments' ,icon:AddToPhotosTwoToneIcon},
+    { title: 'APPOINTMENTS', content: 'View old lab reports' , icon:WysiwygTwoToneIcon},
+    { title: 'NEW APPOINTMENT', content: 'Add new blood tests appoinments' ,icon:AddToPhotosTwoToneIcon},
     { title: 'HISTORY', content: 'View old and pending blood reports', icon:PlagiarismTwoToneIcon},
     { title: 'TYPES', content: 'View details available test types' , icon:FactCheckTwoToneIcon},
 // Add more cards as needed
