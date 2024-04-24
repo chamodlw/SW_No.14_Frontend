@@ -157,7 +157,7 @@ const MyComponent = () => {
     { title: 'AVAILABLE TESTS', content: 'View currently available test types' ,icon:FormatListNumberedSharpIcon},
     { title: 'APPOINTMENTS', content: 'Patient appointments to blood tests' , icon:ListAltSharpIcon},
     { title: 'PATIENTS', content: 'Patient already registered to the system' , icon:Groups2SharpIcon},
-    // Add more cards as needed
+    
   ];
 
   return <CardSlider cards={cards} />;

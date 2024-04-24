@@ -4,27 +4,27 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
 import { rows } from '../Admin_Component/Patientlist';
-import { Button, Card, CardContent, Typography } from '@mui/material'; // Import Card and Typography from MUI
+import { Button, Card, CardContent, Typography } from '@mui/material'; 
 
 export default function PatientSearch() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedPatient, setSelectedPatient] = useState(null);
-  const [showCard, setShowCard] = useState(false); // State to control the display of the card
-  const [showOverlay, setShowOverlay] = useState(false); // State to control the display of the overlay
+  const [showCard, setShowCard] = useState(false); 
+  const [showOverlay, setShowOverlay] = useState(false); 
 
   const handleSearch = () => {
     if (selectedPatient) {
       // Display details of selected patient
-      console.log(selectedPatient); // Replace with your logic to display patient details
-      setShowCard(true); // Show the card after search button is pressed
-      setShowOverlay(true); // Show the overlay after search button is pressed
+      console.log(selectedPatient); 
+      setShowCard(true); 
+      setShowOverlay(true); 
     }
   };
 
   const handleCloseCard = () => {
-    setShowCard(false); // Hide the card
-    setShowOverlay(false); // Hide the overlay
-    setSelectedPatient(null); // Reset selected patient
+    setShowCard(false);
+    setShowOverlay(false); 
+    setSelectedPatient(null); 
   };
 
   return (
@@ -75,7 +75,7 @@ export default function PatientSearch() {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
           zIndex: 999,
         }}
-        onClick={handleCloseCard} // Close card on overlay click
+        onClick={handleCloseCard} 
       ></div>
     )}
     <div
@@ -84,9 +84,9 @@ export default function PatientSearch() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '40%', // Set width to 40% of the screen
-        borderRadius: '20px', // Add rounded corners
-        boxShadow: '0 8px 12px rgba(0, 0, 0, 1)', // Add shadow
+        width: '40%', 
+        borderRadius: '20px', 
+        boxShadow: '0 8px 12px rgba(0, 0, 0, 1)', 
         zIndex: 1000,
       }}
     >

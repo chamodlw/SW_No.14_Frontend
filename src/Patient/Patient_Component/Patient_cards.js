@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 350,
     display: 'inline-block',
     margin: theme.spacing(3),
-    transition: 'transform 0.5s ease, opacity 0.7s ease', // Add opacity transition
-    cursor: 'pointer', // Add cursor pointer for better UX
-    boxShadow: '10px 15px 15px rgba(0, 0, 0, 1)', // Add shadow
+    transition: 'transform 0.5s ease, opacity 0.7s ease', 
+    cursor: 'pointer', 
+    boxShadow: '10px 15px 15px rgba(0, 0, 0, 1)', 
   },
   button: {
     textTransform: 'none',
@@ -43,11 +43,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     paddingRight:'4%', 
     paddingLeft:'2%',
-    // Increased padding
-    borderRadius: theme.spacing(1.5), // Rounded border
+    borderRadius: theme.spacing(1.5),
     transform: 'scale(1.5)', // Increase size by 1.5
     outline: 'none',
-    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.5)', // Add shadow
+    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.5)', 
   },
   clicked: { // Add new style for clicked card
     transform: 'translate(-50%, -50%) scale(0.8)',
@@ -81,9 +80,9 @@ const CardSlider = ({ cards }) => {
   };
 
   const handleAction = () => {
-    // Define actions based on the selected card
+    
     if (selectedCard) {
-      if (selectedCard.title === 'APPOINTMENTS') {
+      if (selectedCard.title === 'PENDING') {
         navigate(`/ViewAppointment`);
       } else if (selectedCard.title === 'NEW APPOINTMENT') {
         navigate(`/Selecttest`);
@@ -91,8 +90,8 @@ const CardSlider = ({ cards }) => {
       else if (selectedCard.title === 'HISTORY') {
         navigate(`/ViewAppointment`);
       } 
-      else if (selectedCard.title === 'PATIENTS') {
-        navigate(`/ViewPatient`);
+      else if (selectedCard.title === 'TYPES') {
+        navigate(`/ViewTest`);
       } 
     }
     handleCloseModal();
@@ -154,11 +153,11 @@ const CardSlider = ({ cards }) => {
 // Usage
 const MyComponent = () => {
   const cards = [
-    { title: 'APPOINTMENTS', content: 'View old lab reports' , icon:WysiwygTwoToneIcon},
+    { title: 'PENDING', content: 'View current appointments' , icon:WysiwygTwoToneIcon},
     { title: 'NEW APPOINTMENT', content: 'Add new blood tests appoinments' ,icon:AddToPhotosTwoToneIcon},
-    { title: 'HISTORY', content: 'View old and pending blood reports', icon:PlagiarismTwoToneIcon},
+    { title: 'HISTORY', content: 'View old blood reports', icon:PlagiarismTwoToneIcon},
     { title: 'TYPES', content: 'View details available test types' , icon:FactCheckTwoToneIcon},
-// Add more cards as needed
+
   ];
 
   return <CardSlider cards={cards} />;

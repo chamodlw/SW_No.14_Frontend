@@ -20,7 +20,7 @@ function BasicTextFields({ handleChange, formData }) {
       setMaxId(maxTestId);
       console.log('max id is:', maxTestId);
     } else {
-      // No data or invalid response format, set max ID to 1
+      
       setMaxId(0);
       console.error('No data available or invalid response format: ', responseData);
     }

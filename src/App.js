@@ -4,7 +4,7 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin"
 import Login from "./Components/Login"
-import Selecttest from './Selecttest';
+import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
 import ViewTest from './Admin/ViewTest';
 import ViewPatient from './Admin/ViewPatients';

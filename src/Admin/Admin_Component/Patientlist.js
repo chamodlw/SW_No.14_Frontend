@@ -42,7 +42,7 @@ export const rows = [
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,15 +55,15 @@ export default function StickyHeadTable() {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 420 }}>
+      <TableContainer sx={{ maxHeight: 400 , minHeight:300}}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
+          <TableHead >
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , fontWeight: 'bold' }}
+                  style={{ minWidth: column.minWidth , fontWeight: 'bold' , backgroundColor:'#D9D9D9'}}
                 >
                   {column.label}
                 </TableCell>
@@ -93,6 +93,7 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <TablePagination
+        style={{ backgroundColor:'#D9D9D9' }}
         rowsPerPageOptions={[5,10, 25, 100]}
         component="div"
         count={rows.length}

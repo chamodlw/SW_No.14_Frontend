@@ -55,7 +55,7 @@ export default function StickyHeadTable() {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 420 , minHeight:390}}>
+      <TableContainer sx={{ maxHeight: 420 , minHeight:390, }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -63,7 +63,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , fontWeight: 'bold' }}
+                  style={{ minWidth: column.minWidth , fontWeight: 'bold',backgroundColor:'#D9D9D9' }}
                 >
                   {column.label}
                 </TableCell>
@@ -94,6 +94,7 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <TablePagination
+        style={{ backgroundColor:'#D9D9D9' }}
         rowsPerPageOptions={[5,10, 25, 100]}
         component="div"
         count={rows.length}
