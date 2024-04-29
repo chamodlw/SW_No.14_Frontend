@@ -13,6 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 export default function FixedContainer() {
   const [msg, setMsg] = useState('');
   const [rid, setRid] = useState('');
+  const [NM, setNM] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const handleDateChange = (date) => {
@@ -50,11 +51,12 @@ export default function FixedContainer() {
           <Grid container spacing={2}>
             <Grid item xs={2}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DatePicker']}>
-           <DemoItem>
+            <DemoContainer components={['DatePicker']} >
+           <DemoItem >
             <DatePicker
             value={selectedDate}
             onChange={handleDateChange}
+            
            />
           </DemoItem>
           </DemoContainer>
@@ -67,6 +69,15 @@ export default function FixedContainer() {
                 onChange={(e) => setRid(e.target.value)}
                 id="outlined-required"
                 label="Report Id"
+              />
+            </Grid>
+            <Grid item xs={6}sx={{ marginTop: '10px'}}>
+              <TextField
+                value={NM}
+                onChange={(e) => setNM(e.target.value)}
+                id="outlined"
+                label="Doctor name"
+                required
               />
             </Grid>
             <Grid item xs={1}sx={{ marginTop: '10px'}}>
