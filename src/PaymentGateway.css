@@ -1,0 +1,36 @@
+/* PaymentGateway.css */
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .payment-card {
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .payment-actions {
+    justify-content: center;
+  }
+  
+  .card-logos {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .card-logo {
+    width: 50px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
