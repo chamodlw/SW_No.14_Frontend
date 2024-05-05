@@ -23,7 +23,7 @@ function Login() {
           <img
             src={photo2}
             style={{ width: "100%", maxWidth: "450px", marginTop: "15px" }}
-            alt="Blood Draw Photo"
+            alt="Blood Draw"
           />
         </Grid>
 
@@ -74,11 +74,7 @@ function Login() {
               Forgot Password?
             </Typography>
 
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ width: "150px", height: "35px", borderRadius: "10px" }}
-            >
+            <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'100%',height:'50px'}}>
               Login
             </Button>
           </div>

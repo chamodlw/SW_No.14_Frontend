@@ -2,9 +2,19 @@ import React from "react";
 import Button from '@mui/material/Button';
 import photo from '../images/HealthLabLogo.jpg';
 import { Link } from 'react-router-dom';
-import { Grid, Typography, TextField } from '@mui/material';
+import { Grid, Typography, TextField} from '@mui/material';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
-function Signin() {
+export default function Signin(){
+const [role, setRole] = React.useState(''); // useState hook is used to create a state variable 'role' and a function 'setRole' to update its value. The initial state of age is an empty string ('').
+
+const handleChange = (event) => { // //This function is called whenever the value of the select input changes. It updates the 'role' state variable with the new selected value.
+  setRole(event.target.value);
+};
+
   return (
     <Grid container justifyContent="center">
       <form
@@ -44,6 +54,7 @@ function Signin() {
               style={{ marginBottom: "20px" }}
             />
           </Grid>
+
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -59,6 +70,22 @@ function Signin() {
               variant="outlined"
               style={{ marginBottom: "20px" }}
             />
+          </Grid>
+          <Grid item xs={6}>
+          <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+          labelId="role-select-label"
+          id="role-select"
+          value={role}
+          label="Role"
+          onChange={handleChange}
+          >
+          <MenuItem value="Patient">Patient</MenuItem>
+          <MenuItem value="Doctor">Doctor</MenuItem>
+          <MenuItem value="Admin">Admin</MenuItem>
+          </Select>
+          </FormControl>
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -90,16 +117,10 @@ function Signin() {
           Already have an account? <Link to="/login">Login</Link>
         </Typography>
 
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ width: "100%", borderRadius: "10px" }}
-        >
+        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'100%',height:'50px'}}>
           Sign In
         </Button>
       </form>
     </Grid>
   );
 }
-
-export default Signin;
