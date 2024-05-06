@@ -8,14 +8,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import { useState,useEffect,setRows } from 'react';
+import axios from 'axios'; 
 
 const columns = [
-  { id: 'id', label: 'id', minWidth: 170 },
-  { id: 'name', label: 'name', minWidth: 100 },
+  { id: 'nationalID', label: 'nationalID', minWidth: 170 },
+  { id: 'fullname', label: 'fullname', minWidth: 100 },
   {
-    id: 'description',
-    label: 'description',
+    id: 'username',
+    label: 'username',
     minWidth: 170,
     align: 'right',
   }
@@ -23,26 +24,30 @@ const columns = [
   
 ];
 
-function createData(id, name, description) {
- 
-  return { id, name, description };
-}
 
-export const rows = [
-  createData(1,'siril','d1'),
-  createData(2,'nihal','d2'),
-  createData(3,'kapila','d3'),
-  createData(4,'chamod','d4'),
-  createData(5,'sunimal','d5'),
-  createData(6,'siripala','d6'),
-  createData(7,'sandun','d7'),
+
+export function StickyHeadTable() {
   
-
-];
-
-export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3100/api/users')
+      .then(response => {
+        console.log('Response data:', response.data);
+        const responseData = response.data && response.data.response; // Accessing the 'response' key
+        if (Array.isArray(responseData)) {
+          setRows(responseData);
+          console.log('Data is an array. Setting rows.');
+        } else {
+          console.error('Data received is not an array:', responseData);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -106,4 +111,7 @@ export default function StickyHeadTable() {
   );
 }
 
+export function updateRows(newRows) {
+  setRows(newRows);
+}
 

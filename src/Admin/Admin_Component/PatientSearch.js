@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
-import { rows } from '../Admin_Component/Patientlist';
 import { Button, Card, CardContent, Typography } from '@mui/material'; 
+
+// Add missing rows variable declaration
+const rows = [];
 
 export default function PatientSearch() {
   const [searchValue, setSearchValue] = useState('');
