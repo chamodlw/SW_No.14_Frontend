@@ -26,7 +26,7 @@ const columns = [
 
 
 
-export function StickyHeadTable() {
+function StickyHeadTable() {
   
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -110,8 +110,6 @@ export function StickyHeadTable() {
     </Paper>
   );
 }
-
-export function updateRows(newRows) {
-  setRows(newRows);
-}
+ 
+export default StickyHeadTable;
 

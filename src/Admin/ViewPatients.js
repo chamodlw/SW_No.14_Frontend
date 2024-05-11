@@ -5,7 +5,7 @@ import Footer from '../Components/Footer';
 import { Grid } from '@mui/material';
 import '../maincss/Class.css';
 import PatientSearch from './Admin_Component/PatientSearch';
-import { Patientlist } from './Admin_Component/Patientlist';
+import  Patientlist  from './Admin_Component/Patientlist';
 
 function ViewTest() {
   return (
