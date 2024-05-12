@@ -36,6 +36,7 @@ import LabReportUI from './Pages/SearchResultPage';
 import Reportview from './Pages/Reportview';
 import SearchBar from './Pages/Serch';
 import  { useState ,React} from 'react';
+import ReportUI from './Component/ReportUI';
 
 const App = () => {
   
@@ -50,6 +51,8 @@ const App = () => {
         <Route path="/" element={<SearchBar />} />
         <Route path="/Reportview" element={<Reportview />} />
         <Route path="/LabReportUI" element={<LabReportUI />} />
+        <Route path='/ReportUI' element={<ReportUI/>}/>
+        
         {/* Add more routes for additional pages */}
       </Routes>
     </Router>
