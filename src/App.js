@@ -13,6 +13,7 @@ import AdminInterface from './Admin/AdminInterface';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact';
+import ReportUI from './ReportUI/ReportUI';
 
 function App() {
   return (
@@ -33,7 +34,8 @@ function App() {
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>
       <Route path='/HomePage' element={<HomePage/>}/>
-    </Routes>
+      <Route path="/ReportUI" element={<ReportUI />}/>
+      </Routes>
   </BrowserRouter>
     </div>
 
@@ -43,6 +45,7 @@ function App() {
 
 
 }
+
 
 export default App;
 //
