@@ -2,6 +2,9 @@
 import React from 'react';
 import { Typography, Paper, Container, Grid,TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import HealthLabLogo from '../images/HealthLabLogo.jpg' ;
+import { Image } from '@mui/icons-material';
+import phoneCall from './img/phoneCall.png'
+import envelope from './img/envelope.png'
 
 
 const ReportUI = () =>{
@@ -41,9 +44,11 @@ const ReportUI = () =>{
     {/* Text grid */}
     <Grid item xs={3} sx={{ gridArea: 'Contact', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
       <Typography variant='body1'>
+        <Image src ={phoneCall} alt="Phone Call" />
         0729295498
       </Typography>
-      <Typography variant='body1'>
+      <Typography variant='body1'  >
+      <Image src ={envelope} alt="Phone Call" />
         bandarakgru@gmail.com
       </Typography>
     </Grid>
