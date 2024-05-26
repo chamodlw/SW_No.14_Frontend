@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Head from './Components/Head';
 import HomePage from './Components/HomePage';
@@ -34,7 +35,7 @@ function App() {
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>
       <Route path='/HomePage' element={<HomePage/>}/>
-      <Route path="/ReportUI" element={<ReportUI />}/>
+      <Route path="/ReportUI/:id" element={<ReportUI />}/>
       </Routes>
   </BrowserRouter>
     </div>
