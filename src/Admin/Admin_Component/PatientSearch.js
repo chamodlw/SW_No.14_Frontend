@@ -25,7 +25,7 @@ export default function PatientSearch({ rows }) {
   };
 
   return (
-    <div style={{ position: 'relative', width: '50%', margin: '0 auto' }}>
+    <div style={{ position: 'relative', width: '50%', margin: '0 auto' , paddingBottom:'20px'}}>
       <Autocomplete
         freeSolo
         options={rows}
@@ -94,7 +94,7 @@ export default function PatientSearch({ rows }) {
                 margin: 'auto',
                 borderRadius: 5,
                 backgroundColor: '#f5f5f5',
-                padding: '1px 20px',
+                padding: '0px 20px',
               }}
               size="large"
             >

@@ -13,7 +13,7 @@ function ViewTest() {
     <div className="Class" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Patienthead />
       <Grid sx={{ flex: 1, paddingTop: '12%', paddingBottom: '3%' }}>
-        <Grid sx={{ paddingTop: '3%', paddingBottom: '3%' }}>
+        <Grid sx={{ paddingTop: '2%', paddingBottom: '3%' }}>
           <PatientSearch rows={rows} />
         </Grid>
         <Patientlist setRows={setRows} />
