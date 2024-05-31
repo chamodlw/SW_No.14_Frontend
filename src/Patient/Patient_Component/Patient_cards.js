@@ -91,7 +91,7 @@ const CardSlider = ({ cards }) => {
         navigate(`/ViewAppointment`);
       } 
       else if (selectedCard.title === 'TYPES') {
-        navigate(`/ViewTest`);
+        navigate(`/PViewTest`);
       } 
     }
     handleCloseModal();

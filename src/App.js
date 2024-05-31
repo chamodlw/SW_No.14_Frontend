@@ -14,6 +14,8 @@ import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact';
 import PatientInterface from './Patient/PatientInterface';
+import PViewTest from './Patient/Patient_Component/PViewTest';
+import AViewTest from './Admin/AViewTest';
 
 function App() {
   return (
@@ -25,9 +27,11 @@ function App() {
       <Route path='Dapproval' element={<Dapproval/>}/>
       <Route path='Contact' element={<Contact/>}/>
       <Route path='AdminInterface' element={<AdminInterface/>}/>
+      <Route path='AViewTest' element={<AViewTest/>}/>
       <Route path='Selecttest' element={<Selecttest/>}/>
       <Route path='AddTest' element={<AddTest/>}/>
       <Route path='ViewTest' element={<ViewTest/>}/>
+      <Route path='PViewTest' element={<PViewTest/>}/>
       <Route path='ViewPatient' element={<ViewPatient/>}/>
       <Route path='ViewAppointment' element={<ViewAppointment/>}/>
       <Route path='/Head' element={<Head/>}/>
