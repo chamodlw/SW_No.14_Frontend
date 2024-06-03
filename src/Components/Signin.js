@@ -1,23 +1,59 @@
-import React from "react";
-import Button from '@mui/material/Button';
+import React, { useState } from "react";
+import { Grid, Typography, TextField, Button, Select, FormControl, InputLabel, MenuItem } from "@mui/material";
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import photo from '../images/HealthLabLogo.jpg';
-import { Link } from 'react-router-dom';
-import { Grid, Typography, TextField} from '@mui/material';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 
-export default function Signin(){
-const [role, setRole] = React.useState(''); // useState hook is used to create a state variable 'role' and a function 'setRole' to update its value. The initial state of age is an empty string ('').
+const Signin = () => {
+  const [data, setData] = useState({
+    firstname:'',
+    lastname:'',
+    email:'',
+    address:'',
+    nationalID:'',
+    phonenumber:'',
+    role:'',
+    username:'',
+    password:''
+  });  
 
-const handleChange = (event) => { // //This function is called whenever the value of the select input changes. It updates the 'role' state variable with the new selected value.
-  setRole(event.target.value);
-};
+  const navigate = useNavigate(); //To navigate after Signin
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
+
+      if(response.data.error){
+          console.log('error');
+      } else {
+          setData({
+            firstname:'',
+            lastname:'',
+            email:'',
+            address:'',
+            nationalID:'',
+            phonenumber:'',
+            role:'',
+            username:'',
+            password:''
+          });
+          navigate('/HomePage');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error) 
+    }
+  };
 
   return (
     <Grid container justifyContent="center">
       <form
+        onSubmit={handleSubmit}
         style={{
           borderRadius: "15px",
           padding: "20px 40px",
@@ -41,8 +77,22 @@ const handleChange = (event) => { // //This function is called whenever the valu
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Full Name"
+              label="First Name"
               variant="outlined"
+              name="firstname"
+              value={data.firstname}
+              onChange={handleChange}
+              style={{ marginBottom: "20px" }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="Last Name"
+              variant="outlined"
+              name="lastname"
+              value={data.lastname}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
@@ -51,6 +101,9 @@ const handleChange = (event) => { // //This function is called whenever the valu
               fullWidth
               label="Email"
               variant="outlined"
+              name="email"
+              value={data.email}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
@@ -60,6 +113,9 @@ const handleChange = (event) => { // //This function is called whenever the valu
               fullWidth
               label="Address"
               variant="outlined"
+              name="address"
+              value={data.address}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
@@ -68,30 +124,48 @@ const handleChange = (event) => { // //This function is called whenever the valu
               fullWidth
               label="National ID number"
               variant="outlined"
+              name="nationalID"
+              value={data.nationalID}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
           <Grid item xs={6}>
-          <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Role</InputLabel>
-          <Select
-          labelId="role-select-label"
-          id="role-select"
-          value={role}
-          label="Role"
-          onChange={handleChange}
-          >
-          <MenuItem value="Patient">Patient</MenuItem>
-          <MenuItem value="Doctor">Doctor</MenuItem>
-          <MenuItem value="Admin">Admin</MenuItem>
-          </Select>
-          </FormControl>
+            <TextField
+              fullWidth
+              label="Phone Number"
+              variant="outlined"
+              name="phonenumber"
+              value={data.phonenumber}
+              onChange={handleChange}
+              style={{ marginBottom: "20px" }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="role-select-label">Role</InputLabel>
+              <Select
+                labelId="role-select-label"
+                id="role-select"
+                name="role"
+                value={data.role}
+                onChange={handleChange}
+                label="Role"
+              >
+                <MenuItem value="PATIENT">Patient</MenuItem>
+                <MenuItem value="DOCTOR">Doctor</MenuItem>
+                <MenuItem value="ADMIN">Admin</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
               label="Username"
               variant="outlined"
+              name="username"
+              value={data.username}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
@@ -100,6 +174,10 @@ const handleChange = (event) => { // //This function is called whenever the valu
               fullWidth
               label="Password"
               variant="outlined"
+              type="password"
+              name="password"
+              value={data.password}
+              onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
           </Grid>
@@ -108,19 +186,25 @@ const handleChange = (event) => { // //This function is called whenever the valu
               fullWidth
               label="Confirm Password"
               variant="outlined"
+              type="password"
               style={{ marginBottom: "20px" }}
             />
           </Grid>
         </Grid>
 
         <Typography variant="body1" style={{ marginBottom: "20px", color: "#9C1C1C" }}>
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/Login">Login</Link>
         </Typography>
 
-        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'100%',height:'50px'}}>
+        <Button 
+          type='submit'
+          sx={{ variant: 'contained', color: '#FFFFFF', background: '#101754', width: '100%', height: '50px' }}
+        >
           Sign In
         </Button>
       </form>
     </Grid>
   );
-}
+};
+
+export default Signin;

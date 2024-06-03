@@ -1,17 +1,17 @@
 import {Box} from "@mui/material";
 import SigninForm from "./Signin";
-import UserTabel from "./UserTable";
+import UserTabel from "./UsersTable";
 import Axios from "axios";
 import { useEffect, useState} from "react";
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
 
     useEffect (() =>{
         getUsers();
     }, []);
     const getUsers = () => {
-        Axios.get('http://127.0.0.1:3001/api/users')
+        Axios.get('http://127.0.0.1:3001/api/u')
         .then(response => {
             console.log(response);
         })
