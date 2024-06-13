@@ -6,6 +6,9 @@ import Signin from "./Components/Signin";
 import Login from "./Components/Login";
 import Selecttest from './Selecttest';
 import AddTest from './Admin/AddTest';
+import ViewTest from './Admin/ViewTest';
+import ViewPatient from './Admin/ViewPatients';
+import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
 import Admin from "./Admin/Admin";
 import UserProfileUpdate from "./Components/UserProfileUpdate";
@@ -49,3 +52,4 @@ function App() {
 }
 
 export default App;
+//
