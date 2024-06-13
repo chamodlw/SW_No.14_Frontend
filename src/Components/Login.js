@@ -1,140 +1,184 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import photo1 from '../images/HealthLabLogo.jpg';
+//Login.js
+import React, { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Grid, Typography, TextField, Button } from "@mui/material";
+import photo1 from "../images/HealthLabLogo.jpg";
 import photo2 from "../images/BloodDraw.webp";
+import axios from 'axios';
 
 function Login() {
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    username: '',
+    password: ''
+  });
+
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+
+  axios.defaults.withCredentials = true;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError(''); // Clear error state before making a new request
+    const { username, password } = data;
+
+    //Receive the response from the backend
+    try {
+      const response = await axios.post('http://localhost:3100/api/router_login/login', { username, password });
+      console.log('Login response:', response.data);
+      const userData = response.data; //making an Object called userData
+      console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
+      // console.log('User data type:', typeof userData); //Checking whether the userData is an object.
+      if (userData.error) {
+        toast.error(userData.error);
+      } else {
+        setData({ username: '', password: '' }); // Clear input fields
+        const { user } = userData; // destructuring  to extract the user property from the userData object. - userData is an object that contains a user property.
+        setUser(user); // Set user data in context
+        const role = user.role; // Extract role from response data
+        const userId = user.id; // Extract user ID from response data
+        console.log('User role:', role);
+        // Redirect based on role
+        switch (role) {
+          case 'PATIENT':
+            //console.log('Redirecting to Patient page');
+            navigate(`/Patient/${userId}`);
+            break;
+          case 'ADMIN':
+            //console.log('Redirecting to Admin page');
+            navigate(`/AdminInterface/${userId}`);
+            break;
+          case 'DOCTOR':
+            //console.log('Redirecting to Doctor page');
+            navigate(`/Doctor/${userId}`);
+            break;
+          default:
+            // Handle unrecognized roles or default redirection
+            //console.log('Redirecting to Home page');
+            navigate('/HomePage');
+        }
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setError('Login failed. Please try again.'); // Set error message if login fails
+    }
+  };
+
   return (
-    <div>
-      
+    <Grid container justifyContent="center">
       <form
+        onSubmit={handleSubmit}
         style={{
-          display: "flex",
           borderRadius: "15px",
-          padding: "20px 40px",
+          padding: "20px",
           backgroundColor: "#D3E9FE",
-          width: "65%",
-          marginLeft: "15%",
+          width: "90%",
+          maxWidth: "800px",
           marginTop: "10%",
           boxShadow: "1px 5px 3px -3px rgba(0,0,0,0.44)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        
-        {/* Photo2 on the left */}
-        <div className="form-group">
-          <img
-            src={photo2}
-            style={{ width: "100%", maxWidth: "450px", marginTop: "15px" }}
-            alt="My Photo"
-          />
-        </div>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6} style={{ textAlign: 'center' }}>
+            <img
+              src={photo2}
+              style={{ width: "100%", maxWidth: "450px", marginTop: "15px" }}
+              alt="Blood Draw"
+            />
+          </Grid>
 
-
-        {/* Form content on the right */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginLeft: "50px", 
-          }}
-        >
-
-          
-<img
-          src={photo1} // Use the imported image
-          // alt="My Photo"
-          style={{ width: "100%", maxWidth: "300px", marginTop: "10px", marginLeft: "100px"}}
-        />
-
-          <h2
-            style={{
-              marginBottom: "7%",
-              color: "#0085FF",
-              fontWeight: "bold",
-              
-            }}
-          >
-
-            Login
-          </h2>
-
-          <div className="form-group"  style={{ marginBottom: "25px" }}>
-            <label className="labels" htmlFor="username">
-              Username
-            </label>
-            <div className="custom_input">
-              <input
+          <Grid item xs={12} md={6} style={{ paddingLeft: "20px", textAlign: 'center' }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: 'center' }}>
+              <img
+                src={photo1}
+                style={{ width: "100%", maxWidth: "300px", marginTop: "10px" }}
+                alt="HealthLab Logo"
+              />
+              <Typography
+                variant="h5"
                 style={{
-                  width: "350px",
-                  height: "25px",
-                  borderRadius: "5px",
-                  background: "rgba(0, 0, 0, 0.04)",
+                  marginBottom: "7%",
+                  marginTop: "3%",
+                  color: "#0085FF",
+                  fontWeight: "bold",
                 }}
-                className="details-input form-control"
-                type="text"
-                id="username"
-                placeholder=""
+              >
+                Login
+              </Typography>
+
+              <TextField
+                fullWidth
+                label="Username"
+                variant="outlined"
+                name="username"
+                value={data.username}
+                onChange={(e) => setData({ ...data, username: e.target.value })}
+                style={{ marginBottom: "25px" }}
               />
-            </div>
-          </div>
 
+              <TextField
+                fullWidth
+                label="Password"
+                variant="outlined"
+                name="password"
+                type="password"
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+                style={{ marginBottom: "25px" }}
+              />
 
-          <div className="form-group"  style={{ marginBottom: "25px" }}>
-            <label className="labels" htmlFor="password">
-              Password
-            </label>
-            <div className="custom_input">
-              <input
-                style={{  
-                  width: "350px",
-                  height: "25px",
-                  borderRadius: "5px",
-                  background: "rgba(0, 0, 0, 0.04)",
+              {error && (
+                <Typography
+                  variant="body1"
+                  style={{
+                    marginBottom: '20px',
+                    color: '#9C1C1C',
+                  }}
+                >
+                  {error}
+                </Typography>
+              )}
+
+              <Typography
+                variant="body1"
+                style={{
+                  marginBottom: "20px",
+                  fontFamily: "Inter",
+                  fontWeight: "500",
+                  fontSize: "12px",
+                  lineHeight: "24px",
+                  color: "#9C1C1C",
                 }}
-                className="details-input form-control"
-                type="text"
-                id="password"
-                placeholder=""
-              />
+              >
+                <Link to="/forget-password" style={{ color: '#9C1C1C' }}>Forgot Password?</Link>
+              </Typography>
+
+              <Button type="submit" sx={{ variant: 'contained', color: '#FFFFFF', background: '#101754', width: '100%', height: '50px'  }}>
+                Login
+              </Button>
+
+              {user && (
+                <Typography
+                  variant="body1"
+                  style={{
+                    marginTop: '20px',
+                    color: '#101754',
+                  }}
+                >
+                  Welcome, {user.username}!
+                </Typography>
+              )}
+
             </div>
-          </div>
-
-          <div className="form-group"  style={{ marginBottom: "20px" }}>
-            <label
-              className="labels"
-              htmlFor="space"
-              style={{
-                fontFamily: "Inter",
-                fontStyle: "normal",
-                fontWeight: "500",
-                fontSize: "12px",
-                lineHeight: "24px",
-                color: "#9C1C1C",
-              }}
-            >
-              Forgot Password?
-            </label>
-          </div>
-
-          <div className="form-group">
-            {/* Additional labels or form elements can be added here */}
-          </div>
-
-          <Button
-            sx={{
-              variant: "contained",
-              color: "#FFFFFF",
-              background: "#101754",
-              width: "150px",
-              height: "35px",
-              borderRadius: "10px",
-            }}
-          >
-            Login
-          </Button>
-        </div>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Grid>
   );
 }
 

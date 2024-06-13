@@ -1,0 +1,8 @@
+.D {
+    background-image: url('./images/X.jpg');
+    background-size:cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: rgb(106, 174, 233);
+  }
+  

@@ -1,25 +1,25 @@
 import React from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import './com_css/footer.css';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 
 const Footer = () => {
   return (
-    <footer className="footer" >
+    <footer className="footer">
       <div className="footer-content">
         <div className="footer-social">
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-            <FaFacebook />
+            <faFacebook />
           </a>
           <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-            <FaTwitter />
+            <faTwitter />
           </a>
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin />
+            <faLinkedin />
           </a>
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <FaInstagram />
+            <faInstagram />
           </a>
         </div>
         <div className="footer-info">
