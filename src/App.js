@@ -29,9 +29,11 @@ function App() {
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>
-      <Route path='/HomePage' element={<HomePage/>}/>
+      <Route path='/HomePage/*' element={<HomePage/>}/>
       <Route path='/Patient/:id' element={<Patient/>}/> 
       {/* Dynamic routing - '/Patient/:id'*/}
+      <Route path='/Doctor/:id' element={<Doctor/>}/>
+      <Route path='/Doctor/:id' element={<Doctor/>}/>
       <Route path='/Doctor/:id' element={<Doctor/>}/>
       <Route path='/UserProfile/:id' element={<UserProfile/>}/>
       <Route path='/UserProfileUpdate/:id' element={<UserProfileUpdate/>}/>

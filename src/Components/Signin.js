@@ -17,6 +17,8 @@ const Signin = () => {
     password:''
   });  
 
+  const [error, setError] = useState({ field: '', message: '' }); // Initialize error as an object //state variable
+
   const navigate = useNavigate(); //To navigate after Signin
 
   const handleChange = (e) => {
@@ -28,10 +30,17 @@ const Signin = () => {
 
     try {
       const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
+      console.log('Server response:', response);
 
-      if(response.data.error){
-          console.log('error');
+      if(response.data.error === false){
+        //console.log('Setting error:', `User with this ${response.data.message} already exists.`);
+        //setError(`User with this ${response.data.message} already exists.`);
+        console.log('Error field:', response.data.field);
+        console.log('Error message:', response.data.message);
+        setError({ field: response.data.field, message: response.data.message });
       } else {
+        // Reset the error state if no error
+          setError({ field: '', message: '' });
           setData({
             firstname:'',
             lastname:'',
@@ -46,10 +55,17 @@ const Signin = () => {
           navigate('/HomePage');
       }
     } catch (error) {
-      console.error('Error registering user:', error) 
+      console.error('Error registering user:', error);
+      if (error.response && error.response.status === 409) {
+        console.log('Error field:', error.response.data.field);
+        console.log('Error message:', error.response.data.message);
+        setError({ field: error.response.data.field, message: error.response.data.message });
+      } else {
+        setError({ field: '', message: 'Error registering user: ' + error.message });
+      }
     }
   };
-
+  console.log('Error state:', error);
   return (
     <Grid container justifyContent="center">
       <form
@@ -106,6 +122,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
+
           </Grid>
 
           <Grid item xs={6}>
@@ -129,7 +146,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
-          </Grid>
+            </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -155,6 +172,8 @@ const Signin = () => {
                 <MenuItem value="PATIENT">Patient</MenuItem>
                 <MenuItem value="DOCTOR">Doctor</MenuItem>
                 <MenuItem value="ADMIN">Admin</MenuItem>
+                <MenuItem value="LABOPERATOR">LabOperator</MenuItem>
+                <MenuItem value="LABASSISTANT">LabAssistant</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -168,7 +187,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
-          </Grid>
+            </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -190,6 +209,13 @@ const Signin = () => {
               style={{ marginBottom: "20px" }}
             />
           </Grid>
+
+          {error.message && (
+            <Grid item xs={12}>
+              <Typography variant="body2" color="error">{error.message}</Typography>
+            </Grid>
+          )}
+
         </Grid>
 
         <Typography variant="body1" style={{ marginBottom: "20px", color: "#9C1C1C" }}>
@@ -208,3 +234,5 @@ const Signin = () => {
 };
 
 export default Signin;
+
+// 2307261097
