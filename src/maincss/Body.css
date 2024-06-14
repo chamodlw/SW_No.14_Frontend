@@ -1,6 +1,6 @@
-.AdminInterface {
+body {
     background-image: url('../images/2.png');
-    background-size: cover;
+    background-size: cover;  
     background-repeat: no-repeat;
     background-position: center center;
     /* Optionally, you can set a background color as a fallback */

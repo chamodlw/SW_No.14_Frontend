@@ -1,7 +1,7 @@
 import React from 'react';
 import Appoinmentlist from './Admin_Component/Appoinmentlist';
-import Patienthead from '../Components/Patienthead'; // Importing header component
-import Footer from '../Components/Footer'; // Importing footer component
+import Patienthead from '../Components/Patienthead'; 
+import Footer from '../Components/Footer'; 
 import { Grid } from '@mui/material';
 import '../maincss/Class.css';
 
