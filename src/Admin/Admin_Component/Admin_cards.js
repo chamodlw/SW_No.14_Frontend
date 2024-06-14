@@ -83,15 +83,15 @@ const CardSlider = ({ cards }) => {
     // Define actions based on the selected card
     if (selectedCard) {
       if (selectedCard.title === 'ADD NEW') {
-        navigate(`/AddTest`);
+        navigate(`/AddTest/:id`);
       } else if (selectedCard.title === 'AVAILABLE TESTS') {
-        navigate(`/AViewTest`);
+        navigate(`/AViewTest/:id`);
       } 
       else if (selectedCard.title === 'APPOINTMENTS') {
-        navigate(`/ViewAppointment`);
+        navigate(`/ViewAppoinment/:id`);
       } 
       else if (selectedCard.title === 'PATIENTS') {
-        navigate(`/ViewPatient`);
+        navigate(`/ViewPatient/:id`);
       } 
     }
     handleCloseModal();

@@ -16,6 +16,10 @@ import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
 
+import PatientInterface from './Patient/PatientInterface';
+import PViewTest from './Patient/Patient_Component/PViewTest';
+import AViewTest from './Admin/AViewTest';
+
 
 function App() {
   return (
@@ -27,6 +31,9 @@ function App() {
       {/* path is the URL we should access while element is the component/page */}
       <Route path='/Admin/:id' element={<Admin/>}/>
       <Route path='/AddTest/:id' element={<AddTest/>}/>
+      <Route path='/AViewTest/:id' element={<AViewTest/>}/>
+      <Route path='/ViewAppoinment/:id' element={<ViewAppointment/>}/>
+      <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
 
       <Route path='/Selecttest' element={<Selecttest/>}/>
       <Route path='/Head' element={<Head/>}/>

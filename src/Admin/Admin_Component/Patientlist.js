@@ -26,12 +26,12 @@ function StickyHeadTable({ setRows }) {
   const [rows, setLocalRows] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3100/api/users')
+    axios.get('http://localhost:3100/api/router_login/users')
       .then(response => {
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
           // Filter users by role "patient"
-          const patientUsers = responseData.filter(user => user.role === "patient");
+          const patientUsers = responseData.filter(user => user.role.toLowerCase() === "patient");
           setLocalRows(patientUsers);
           setRows(patientUsers); // Update the parent component's state
         } else {

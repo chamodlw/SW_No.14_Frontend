@@ -76,8 +76,20 @@ export default function Patienthead() {
   return (
     <>
       <AppBar position="fixed" style={{ background: "#D9D9D9", transition: 'all 0.3s ease-in-out' }}>
+      <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2, display: { md: 'none' } }}
+          onClick={handleDrawerToggle}
+        >
+          {isMobile && (
+          <MenuIcon />
+          )}
+        </IconButton>
         {!scrolled ? (
           <>
+            
             <Toolbar style={{ justifyContent: 'center' , }}>
               <Box display="flex" alignItems="center" >
                 <LocalHospitalTwoToneIcon fontSize="large" style={{ marginRight: '10px', color: '#101754', fontSize: '48px' }} />
@@ -86,16 +98,19 @@ export default function Patienthead() {
                 </Typography>
               </Box>
             </Toolbar>
+          {!isMobile && (
             <Toolbar style={{ justifyContent: 'center' }}>
-              {!isMobile && (
-                <Tabs >
-                  <Tab label="Home" component={Link} to="/" style={{fontSize:'18px'}}/>
-                  <Tab label="Services" component={Link} to="/services" style={{fontSize:'18px'}}/>
-                  <Tab label="About us" component={Link} to="/about" style={{fontSize:'18px'}}/>
-                  <Tab label="Contact us" component={Link} to="/contact" style={{fontSize:'18px'}}/>
+              
+                <Tabs>
+                  <Tab label="Home" component={Link} to="/" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="Services" component={Link} to="/services" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="About us" component={Link} to="/about" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
                 </Tabs>
-              )}
+              
             </Toolbar>
+          )}
+
           </>
         ) : (
           <Toolbar style={{ justifyContent: 'space-between' }}>
@@ -106,15 +121,15 @@ export default function Patienthead() {
               </Typography>
             </Box>
             {!isMobile && (
-              <Tabs>
-                <Tab label="Home" component={Link} to="/" />
-                <Tab label="Services" component={Link} to="/services" />
-                <Tab label="About us" component={Link} to="/about" />
-                <Tab label="Contact us" component={Link} to="/contact" />
+              <Tabs style={{ marginLeft: 'auto', marginRight: '10%' }}>
+                <Tab label="Home" component={Link} to="/" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Services" component={Link} to="/services" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }} />
+                <Tab label="About us" component={Link} to="/about" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
               </Tabs>
             )}
             <AccountCircleIcon 
-              sx={{ color: '#101754', fontSize: 42, cursor: 'pointer' }} 
+              style={{ color: '#101754', fontSize: 42, cursor: 'pointer' }} 
               onClick={handleMenuOpen} 
             />
           </Toolbar>
@@ -123,7 +138,7 @@ export default function Patienthead() {
           anchor="left"
           open={drawerOpen}
           onClose={handleDrawerToggle}
-          sx={{ display: { md: 'none' } }}
+          style={{ display: { md: 'none' } }}
         >
           {drawer}
         </Drawer>
