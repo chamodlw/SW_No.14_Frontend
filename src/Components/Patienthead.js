@@ -80,7 +80,7 @@ export default function Patienthead() {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2, display: { md: 'none' } }}
+          style={{ mr: 2, display: { md: 'none' } }}
           onClick={handleDrawerToggle}
         >
           {isMobile && (
@@ -91,7 +91,7 @@ export default function Patienthead() {
           <>
             
             <Toolbar style={{ justifyContent: 'center' , }}>
-              <Box display="flex" alignItems="center" >
+              <Box display="flex" alignItems="center" style={{ marginTop: '15px' }}>
                 <LocalHospitalTwoToneIcon fontSize="large" style={{ marginRight: '10px', color: '#101754', fontSize: '48px' }} />
                 <Typography variant="h6" style={{ fontFamily: 'Helvetica', fontSize: '35px', color: '#101754' }}>
                   HealthLab
@@ -122,10 +122,10 @@ export default function Patienthead() {
             </Box>
             {!isMobile && (
               <Tabs style={{ marginLeft: 'auto', marginRight: '10%' }}>
-                <Tab label="Home" component={Link} to="/" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
-                <Tab label="Services" component={Link} to="/services" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }} />
-                <Tab label="About us" component={Link} to="/about" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
-                <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '15px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Home" component={Link} to="/" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Services" component={Link} to="/services" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }} />
+                <Tab label="About us" component={Link} to="/about" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
               </Tabs>
             )}
             <AccountCircleIcon 
