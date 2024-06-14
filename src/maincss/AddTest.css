@@ -1,0 +1,9 @@
+.AddTest {
+    background-image: url('../images/2.png');
+    background-size: cover; /* This will make the image cover the entire background */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed; /* This will ensure the background image stays fixed as the content scrolls */
+    /* Optionally, you can set a background color as a fallback */
+    background-color: rgb(106, 174, 233);
+}
