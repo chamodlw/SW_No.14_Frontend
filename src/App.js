@@ -6,7 +6,6 @@ import Signin from "./Components/Signin";
 import Login from "./Components/Login";
 import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
-import ViewTest from './Admin/ViewTest';
 import ViewPatient from './Admin/ViewPatients';
 import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
@@ -32,8 +31,11 @@ function App() {
       <Route path='/Admin/:id' element={<Admin/>}/>
       <Route path='/AddTest/:id' element={<AddTest/>}/>
       <Route path='/AViewTest/:id' element={<AViewTest/>}/>
-      <Route path='/ViewAppoinment/:id' element={<ViewAppointment/>}/>
+      <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
+
+      
+      <Route path='/PViewTest/:id' element={<PViewTest/>}/>
 
       <Route path='/Selecttest' element={<Selecttest/>}/>
       <Route path='/Head' element={<Head/>}/>
