@@ -27,7 +27,7 @@ axios.defaults.withCredentials = true;
   return (
     <div className="AdminInterface">
       <Patienthead />
-      <Grid sx={{paddingTop:'10%', paddingBottom:'10%', alignitems:'center'}}>
+      <Grid sx={{paddingTop:'13%', paddingBottom:'10%', alignitems:'center'}}>
         <AdminCards sx ={{ alignitems:'center'}}/>
       </Grid>      
       <Footer />

@@ -10,7 +10,7 @@ function PatientInterface() {
   return (
     <div className="Class">
       <Patienthead />
-      <Grid sx={{paddingTop:'20%', paddingBottom:'10%', alignitems:'center'}}>
+      <Grid sx={{paddingTop:'13%', paddingBottom:'10%', alignitems:'center'}}>
         <PatientCards sx ={{ alignitems:'center'}}/>
   </Grid>    
       <Footer />
