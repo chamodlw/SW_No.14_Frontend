@@ -1,6 +1,7 @@
 // src/Admin/Admin_component/UserContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 
 // Create two contexts for the user

@@ -39,6 +39,7 @@ function App() {
       <Route path='/Admin/:id' element={<Admin/>}/>
       <Route path='/AddTest/:id' element={<AddTest/>}/>
       </Route>
+      
       <Route path='/Selecttest' element={<Selecttest/>}/>
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
