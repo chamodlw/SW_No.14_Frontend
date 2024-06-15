@@ -4,7 +4,7 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
-import Selecttest from './Selecttest';
+import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
 // import ViewTest from './Admin/ViewTest';
 // import ViewPatient from './Admin/ViewPatients';
@@ -19,6 +19,10 @@ import LabOperator from "./pages/LabOperator";
 import UserProfile from "./Components/UserProfile";
 import ProtectedRoute from './Admin/Admin_Component/ProtectedRoute';
 import { UserProvider } from './Admin/Admin_Component/UserContext';
+
+import PatientInterface from './Patient/PatientInterface';
+import PViewTest from './Patient/Patient_Component/PViewTest';
+import AViewTest from './Admin/AViewTest';
 
 
 function App() {

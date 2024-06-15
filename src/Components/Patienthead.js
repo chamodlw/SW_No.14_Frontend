@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AppBar, Tab, Tabs, Typography, Toolbar, useMediaQuery, useTheme, IconButton, Drawer, List, ListItem, ListItemText, Menu, MenuItem } from '@mui/material/';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Tab, Tabs, Typography, Toolbar, useMediaQuery, useTheme, IconButton, Drawer, List, ListItem, ListItemText, Menu, MenuItem, Box } from '@mui/material/';
 import LocalHospitalTwoToneIcon from '@mui/icons-material/LocalHospitalTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -11,6 +11,7 @@ export default function Patienthead() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
@@ -36,6 +37,16 @@ export default function Patienthead() {
     localStorage.removeItem('user');
     navigate('/login');
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const drawer = (
     <div>
@@ -63,53 +74,84 @@ export default function Patienthead() {
   );
 
   return (
-    <AppBar position="static" sx={{ background: "#D9D9D9" }}>
-      <Toolbar>
-        <IconButton
+    <>
+      <AppBar position="fixed" style={{ background: "#D9D9D9", transition: 'all 0.3s ease-in-out' }}>
+      <IconButton
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2, display: { md: 'none' } }}
+          style={{ mr: 2, display: { md: 'none' } }}
           onClick={handleDrawerToggle}
         >
+          {isMobile && (
           <MenuIcon />
+          )}
         </IconButton>
-        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', fontFamily: 'Helvetica', fontSize: '30px', color: '#101754', flexGrow: 1 }}>
-          <LocalHospitalTwoToneIcon fontSize="large" style={{ marginRight: '10px', color: '#101754' }} />
-          HealthLab
-        </Typography>
-        {!isMobile ? (
+        {!scrolled ? (
           <>
-            <Tabs sx={{ marginLeft: 'auto' }}>
-              <Tab label="Home" component={Link} to="/" />
-              <Tab label="Services" component={Link} to="/services" />
-              <Tab label="About us" component={Link} to="/about" />
-              <Tab label="Contact us" component={Link} to="/contact" />
-            </Tabs>
+            
+            <Toolbar style={{ justifyContent: 'center' , }}>
+              <Box display="flex" alignItems="center" style={{ marginTop: '15px' }}>
+                <LocalHospitalTwoToneIcon fontSize="large" style={{ marginRight: '10px', color: '#101754', fontSize: '48px' }} />
+                <Typography variant="h6" style={{ fontFamily: 'Helvetica', fontSize: '35px', color: '#101754' }}>
+                  HealthLab
+                </Typography>
+              </Box>
+            </Toolbar>
+          {!isMobile && (
+            <Toolbar style={{ justifyContent: 'center' }}>
+              
+                <Tabs>
+                  <Tab label="Home" component={Link} to="/" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="Services" component={Link} to="/services" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="About us" component={Link} to="/about" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                  <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '18px', color: '#5A5959', margin: '0 12px' }} />
+                </Tabs>
+              
+            </Toolbar>
+          )}
+
+          </>
+        ) : (
+          <Toolbar style={{ justifyContent: 'space-between' }}>
+            <Box display="flex" alignItems="center">
+              <LocalHospitalTwoToneIcon fontSize="large" style={{ marginRight: '10px', color: '#101754', fontSize: '35px' }} />
+              <Typography variant="h6" style={{ fontFamily: 'Helvetica', fontSize: '30px', color: '#101754' }}>
+                HealthLab
+              </Typography>
+            </Box>
+            {!isMobile && (
+              <Tabs style={{ marginLeft: 'auto', marginRight: '10%' }}>
+                <Tab label="Home" component={Link} to="/" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Services" component={Link} to="/services" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }} />
+                <Tab label="About us" component={Link} to="/about" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
+                <Tab label="Contact us" component={Link} to="/contact" style={{ fontSize: '17px', color: '#5A5959', margin: '0 12px' }}/>
+              </Tabs>
+            )}
             <AccountCircleIcon 
-              sx={{ color: '#101754', fontSize: 42, marginLeft: '30px', cursor: 'pointer' }} 
+              style={{ color: '#101754', fontSize: 42, cursor: 'pointer' }} 
               onClick={handleMenuOpen} 
             />
-          </>
-        ) : null}
-      </Toolbar>
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={handleDrawerToggle}
-        sx={{ display: { md: 'none' } }}
-      >
-        {drawer}
-      </Drawer>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-        <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-      </Menu>
-    </AppBar>
+          </Toolbar>
+        )}
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          style={{ display: { md: 'none' } }}
+        >
+          {drawer}
+        </Drawer>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+          <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+        </Menu>
+      </AppBar>
+      <Toolbar /> {/* This is an empty Toolbar component to push down the content */}
+    </>
   );
 }
-

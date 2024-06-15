@@ -11,14 +11,18 @@ import Axios from 'axios';
 import SelectTable from './SelectTable';
 import { Snackbar } from '@mui/material';
 
+
 function BasicSelect() {
   
   const [tests, setTests] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
-  const [selectedTestsForTable, setSelectedTestsForTable] = useState([]); // New state to track selected tests for table
+  const [selectedTestsForTable, setSelectedTestsForTable] = useState([]); 
   const [selectedTestDescription, setSelectedTestDescription] = useState('');
   const [testDetails, setTestDetails] = useState('');
-    // State to manage Snackbar
+  const [patientId, setPatientId] = useState();
+  const [patientName, setpatientName] = useState(null); 
+  const [state, setState] = useState(null);
+  //snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -26,7 +30,7 @@ function BasicSelect() {
     getTests();
   }, []);
 
-  // Function to close the Snackbar
+  //close the Snackbar
   const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
   }
@@ -65,13 +69,16 @@ function BasicSelect() {
           });
       }
     } else {
-      // If the test is already selected, you can handle this case as needed.
       console.log('Test is already selected');
     }
   };
 
   const handleConfirm = () => {
+      
     if (selectedTest) {
+      setPatientId(1);
+      setpatientName("Chamod");
+      setState('register_only');
       // Find the selected test object from the tests array
       const selectedTestObject = tests.find((test) => test.id === selectedTest);
       // Add selected test object to the table
@@ -80,24 +87,26 @@ function BasicSelect() {
       setSelectedTestDescription('');
       setTestDetails('');
   
-      // Sort selectedTestsForTable by ID in ascending order
+      // Sort
       setSelectedTestsForTable(prevSelectedTests => prevSelectedTests.sort((a, b) => a.id - b.id));
     }
     
   };
   
   const handleFinal = () => {
-  // Extracting selected test IDs from selectedTestsForTable array
+  
   const selectTestIds = selectedTestsForTable.map(test => test.id);
-  // Extracting selected test names from selectedTestsForTable array
+  
   const selectTestNames = selectedTestsForTable.map(test => test.name);
   
   // Create a new appointment object
   const newAppointment = {
-    id: Math.floor(Math.random() * 1000), // Generate a random integer ID for the appointment
-    // You can add more properties to the appointment object as needed
+    
     selectTestIds: selectTestIds,
-    selectTestNames: selectTestNames // Include selected test names in the appointment object
+    selectTestNames: selectTestNames, 
+    patientId: patientId, //patient ID
+    patientName: patientName, //name
+    state: state // Include state
   };
   
   // Show success Snackbar
@@ -105,7 +114,7 @@ function BasicSelect() {
   setSnackbarOpen(true);
 
   
-  // Send the new appointment data to the server
+  
   fetch('http://localhost:3100/api/addappointment', {
     method: 'POST',
     headers: {
@@ -121,7 +130,6 @@ function BasicSelect() {
   })
   .catch(error => {
     console.error('Error:', error);
-    // You can handle errors as needed
   });
 };
 

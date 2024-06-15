@@ -1,4 +1,4 @@
-//viewtest.js
+//Aviewtest.js
 import React from 'react';
 import Testlist from './Admin_Component/Testlist';
 import Patienthead from '../Components/Patienthead'; 
@@ -6,7 +6,7 @@ import Footer from '../Components/Footer';
 import { Grid } from '@mui/material';
 import '../maincss/Class.css';
 
-function ViewTest() {
+function AViewTest() {
   return (
     <div className = "Class" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Patienthead />
@@ -20,4 +20,4 @@ function ViewTest() {
   );
 }
 
-export default ViewTest;
+export default AViewTest;
