@@ -6,7 +6,7 @@ import Footer from '../Components/Footer'; // Importing footer component
 import { Grid } from '@mui/material';
 import '../maincss/Class.css';
 import PatientSearch from './Admin_Component/PatientSearch';
-
+        
 function ViewTest() {
   return (
     <div className = "Class" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>

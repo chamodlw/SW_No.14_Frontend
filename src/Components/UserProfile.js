@@ -13,15 +13,18 @@ const Profile = () => {
 
   const fetchUserData = async () => { // Fetch User Data Function: This function sends a GET request to the backend API endpoint to fetch user data.
     try {
+      console.log('Fetching user data...');
       const response = await fetch('http://localhost:3100/api/router_login/getCurrentUser', {
-        credentials: 'include', // Ensure cookies are sent with the request
+        credentials: 'include', // Ensure cookies are sent with the request. (In frontend, when making API requests with Axios or Fetch, include credentials: 'include' to ensure cookies are sent.)
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      console.log('User data fetched successfully.');
       const data = await response.json();
+      console.log('Fetched user data:', data);
       setUserData(data); // Assuming `data` is the user object itself
     } catch (error) {
       console.error('Error fetching user data:', error);

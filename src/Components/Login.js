@@ -6,9 +6,11 @@ import { Grid, Typography, TextField, Button } from "@mui/material";
 import photo1 from "../images/HealthLabLogo.jpg";
 import photo2 from "../images/BloodDraw.webp";
 import axios from 'axios';
+import { useSetUser } from '../Admin/Admin_Component/UserContext';
 
 function Login() {
   const navigate = useNavigate();
+  const setUserContext  = useSetUser(); // Use the setUser function from UserContext. Using the useSetUser hook to obtain the setUser function from your context. This function is responsible for updating the user state in the context.
   const [data, setData] = useState({
     username: '',
     password: ''
@@ -21,6 +23,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Login: Form submitted with data:', data);
     setError(''); // Clear error state before making a new request
     const { username, password } = data;
 
@@ -31,32 +34,51 @@ function Login() {
       const userData = response.data; //making an Object called userData
       console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
       // console.log('User data type:', typeof userData); //Checking whether the userData is an object.
+
       if (userData.error) {
+        console.log('Login: Error from backend:', userData.error);
         toast.error(userData.error);
       } else {
         setData({ username: '', password: '' }); // Clear input fields
         const { user } = userData; // destructuring  to extract the user property from the userData object. - userData is an object that contains a user property.
-        setUser(user); // Set user data in context
+        
+        setUser(user); // Set user data in local state. Declared in line 19
+        setUserContext(user); // Set user data in context. Declared in line 13
         const role = user.role; // Extract role from response data
         const userId = user.id; // Extract user ID from response data
-        console.log('User role:', role);
+        console.log('Login: User role:', role);
+        //console.log('Navigating to:', `/AdminInterface/${userId}`); // Debug: Log the navigation path
+
+        // Additional logging for debugging
+      //console.log('Navigating to:', `/${role}Interface/${userId}`);
+
         // Redirect based on role
         switch (role) {
           case 'PATIENT':
             //console.log('Redirecting to Patient page');
             navigate(`/Patient/${userId}`);
+            console.log('Navigation done');
             break;
           case 'ADMIN':
-            //console.log('Redirecting to Admin page');
+            console.log('Redirecting to Admin page');
             navigate(`/AdminInterface/${userId}`);
+            //console.log('Navigation done');
             break;
           case 'DOCTOR':
             //console.log('Redirecting to Doctor page');
             navigate(`/Doctor/${userId}`);
             break;
+          case 'LABASSISTANT':
+            //console.log('Redirecting to LabAssistant page');
+            navigate(`/LabAssistant/${userId}`);
+            break;
+          case 'LABOPERATOR':
+            //console.log('Redirecting to LabOperator page');
+            navigate(`/LabOperator/${userId}`);
+            break;
           default:
             // Handle unrecognized roles or default redirection
-            //console.log('Redirecting to Home page');
+            console.log('Redirecting to Home page');
             navigate('/HomePage');
         }
       }
