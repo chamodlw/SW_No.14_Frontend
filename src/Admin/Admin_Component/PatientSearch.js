@@ -25,14 +25,14 @@ export default function PatientSearch({ rows }) {
   };
 
   return (
-    <div style={{ position: 'relative', width: '50%', margin: '0 auto' , paddingBottom:'20px'}}>
+    <div style={{ position: 'relative', width: '50%', margin: '0 auto', paddingBottom: '20px' }}>
       <Autocomplete
         freeSolo
         options={rows}
-        getOptionLabel={(row) => row.fullname}
+        getOptionLabel={(row) => row?.fullname || ''}
         filterOptions={(options, { inputValue }) =>
           options.filter((option) =>
-            option.fullname.toLowerCase().includes(inputValue.toLowerCase())
+            option?.fullname?.toLowerCase().includes(inputValue.toLowerCase())
           )
         }
         onChange={(event, value) => setSelectedPatient(value)}
@@ -79,7 +79,7 @@ export default function PatientSearch({ rows }) {
               top: '100%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '100%', 
+              width: '100%',
               borderRadius: '20px',
               boxShadow: '0 8px 12px rgba(0, 0, 0, 1)',
               zIndex: 1000,
@@ -100,18 +100,18 @@ export default function PatientSearch({ rows }) {
             >
               <CardContent>
                 <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                  {selectedPatient.fullname}
+                  {selectedPatient?.fullname}
                 </Typography>
                 <Typography variant="body1">
                   {selectedPatient && (
                     <ul style={{ listStyleType: 'circle', padding: 0 }}>
-                      <li><strong>ID:</strong> {selectedPatient.nationalID}</li>
-                      <li><strong>Name:</strong> {selectedPatient.fullname}</li>
-                      <li><strong>Email:</strong> {selectedPatient.email}</li>
-                      <li><strong>Address:</strong> {selectedPatient.address}</li>
-                      <li><strong>Role:</strong> {selectedPatient.role}</li>
-                      <li><strong>Username:</strong> {selectedPatient.username}</li>
-                      <li><strong>Password:</strong> {selectedPatient.password}</li>
+                      <li><strong>ID:</strong> {selectedPatient?.nationalID}</li>
+                      <li><strong>Name:</strong> {selectedPatient?.fullname}</li>
+                      <li><strong>Email:</strong> {selectedPatient?.email}</li>
+                      <li><strong>Address:</strong> {selectedPatient?.address}</li>
+                      <li><strong>Role:</strong> {selectedPatient?.role}</li>
+                      <li><strong>Username:</strong> {selectedPatient?.username}</li>
+                      <li><strong>Password:</strong> {selectedPatient?.password}</li>
                     </ul>
                   )}
                 </Typography>
