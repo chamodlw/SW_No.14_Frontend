@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 import axios from 'axios';
 import '../maincss/AdminInterface.css';
 import { useParams } from 'react-router-dom';
-//import AdminCards from './Admin_Component/Admin_cards'
+import AdminCards from './Admin_Component/Admin_cards'
 
 function AdminInterface() {
   let { id } = useParams();

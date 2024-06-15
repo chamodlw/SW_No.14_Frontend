@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Tab, Tabs, Typography, Toolbar, useMediaQuery, useTheme, IconButton, Drawer, List, ListItem, ListItemText, Menu, MenuItem, Box } from '@mui/material/';
+import { AppBar, Tab, Tabs, Typography, Toolbar, useMediaQuery, useTheme, IconButton, Drawer, List, ListItem, ListItemText, Menu, MenuItem, Box, styled } from '@mui/material/';
 import LocalHospitalTwoToneIcon from '@mui/icons-material/LocalHospitalTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -13,6 +13,17 @@ export default function Patienthead() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+
+  const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    display: 'block',
+    width: '100%',
+    padding: theme.spacing(2),
+    margin: theme.spacing(1, 0), // Adds vertical margin between menu items
+    boxSizing: 'border-box', // Ensures padding and margin are calculated inside the element's total width and height
+    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Temporary background to visualize padding
+  border: '1px solid rgba(0, 0, 0, 0.1)', // Temporary border to visualize margin
+}));
+
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -147,8 +158,8 @@ export default function Patienthead() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-          <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+          <StyledMenuItem  onClick={handleProfileClick}>Profile</StyledMenuItem ><br/>
+          <StyledMenuItem  onClick={handleLogoutClick}>Logout</StyledMenuItem >
         </Menu>
       </AppBar>
       <Toolbar /> {/* This is an empty Toolbar component to push down the content */}
