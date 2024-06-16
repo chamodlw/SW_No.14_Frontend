@@ -1,63 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import axios, { Axios } from 'axios';
+// import { Link } from 'react-router-dom';
+import axios from 'axios';
+// import { render } from '@testing-library/react';
+// import { RecordVoiceOver } from '@mui/icons-material';
 
 
-const Users=() =>{
-  const [users,setUsera]=useState([]);
 
-//   useEffect(() => {
-//     const url = "https://dogapi.dog/api/v2/breeds";
-//     axios.get(url)
-//         .then(response => {
-//             // Set the fetched data to state
-//             setBreeds(response.data.data);
-//         })
-//         .catch(error => {
-//             console.error('Error fetching data:', error.message);
-//         });
-// }, []);
 
-useEffect(()=>{getUsers();},[])
 
-  const getUsers=()=>{
-    Axios.get('http://localhost:3001/api/userss')
-    .then(Response=>{console.log(Response.data);})
+// record function to render the record
+
+
+const Record = (props) => (
+  <TableRow>
+    <TableCell>{props.record._id} </TableCell>
+    <TableCell>{props.record.nationalID}</TableCell>
+    <TableCell>{props.record.fullname}</TableCell>
+    <TableCell>
+      <Button variant="contained" color="primary">
+        Generate
+      </Button>
+    </TableCell>
+  </TableRow>
+);
+
+
+export default function RecordeList() {
+  const [records, setRecords] = useState([]);
+
+  // get the records from the database
+
+
+    useEffect(() => {
+    async function getRecords() {
+      const response = await fetch(`http://localhost:3101/users`);
+      if (!response.ok) {
+        const message = `An error occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+      const records = await response.json();
+      setRecords(records.response);
+    }
+    getRecords();
+    return;
+  }, [records.length]);
+
+
+
+
+  // get individual record and map for render
+
+  function RenderRecordList() {
+    return records.map((record)=>{
+return(
+  <Record
+  record = {record} />
+)
+    })
   }
-}
 
-const MyTable = ({ data }) => {
-  const handleGenerate = (reportID) => {
-    // Handle the generate action here
-    console.log(`Generating report for ReportID: ${reportID}`);
-  };
+
+// render the list of records
 
   return (
     <TableContainer sx={{display: 'flex', padding:'100px' }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ReportID</TableCell>
+            <TableCell>ReportID </TableCell>
             <TableCell>NationalID</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Genarate</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.reportID}>
 
-              <TableCell>{row.reportID}</TableCell>
-              <TableCell>{row.NationalID}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>
-                <Link to="/LabReportUI"><Button variant="contained" color="primary" onClick={() => handleGenerate(row.reportID)}>
-                Genarate
-                </Button></Link>
-              </TableCell>
-            </TableRow>
-          ))}
+
+        <TableBody>
+        {RenderRecordList()}
+      
         </TableBody>
       </Table>
     </TableContainer>
@@ -67,26 +89,5 @@ const MyTable = ({ data }) => {
 // Hard-coded sample data
 
 
-const Report = () => {
- 
-const sampleData = [
-  { reportID: 1, name: 'John Doe' ,NationalID:'123'},
-  { reportID: 2, name: 'Jane Smith',NationalID:'3' },
-  { reportID: 3, name: 'Alice Johnson',NationalID:'13' },
-];
-  useEffect(()=>{
-   axios.get('http://localhost:3001/api/users')
-   .then((response)=>{
-    const data=response.data;
-     console.log(response.data);
-   })
-  },[]);
-  return (
-    <div>
-     
-      <MyTable data={sampleData} />
-    </div>
-  );
-};
 
-export default Report;
+
