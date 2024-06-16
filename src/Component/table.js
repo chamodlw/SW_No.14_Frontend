@@ -7,11 +7,23 @@ import axios, { Axios } from 'axios';
 const Users=() =>{
   const [users,setUsera]=useState([]);
 
+//   useEffect(() => {
+//     const url = "https://dogapi.dog/api/v2/breeds";
+//     axios.get(url)
+//         .then(response => {
+//             // Set the fetched data to state
+//             setBreeds(response.data.data);
+//         })
+//         .catch(error => {
+//             console.error('Error fetching data:', error.message);
+//         });
+// }, []);
+
 useEffect(()=>{getUsers();},[])
 
   const getUsers=()=>{
     Axios.get('http://localhost:3001/api/userss')
-    .then(Response=>{console.log(Response);})
+    .then(Response=>{console.log(Response.data);})
   }
 }
 
