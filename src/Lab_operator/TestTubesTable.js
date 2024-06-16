@@ -3,14 +3,14 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconB
 import { Delete, Edit } from "@mui/icons-material";
 
 const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
-const handleEditTube = (tubeId, tubeType, description, expireDate, location) => {
-    // Pass individual attributes to the selectedTestTube function
-    selectedTestTube({ tube_id: tubeId, tube_type: tubeType, description: description, expire_date: expireDate, location: location });
-};
-    
+    const handleEditTube = (tubeId, tubeType, description, expireDate, location) => {
+        // Pass individual attributes to the selectedTestTube function
+        selectedTestTube({ tube_id: tubeId, tube_type: tubeType, description: description, expire_date: expireDate, location: location });
+    };
 
     const handleDeleteTube = (id) => {
         console.log(`Deleting tube with ID ${id}`);
+        deleteTestTube({ tube_id: id }); // Call deleteTestTube function with the tube ID
     };
 
     return (
@@ -28,7 +28,7 @@ const handleEditTube = (tubeId, tubeType, description, expireDate, location) => 
                 </TableHead>
                 <TableBody>
                     {rows && rows.map((row) => (
-                        <TableRow key={row._id}>
+                        <TableRow key={row.tube_id}>
                             <TableCell>{row.tube_id}</TableCell>
                             <TableCell>{row.tube_type}</TableCell>
                             <TableCell>{row.description}</TableCell>
@@ -44,7 +44,7 @@ const handleEditTube = (tubeId, tubeType, description, expireDate, location) => 
                                 </IconButton>
                                 <IconButton
                                     color="secondary"
-                                    onClick={() => window.confirm('Are you sure?') && deleteTestTube({ tube_id: row.tube_id })}
+                                    onClick={() => window.confirm('Are you sure?') && handleDeleteTube(row.tube_id)}
                                 >
                                     <Delete /> 
                                 </IconButton>

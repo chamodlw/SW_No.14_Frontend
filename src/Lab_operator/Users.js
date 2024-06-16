@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import UserForm from "./UserForm";
 import UsersTable from "./UsersTable";
 import Axios from 'axios'; 
-import Head from "../Head";
+import Head from "../Head"; 
 import Footer from '../Footer';
 
 const Users = () => {
@@ -17,7 +17,7 @@ const Users = () => {
     }, []);
 
     const getUsers = () => {
-        Axios.get('http://localhost:3001/api/testing-users')
+        Axios.get('http://localhost:3100/api/testing-users')
             .then(response => {
                 setUsers(response.data?.response || []);
             })
@@ -38,7 +38,7 @@ const Users = () => {
     
         console.log('Payload:', payload); // Log payload data
     
-        Axios.post('http://localhost:3001/api/create-testing-user', payload)
+        Axios.post('http://localhost:3100/api/create-testing-user', payload)
         .then(() => {
             getUsers();
             setSubmitted(false);
@@ -61,7 +61,7 @@ const Users = () => {
             blood_type: data.blood_type,
         };
 
-        Axios.post('http://localhost:3001/api/update-testing-user', payload)
+        Axios.post('http://localhost:3100/api/update-testing-user', payload)
         .then(() => {
             getUsers();
             setSubmitted(false);
@@ -73,7 +73,7 @@ const Users = () => {
     }
 
     const deleteUser = (data) => {
-        Axios.delete('http://localhost:3001/api/delete-testing-user', { data })
+        Axios.delete('http://localhost:3100/api/delete-testing-user', { data })
         .then(() => {
             getUsers();
         })

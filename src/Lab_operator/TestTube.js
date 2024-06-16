@@ -18,7 +18,7 @@ const TestTube = () => {
 
     const getTestTubes = () => {
         console.log("Fetching test tubes...");
-        Axios.get('http://localhost:3001/api/test_tubes')
+        Axios.get('http://localhost:3100/api/test_tubes')
             .then(response => {
                 console.log("Test tubes fetched successfully:", response.data);
                 setTestTubes(response.data?.response || []);
@@ -39,7 +39,7 @@ const TestTube = () => {
 
         console.log('Payload:', payload); // Log payload data
 
-        Axios.post('http://localhost:3001/api/createtest_tubes', payload)
+        Axios.post('http://localhost:3100/api/createtest_tubes', payload)
             .then(() => {
                 getTestTubes();
                 setSubmitted(false);
@@ -61,7 +61,7 @@ const TestTube = () => {
             location: data.location,
         };
 
-        Axios.post('http://localhost:3001/api/updatetest_tubes', payload)
+        Axios.post('http://localhost:3100/api/updatetest_tubes', payload)
             .then(() => {
                 getTestTubes();
                 setSubmitted(false);
@@ -73,7 +73,7 @@ const TestTube = () => {
     };
 
     const deleteTestTube = (data) => {
-        Axios.delete('http://localhost:3001/api/deletetest_tubes', { data })
+        Axios.delete('http://localhost:3100/api/deletetest_tubes', { data })
         .then(() => {
             getTestTubes();
         })
