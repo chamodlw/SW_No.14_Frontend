@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Selectrole from './Selectrole';
 
 export default function PatientSearch({ rows }) {
   const [searchValue, setSearchValue] = useState('');
@@ -26,36 +28,38 @@ export default function PatientSearch({ rows }) {
 
   return (
     <div style={{ position: 'relative', width: '50%', margin: '0 auto', paddingBottom: '20px' }}>
-      <Autocomplete
-        freeSolo
-        options={rows}
-        getOptionLabel={(row) => row?.fullname || ''}
-        filterOptions={(options, { inputValue }) =>
-          options.filter((option) =>
-            option?.fullname?.toLowerCase().includes(inputValue.toLowerCase())
-          )
-        }
-        onChange={(event, value) => setSelectedPatient(value)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search for a patient"
-            variant="outlined"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            InputProps={{
-              ...params.InputProps,
-              type: 'search',
-              startAdornment: (
-                <Button onClick={handleSearch}>
-                  <SearchIcon sx={{ color: 'action.active', mr: 1.5 }} />
-                </Button>
-              ),
-              sx: { borderRadius: '20px' },
-            }}
-          />
-        )}
-      />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Selectrole/>
+        <Autocomplete
+          freeSolo
+          options={rows}
+          getOptionLabel={(row) => row?.firstname || ''}
+          filterOptions={(options, { inputValue }) =>
+            options.filter((option) =>
+              option?.firstname?.toLowerCase().includes(inputValue.toLowerCase())
+            )
+          }
+          onChange={(event, value) => setSelectedPatient(value)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search for a patient"
+              variant="outlined"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+                sx: { borderRadius: '20px' },
+              }}
+              style={{ width: '400px' }} // Adjust width as needed
+            />
+          )}
+        />
+        <IconButton onClick={handleSearch}>
+          <SearchIcon sx={{ color: 'action.active', ml: 1.5 }} />
+        </IconButton>
+      </div>
 
       {showCard && selectedPatient && (
         <>

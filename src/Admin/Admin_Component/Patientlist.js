@@ -1,3 +1,4 @@
+//patientlist.js
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -8,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
+import Selectrole from './Selectrole';
 
 const columns = [
   { id: 'nationalID', label: 'National ID', minWidth: 170 },
@@ -30,8 +32,8 @@ function StickyHeadTable({ setRows }) {
       .then(response => {
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
-          // Filter users by role "patient"
-          const patientUsers = responseData.filter(user => user.role.toLowerCase() === "patient");
+          // Filter users by role 
+          const patientUsers = responseData.filter(user => user/*add value of newValue in Selectrole*/ );
           setLocalRows(patientUsers);
           setRows(patientUsers); // Update the parent component's state
         } else {
