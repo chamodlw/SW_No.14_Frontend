@@ -1,11 +1,11 @@
 // AddTest.js
-// Import necessary dependencies and components
+
 import React, { useState } from 'react';
-import Patienthead from '../Components/Patienthead'; // Importing header component
-import Footer from '../Components/Footer'; // Importing footer component
-import '../maincss/AddTest.css'; // Importing CSS file for styling
-import { Button, Grid, Snackbar } from '@mui/material'; // Importing Button and Grid components from Material-UI
-import BasicTextFields from './Admin_Component/Entersection'; // Importing custom text field component
+import Patienthead from '../Components/Patienthead'; 
+import Footer from '../Components/Footer'; 
+import '../maincss/AddTest.css';
+import { Button, Grid, Snackbar } from '@mui/material'; 
+import BasicTextFields from './Admin_Component/Entersection';
 
 
 function AddTest() {
@@ -28,7 +28,6 @@ function AddTest() {
   // Function to handle form submission
   const handleSubmit = () => {
     if (!formData.id || !formData.name || !formData.description) {
-      // If any of the fields are empty, return
       
       // Show fail Snackbar
       setSnackbarMessage('Failed to add test');
@@ -44,7 +43,15 @@ function AddTest() {
       setSnackbarOpen(true);
       return;
     }
-    
+
+    if ((formData.min>formData.max)) {
+      console.log('min grater');
+      console.log(formData.min + formData.max);
+      // Show error Snackbar
+      setSnackbarMessage('MINIMUM value grater than MAXIMUM');
+      setSnackbarOpen(true);
+      return;
+    }
   
 
     fetch('http://localhost:3100/api/addtest', {
@@ -57,7 +64,7 @@ function AddTest() {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        // Reset form data if needed
+        // Reset form data
         setFormData({
           id: '',
           name: '',
@@ -82,13 +89,13 @@ function AddTest() {
   };
   return (
     <div className="AddTest">
-      {/* Header component */}
+      
       <Patienthead /><br />
       
       <Grid sx={{ align: 'center', paddingTop: '100px', minHeight: '85vh' ,}}>
-        {/* Custom text field component */}
+        
         <BasicTextFields handleChange={handleChange} formData={formData} />
-        {/* Button for form submission */}
+        
         <Button
           onClick={handleSubmit}
           sx={{
@@ -121,7 +128,7 @@ function AddTest() {
           horizontal: 'right'
         }}
       />
-      {/* Footer component */}
+      
       <Footer />
     </div>
   );

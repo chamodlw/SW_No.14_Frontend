@@ -10,6 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios'; // Import axios for making HTTP requests
 
+
 const columns = [
   { id: 'id', label: 'id', minWidth: 170 },
   { id: 'name', label: 'name', minWidth: 100 },
@@ -18,7 +19,7 @@ const columns = [
 
 export default function StickyHeadTable() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
 
 
@@ -54,7 +55,7 @@ export default function StickyHeadTable() {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 420 }}>
+      <TableContainer sx={{ maxHeight: 420 , minHeight:390, }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -62,7 +63,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , fontWeight: 'bold' }}
+                  style={{ minWidth: column.minWidth , fontWeight: 'bold',backgroundColor:'#D9D9D9' }}
                 >
                   {column.label}
                 </TableCell>
@@ -70,23 +71,30 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-  {rows.map((row, index) => (
-    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-      {columns.map((column) => {
-        const value = row[column.id]; // Accessing the value based on column id
-        return (
-          <TableCell key={column.id} align={column.align}>
-            {value}
-          </TableCell>
-        );
-      })}
-    </TableRow>
-  ))}
+          {rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
 </TableBody>
 
         </Table>
       </TableContainer>
       <TablePagination
+        style={{ backgroundColor:'#D9D9D9' }}
         rowsPerPageOptions={[5,10, 25, 100]}
         component="div"
         count={rows.length}
