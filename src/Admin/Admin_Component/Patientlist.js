@@ -1,4 +1,3 @@
-//patientlist.js
 import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -26,6 +25,9 @@ function StickyHeadTable({ setRows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setLocalRows] = useState([]);
+  const Set = (value)=>{
+    return value;
+  }
 
   useEffect(() => {
     axios.get('http://localhost:3100/api/router_login/users')
@@ -33,7 +35,7 @@ function StickyHeadTable({ setRows }) {
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
           // Filter users by role 
-          const patientUsers = responseData.filter(user => user/*add value of newValue in Selectrole*/ );
+          const patientUsers = responseData.filter(user => user/*.role === <Selectrole callback= {Set}/>*/);
           setLocalRows(patientUsers);
           setRows(patientUsers); // Update the parent component's state
         } else {
