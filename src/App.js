@@ -1,3 +1,42 @@
+
+// import { Table } from '@mui/material';
+// import { Box } from '@mui/system';
+// import './App.css';
+// import Cover from './Component/Cover';
+// import Footer from './Component/Footer';
+// import Head from './Component/Head';
+// import Report from './Component/table';
+// import Reportview from './Pages/Reportview';
+// import LabReportUI from './Pages/SearchResultPage';
+// import SearchBar from './Pages/Serch';
+
+// function App() {
+//   return (
+//     <div className="App">
+//   <Box>
+//     <Reportview/>
+//     <SearchBar/>
+// <LabReportUI/>
+
+//   </Box>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+// App.js
+
+
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import LabReportUI from './Pages/SearchResultPage';
+import Reportview from './Pages/Reportview';
+import SearchBar from './Pages/Serch';
+import  { useState ,React} from 'react';
+import ReportUI from './Component/ReportUI';
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,29 +54,26 @@ import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact';
 
-function App() {
+const App = () => {
+  
+    const [currentPage, setCurrentPage] = useState('page1');
+  
+ 
+
+
   return (
-    <div>
-    {/* <Signin></Signin> */}
-    <BrowserRouter>
-    <Routes>
-      <Route path='/AdminInterface/:id' element={<AdminInterface/>}/> 
-      {/* path is the URL we should access while element is the component/page */}
-      <Route path='/Admin/:id' element={<Admin/>}/>
-      <Route path='/AddTest/:id' element={<AddTest/>}/>
-
-      <Route path='/Selecttest' element={<Selecttest/>}/>
-      <Route path='/Head' element={<Head/>}/>
-      <Route path='/Login' element={<Login/>}/>
-      <Route path='/Signin' element={<Signin/>}/>
-      <Route path='/HomePage' element={<HomePage/>}/>
-    </Routes>
-  </BrowserRouter>
-    </div>
-    );
-
-}
-
+    <Router>
+      <Routes>
+        <Route path="/" element={<SearchBar />} />
+        <Route path="/Reportview" element={<Reportview />} />
+        <Route path="/LabReportUI" element={<LabReportUI />} />
+        <Route path='/ReportUI' element={<ReportUI/>}/>
+        
+        {/* Add more routes for additional pages */}
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;
 //
