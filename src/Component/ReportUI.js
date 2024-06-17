@@ -2,9 +2,15 @@
 import React from 'react';
 import { Typography, Paper, Container, Grid,TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import healthLabLogo from './img/Health lab logo_.png';
+import { useLocation } from 'react-router-dom';
 
 
-const ReportUI = () =>{
+const ReportUI =() =>{
+
+  const location = useLocation();
+  const record = location.state.record;
+
+  
   const data = [
     { id: 1, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4' },
     { id: 2, col1: 'Data 5', col2: 'Data 6', col3: 'Data 7', col4: 'Data 8' },
@@ -41,10 +47,10 @@ const ReportUI = () =>{
     {/* Text grid */}
     <Grid item xs={3} sx={{ gridArea: 'Contact', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
       <Typography variant='body1'>
-        0729295498
+        
       </Typography>
       <Typography variant='body1'>
-        bandarakgru@gmail.com
+        
       </Typography>
     </Grid>
 
@@ -52,8 +58,8 @@ const ReportUI = () =>{
     {/* Bio data */}
     {/* First coloum */}
     <Grid item xs={3} sx={{gridArea:'BD1'}}>
-      <Typography variant="p" sx={{fontSize:'16px' }} >Rajitah Bandara</Typography>
-      <Typography variant="body1" sx={{fontSize:'14px'}}>Age:26<br />Sex:Mail<br />PID:214030K</Typography>
+      <Typography variant="p" sx={{fontSize:'16px' }} >{record.fullname}</Typography>
+      <Typography variant="body1" sx={{fontSize:'14px'}}>Age:26<br />Sex:Mail<br />PID:{record._id}</Typography>
     </Grid>
     {/* Second coloum */}
     {/* <Grid item xs={3} sx={{display:'grid',gridArea:'BD2',justifyItems:'center'}}>
@@ -62,7 +68,7 @@ const ReportUI = () =>{
     </Grid> */}
     {/* Third coloum */}
     <Grid item xs={3} sx={{gridArea:'BD3'}}>
-      <Typography variant="p" sx={{fontSize:'16px' }}>Rajitha Bandara</Typography>
+      <Typography variant="p" sx={{fontSize:'16px' }}>{record.username}</Typography>
       <Typography variant="body1" sx={{fontSize:'14px'}}>Registered on: 02.31 pm December 2022<br />Collected on: 02.31pm 02 December<br />Reported on: 02.31 December 2022</Typography>
     </Grid>
 
