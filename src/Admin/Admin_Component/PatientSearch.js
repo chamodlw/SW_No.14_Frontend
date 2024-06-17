@@ -109,11 +109,13 @@ export default function PatientSearch({ rows }) {
                 <Typography variant="body1">
                   {selectedPatient && (
                     <ul style={{ listStyleType: 'circle', padding: 0 }}>
-                      <li><strong>ID:</strong> {selectedPatient?.nationalID}</li>
-                      <li><strong>Name:</strong> {selectedPatient?.fullname}</li>
+                      
+                      <li><strong>Name:</strong> {selectedPatient?.firstname + " " + selectedPatient?.lastname}</li>
+                      <li><strong>National ID:</strong> {selectedPatient?.nationalID}</li>
                       <li><strong>Email:</strong> {selectedPatient?.email}</li>
                       <li><strong>Address:</strong> {selectedPatient?.address}</li>
                       <li><strong>Role:</strong> {selectedPatient?.role}</li>
+                      <li><strong>Contact Number:</strong> {selectedPatient?.phonenumber}</li>
                       <li><strong>Username:</strong> {selectedPatient?.username}</li>
                       <li><strong>Password:</strong> {selectedPatient?.password}</li>
                     </ul>
