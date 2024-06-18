@@ -5,18 +5,22 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useUser } from './UserContext';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const user = useUser();
+  const {user, isReady} = useUser();
+  
+  if(!isReady){
+    return <h1>Fetching user data</h1>;
+  }
   
   // Log the user object
   console.log('ProtectedRoute - User:', user);
 
   // Log the user's role and allowed roles
   console.log('ProtectedRoute - User:', user);
-  console.log('ProtectedRoute - User role:', user.role);
+  console.log('ProtectedRoute - User role:', user?.role);
   console.log('ProtectedRoute - Allowed roles:', allowedRoles);
 
     // If user is not available, redirect to home
-    if (!user) {
+    if (user== null) {
       console.log('ProtectedRoute - No user, redirecting to home');
       return <Navigate to="/" replace />;
     }

@@ -5,3 +5,4 @@ export default function Doctor() {
      <div>Doctor</div>
     )
 }
+       

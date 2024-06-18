@@ -1,7 +1,7 @@
 // src/Admin/Admin_component/UserContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+//import { useCookies } from 'react-cookie';
 
 
 // Create two contexts for the user
@@ -25,6 +25,7 @@ export const useSetUser = () => {
 // UserProvider component to wrap around the parts of my app that need access to the user data
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const[isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     // Fetch user data from my backend
@@ -37,13 +38,16 @@ export const UserProvider = ({ children }) => {
       .catch(error => {
         console.error('UserProvider: Error fetching current user:', error)
         setUser(null);
-      });
+      })
+      .finally(() =>{
+        setIsReady(true);
+      })
   }, []);
 
   console.log('UserProvider: Rendering provider with user:', user);
   
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{user:user, isReady:isReady}}>
       <UserUpdateContext.Provider value={setUser}>
         {children}
       </UserUpdateContext.Provider>

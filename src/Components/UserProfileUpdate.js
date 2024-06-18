@@ -1,3 +1,4 @@
+//UserProfileUpdate.js - Avatar Component
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Grid, Avatar, Typography, TextField, Button, Paper, Modal, Slider } from '@mui/material';
 import { styled } from '@mui/system';
@@ -62,7 +63,7 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
 
 const UserProfileUpdate = ({ userData, onClose }) => {
   const [user, setUser] = useState({
-    id: '',
+    _id : '',
     firstname: '',
     lastname: '',
     email: '',
@@ -98,16 +99,18 @@ const UserProfileUpdate = ({ userData, onClose }) => {
   // Function to handle file change (image selection) - Use when a file is selected.
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-//In this function, we update profilePic with the selected file and profilePicUrl with the URL created using URL.createObjectURL(file).
+  //In this function, we update profilePic with the selected file and profilePicUrl with the URL created using URL.createObjectURL(file).
     if (file) {
       const fileUrl = URL.createObjectURL(file);
+      // console.log('Selected profile picture URL:', fileUrl);
+      
       setUser({
         ...user,
         profilePic: file,
         profilePicUrl: fileUrl,
       });
       setCroppingImage(true);
-      console.log('Selected profile picture:', file);
+      // console.log('Selected profile picture:', file);
     }
   };
 
@@ -117,26 +120,60 @@ const UserProfileUpdate = ({ userData, onClose }) => {
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
+    console.log('Crop complete:', croppedArea, croppedAreaPixels);
   }, []);
 
   const handleSaveCroppedImage = useCallback(async () => {
     try {
+      console.log('Cropping image with URL:', user.profilePicUrl);
       const croppedImage = await getCroppedImg(user.profilePicUrl, croppedAreaPixels);
+      console.log('Cropped Image Blob:', croppedImage);
+
       const file = new File([croppedImage], 'profile.jpg', { type: 'image/jpeg' });
-      setUser({
-        ...user,
-        profilePic: file,
-        profilePicUrl: URL.createObjectURL(file),
-      });
-      setCroppingImage(false);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [croppedAreaPixels, user.profilePicUrl]);
+      console.log('Cropped Image File:', file);
+
+      const newProfilePicUrl = URL.createObjectURL(file);
+      console.log('New Profile Pic URL:', newProfilePicUrl, user);
+
+  //     setUser({
+  //       ...user,
+  //       profilePic: file,
+  //       profilePicUrl: URL.createObjectURL(file),
+  //     });
+  //     setCroppingImage(false);
+  //   } catch (e) {
+  //     console.error('Error cropping image:', e);
+  //   }
+  // }, [croppedAreaPixels, user]);
+
+  setUser((prevUser) => ({
+    ...prevUser,
+    profilePic: file,
+    profilePicUrl: newProfilePicUrl,
+  }));
+  setCroppingImage(false);
+} catch (e) {
+  console.error('Error cropping image:', e);
+}
+}, [croppedAreaPixels, user.profilePicUrl]);
+
+  useEffect(() => {
+    console.log('Profile Pic URL changed:', user.profilePicUrl);
+  }, [user.profilePicUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Submitting user data:', user);
+
+    
+    // Check if userId is missing or not set properly
+    const { id, _id } = user;
+    const userId = id || _id;
+    if (!userId) {
+      console.error('User ID is missing or invalid:', user);
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append('profilePic', user.profilePic);
