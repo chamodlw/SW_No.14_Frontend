@@ -5,6 +5,9 @@ import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
 import Selecttest from './Selecttest';
+import Dhome from './Dhome';
+import Dapproval from './Dapproval';
+import Contact from './Contact/Contact';
 import AddTest from './Admin/AddTest';
 import ViewTest from './Admin/ViewTest';
 import ViewPatient from './Admin/ViewPatients';
@@ -28,6 +31,9 @@ function App() {
       <Route path='/AddTest/:id' element={<AddTest/>}/>
 
       <Route path='/Selecttest' element={<Selecttest/>}/>
+      <Route path='/Dhome' element={<Dhome/>}/>
+      <Route path='/Dapproval' element={<Dapproval/>}/>
+      <Route path='/Contact' element={<Contact/>}/>
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path='/Signin' element={<Signin/>}/>

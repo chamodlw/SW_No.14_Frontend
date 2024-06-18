@@ -15,10 +15,7 @@ function Dapproval() {
         height:'800px'
       }}>
        
-        <Patienthead/><br/><br/><br/><br/><br/>
-        
-        <br/>
-        
+        <Patienthead/>
     <Box sx={{ width: '80%', margin: 'auto', padding: '20px' ,borderRadius: '8px'}}>
         <h1>Lab Report</h1><hr/><br/><br/>
         </Box>

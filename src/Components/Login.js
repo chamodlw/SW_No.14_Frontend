@@ -26,7 +26,7 @@ function Login() {
 
     //Receive the response from the backend
     try {
-      const response = await axios.post('http://localhost:3100/api/router_login/login', { username, password });
+      const response = await axios.post('http://localhost:3101/api/router_login/login', { username, password });
       console.log('Login response:', response.data);
       const userData = response.data; //making an Object called userData
       console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
