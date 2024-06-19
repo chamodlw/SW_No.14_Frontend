@@ -59,16 +59,6 @@ const FixedContainer = () => {
     }
   };
 
-  const approveRecommendation = async () => {
-    try {
-        const response = await axios.get(`http://localhost:3100/api/recommendations/${rid}/approve`);
-        setAlertMessage('Email sent successfully!');
-    } catch (error) {
-        console.error('Error approving recommendation:', error);
-        setAlertMessage('Error: Failed to approve recommendation');
-    }
-};
-
 
   return (
     <React.Fragment>
@@ -106,7 +96,7 @@ const FixedContainer = () => {
               <Button
                 variant="contained"
                 style={{ color: '#FFFFFF', background: '#101754', width: '100px', height: '50px' }}
-                onClick={approveRecommendation}
+               // onClick={}
               >
                 Approve
               </Button>
