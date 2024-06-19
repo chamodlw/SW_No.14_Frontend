@@ -4,14 +4,11 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
-<<<<<<< HEAD
 import Selecttest from './Selecttest';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact/Contact';
-=======
 import Selecttest from './Patient/Patient_Component/Selecttest';
->>>>>>> 5883e89bcb1086797e39830587718af87e769bac
 import AddTest from './Admin/AddTest';
 import ViewPatient from './Admin/ViewPatients';
 import ViewAppointment from './Admin/ViewAppoinments';
