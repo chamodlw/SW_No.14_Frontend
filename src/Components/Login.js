@@ -6,6 +6,8 @@ import { Grid, Typography, TextField, Button } from "@mui/material";
 import photo1 from "../images/HealthLabLogo.jpg";
 import photo2 from "../images/BloodDraw.webp";
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -31,14 +33,17 @@ function Login() {
       const userData = response.data; //making an Object called userData
       console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
       // console.log('User data type:', typeof userData); //Checking whether the userData is an object.
-      if (userData.error) {
+      if (userData.message!=="Success") {
         toast.error(userData.error);
       } else {
+        localStorage.setItem("myToken", response.data.data);
+        const userId = jwtDecode(localStorage.getItem("myToken")).id;
+        console.log("user id is="+userId);
         setData({ username: '', password: '' }); // Clear input fields
         const { user } = userData; // destructuring  to extract the user property from the userData object. - userData is an object that contains a user property.
         setUser(user); // Set user data in context
-        const role = user.role; // Extract role from response data
-        const userId = user.id; // Extract user ID from response data
+        const role = jwtDecode(localStorage.getItem("myToken")).role; // Extract role from response data
+        
         console.log('User role:', role);
         // Redirect based on role
         switch (role) {

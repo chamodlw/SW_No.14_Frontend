@@ -26,30 +26,10 @@ axios.defaults.withCredentials = true;
 
   return (
     <div className="AdminInterface">
-      <Patienthead /><br /><br /><br /><br /><br />
-      <Grid
-        sx={{
-          display: 'flex',
-          justifyContent: 'center', // Center horizontally
-          alignItems: 'center', // Center vertically
-          gap: '5%',
-          width: '100%', // Added to align buttons to the middle of the page
-          height: '70vh', // Added to align buttons to the middle of the page
-        }}
-      >
-        <button
-          className="AdminButton1"
-          onClick={() => handleNavigate('../AddTest')}
-        >
-          Add New Test
-        </button>
-        <button
-          className="AdminButton2"
-          onClick={() => handleNavigate('../ViewTests')}
-        >
-          View Test List
-        </button>
-      </Grid>
+      <Patienthead />
+      <Grid sx={{paddingTop:'13%', paddingBottom:'10%', alignitems:'center'}}>
+        <AdminCards sx ={{ alignitems:'center'}}/>
+      </Grid>      
       <Footer />
     </div>
   );

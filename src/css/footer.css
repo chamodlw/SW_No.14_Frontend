@@ -9,21 +9,19 @@
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
-  margin: 25px auto;
+  margin: 0 auto;
 }
 
 .footer-social a {
   color: white;
-  margin-right: 20px; 
-  font-size: 32px; 
+  margin-right: 10px;
+  font-size: 24px;
   text-decoration: none;
 }
 
 .footer-info p {
   margin: 0;
-  font-size:larger;
 }
-
 
 .footer-line {
   border: 0;

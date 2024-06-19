@@ -1,5 +1,4 @@
-//Patientlist.js
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,41 +7,46 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import axios from 'axios';
+import Selectrole from './Selectrole';
 
 const columns = [
-  { id: 'id', label: 'id', minWidth: 170 },
-  { id: 'name', label: 'name', minWidth: 100 },
+  { id: 'nationalID', label: 'National ID', minWidth: 170 },
+  { id: 'fullname', label: 'Full Name', minWidth: 100 },
   {
-    id: 'description',
-    label: 'description',
+    id: 'email',
+    label: 'email',
     minWidth: 170,
     align: 'right',
   }
-  
-  
 ];
 
-function createData(id, name, description) {
- 
-  return { id, name, description };
-}
+function StickyHeadTable({ setRows }) {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setLocalRows] = useState([]);
+  const Set = (value)=>{
+    return value;
+  }
 
-export const rows = [
-  createData(1,'siril','d1'),
-  createData(2,'nihal','d2'),
-  createData(3,'kapila','d3'),
-  createData(4,'chamod','d4'),
-  createData(5,'sunimal','d5'),
-  createData(6,'siripala','d6'),
-  createData(7,'sandun','d7'),
+  useEffect(() => {
+    axios.get('http://localhost:3100/api/router_login/users')
+      .then(response => {
+        const responseData = response.data && response.data.response;
+        if (Array.isArray(responseData)) {
+          // Filter users by role 
+          const patientUsers = responseData.filter(user => user/*.role === <Selectrole callback= {Set}/>*/);
+          setLocalRows(patientUsers);
+          setRows(patientUsers); // Update the parent component's state
+        } else {
+          console.error('Data received is not an array:', responseData);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [setRows]);
   
-
-];
-
-export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,7 +59,7 @@ export default function StickyHeadTable() {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 420 }}>
+      <TableContainer sx={{ maxHeight: 400, minHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -63,7 +67,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , fontWeight: 'bold' }}
+                  style={{ minWidth: column.minWidth, fontWeight: 'bold', backgroundColor: '#D9D9D9' }}
                 >
                   {column.label}
                 </TableCell>
@@ -75,14 +79,12 @@ export default function StickyHeadTable() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.nationalID}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
+                          {value}
                         </TableCell>
                       );
                     })}
@@ -93,7 +95,8 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5,10, 25, 100]}
+        style={{ backgroundColor: '#D9D9D9' }}
+        rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -105,4 +108,4 @@ export default function StickyHeadTable() {
   );
 }
 
-
+export default StickyHeadTable;

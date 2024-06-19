@@ -4,12 +4,15 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
+<<<<<<< HEAD
 import Selecttest from './Selecttest';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact/Contact';
+=======
+import Selecttest from './Patient/Patient_Component/Selecttest';
+>>>>>>> 5883e89bcb1086797e39830587718af87e769bac
 import AddTest from './Admin/AddTest';
-import ViewTest from './Admin/ViewTest';
 import ViewPatient from './Admin/ViewPatients';
 import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
@@ -18,6 +21,10 @@ import UserProfileUpdate from "./Components/UserProfileUpdate";
 import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
+
+import PatientInterface from './Patient/PatientInterface';
+import PViewTest from './Patient/Patient_Component/PViewTest';
+import AViewTest from './Admin/AViewTest';
 
 
 function App() {
@@ -29,6 +36,12 @@ function App() {
       {/* path is the URL we should access while element is the component/page */}
       <Route path='/Admin/:id' element={<Admin/>}/>
       <Route path='/AddTest/:id' element={<AddTest/>}/>
+      <Route path='/AViewTest/:id' element={<AViewTest/>}/>
+      <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
+      <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
+
+      
+      <Route path='/PViewTest/:id' element={<PViewTest/>}/>
 
       <Route path='/Selecttest' element={<Selecttest/>}/>
       <Route path='/Dhome' element={<Dhome/>}/>
