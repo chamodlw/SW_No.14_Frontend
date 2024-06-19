@@ -14,6 +14,7 @@ function ViewTest() {
       <Patienthead />
       <Grid sx={{ flex: 1, paddingTop: '12%', paddingBottom: '3%' }}>
         <Grid sx={{ paddingTop: '2%', paddingBottom: '3%' }}>
+          
           <PatientSearch rows={rows} />
         </Grid>
         <Patientlist setRows={setRows} />

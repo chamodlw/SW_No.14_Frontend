@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Axios from 'axios';
 import SelectTable from './SelectTable';
 import { Snackbar } from '@mui/material';
+import { jwtDecode } from 'jwt-decode';
 
 
 function BasicSelect() {
@@ -76,7 +77,8 @@ function BasicSelect() {
   const handleConfirm = () => {
       
     if (selectedTest) {
-      setPatientId(1);
+      setPatientId(jwtDecode(localStorage.getItem("myToken")).id);
+      console.log("id is"+jwtDecode(localStorage.getItem("myToken")).id);
       setpatientName("Chamod");
       setState('register_only');
       // Find the selected test object from the tests array

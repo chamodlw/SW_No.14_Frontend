@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
+import Selectrole from './Selectrole';
 
 const columns = [
   { id: 'nationalID', label: 'National ID', minWidth: 170 },
@@ -24,14 +25,17 @@ function StickyHeadTable({ setRows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setLocalRows] = useState([]);
+  const Set = (value)=>{
+    return value;
+  }
 
   useEffect(() => {
     axios.get('http://localhost:3100/api/router_login/users')
       .then(response => {
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
-          // Filter users by role "patient"
-          const patientUsers = responseData.filter(user => user.role.toLowerCase() === "patient");
+          // Filter users by role 
+          const patientUsers = responseData.filter(user => user/*.role === <Selectrole callback= {Set}/>*/);
           setLocalRows(patientUsers);
           setRows(patientUsers); // Update the parent component's state
         } else {

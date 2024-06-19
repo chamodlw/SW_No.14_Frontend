@@ -7,12 +7,15 @@ import Date from '../../Components/Date';
 import { Grid } from '@mui/material';
 
 function Selecttest() {
+  const getId = (id) =>{
+    console.log(id);
+  }
   return (
     <div className="Class">
      
       <Patienthead/>
       <Grid sx={{paddingTop:'12%'}}>
-        <BasicSelect/>
+        <BasicSelect onLoad={() => getId()} />
         <BackToTop />
         <Date/><br/>
       </Grid>
