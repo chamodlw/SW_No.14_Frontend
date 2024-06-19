@@ -8,17 +8,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+
 export default function Dhome02() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [reportId, setReportId] = useState('');
 
   const handleClick = () => {
     if (!selectedDate || reportId.trim() === '') {
-      // If either the DatePicker or Report ID is null or empty, show an alert
       alert("DatePicker and Report ID cannot be null");
     } else {
-      // Redirect to another page
-      window.location.href = '/Dapproval';
+      const date = selectedDate.format('YYYY-MM-DD');
+      window.location.href = `/Dapproval?date=${date}&reportId=${reportId}`;
     }
   };
 

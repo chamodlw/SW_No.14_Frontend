@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import axios from 'axios';
@@ -8,13 +9,19 @@ import Grid from '@mui/material/Grid';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
-export default function FixedContainer() {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+const FixedContainer = () => {
+  const query = useQuery();
   const [msg, setMsg] = useState('');
-  const [rid, setRid] = useState('');
+  const [rid, setRid] = useState(query.get('reportId') || '');
   const [nm, setNm] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(query.get('date') ? dayjs(query.get('date')) : null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -27,11 +34,11 @@ export default function FixedContainer() {
         throw new Error('Report ID cannot be empty');
       }
 
-      const response = await axios.post('http://localhost:3101/api/recommendations', {
+      const response = await axios.post('http://localhost:3100/api/recommendations', {
         date: selectedDate,
         id: rid,
         recommendation: msg,
-        docname:nm,
+        docname: nm,
       });
 
       console.log('Response:', response);
@@ -43,22 +50,25 @@ export default function FixedContainer() {
     } catch (error) {
       console.error('Error submitting recommendation:', error);
       if (error.response) {
-        // The request was made and the server responded with a status code that falls out of the range of 2xx
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
         setAlertMessage(`Error: ${error.response.data.message || 'Failed to submit recommendation'}`);
       } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Request data:', error.request);
         setAlertMessage('Error: No response from the server');
       } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error message:', error.message);
         setAlertMessage(`Error: ${error.message}`);
       }
     }
   };
+
+  const approveRecommendation = async () => {
+    try {
+        const response = await axios.get(`http://localhost:3100/api/recommendations/${rid}/approve`);
+        setAlertMessage('Email sent successfully!');
+    } catch (error) {
+        console.error('Error approving recommendation:', error);
+        setAlertMessage('Error: Failed to approve recommendation');
+    }
+};
+
 
   return (
     <React.Fragment>
@@ -75,8 +85,9 @@ export default function FixedContainer() {
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid item xs={6} >
-              <TextField style={{ marginRight: '15px' }}
+            <Grid item xs={6}>
+              <TextField
+                style={{ marginRight: '15px' }}
                 value={rid}
                 onChange={(e) => setRid(e.target.value)}
                 id="outlined-required"
@@ -91,14 +102,21 @@ export default function FixedContainer() {
                 required
               />
             </Grid>
-           
             <Grid item xs={1} sx={{ marginTop: '10px' }}>
-              <Button variant="contained" style={{ color: '#FFFFFF', background: '#101754', width: '100px', height: '50px' }} type="button">
+              <Button
+                variant="contained"
+                style={{ color: '#FFFFFF', background: '#101754', width: '100px', height: '50px' }}
+                onClick={approveRecommendation}
+              >
                 Approve
               </Button>
             </Grid>
             <Grid item xs={1} sx={{ marginTop: '10px' }}>
-              <Button variant="contained" style={{ color: '#FFFFFF', background: '#101754', width: '200px', height: '50px' }} type="button">
+              <Button
+                variant="contained"
+                style={{ color: '#FFFFFF', background: '#101754', width: '200px', height: '50px' }}
+                type="button"
+              >
                 Recommend to recheck
               </Button>
             </Grid>
@@ -112,11 +130,15 @@ export default function FixedContainer() {
         <br />
         <div className="cont">
           <form onSubmit={submit}>
-            <textarea name="text" 
-            value={msg}
-           onChange={(e) => setMsg(e.target.value)}
-            placeholder="Need to..." cols="150" rows="10"></textarea><br></br>
-            
+            <textarea
+              name="text"
+              value={msg}
+              onChange={(e) => setMsg(e.target.value)}
+              placeholder="Need to..."
+              cols="150"
+              rows="10"
+            ></textarea>
+            <br />
             <Button type="submit" variant="contained" style={{ color: '#FFFFFF', background: '#101754', width: '100px', height: '50px' }}>Submit</Button>
           </form>
         </div>
@@ -125,4 +147,6 @@ export default function FixedContainer() {
       </Box>
     </React.Fragment>
   );
-}
+};
+
+export default FixedContainer;
