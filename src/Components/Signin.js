@@ -17,6 +17,8 @@ const Signin = () => {
     password:''
   });  
 
+  const [confirmPassword, setConfirmPassword] = useState(''); // State variable for confirm password
+
   const [error, setError] = useState({ field: '', message: '' }); // Initialize error as an object //state variable
 
   const navigate = useNavigate(); //To navigate after Signin
@@ -25,8 +27,18 @@ const Signin = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+      // Password confirmation check
+      if (data.password !== confirmPassword) {
+        setError({ field: 'confirmPassword', message: 'Confirm Password does not match' });
+        return;
+      }
 
     try {
       const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
@@ -202,11 +214,13 @@ const Signin = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              fullWidth
-              label="Confirm Password"
-              variant="outlined"
-              type="password"
-              style={{ marginBottom: "20px" }}
+            fullWidth
+            label="Confirm Password"
+            variant="outlined"
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange} //Added value and onChange props for the "Confirm Password" field:
+            style={{ marginBottom: "20px" }}
             />
           </Grid>
 
