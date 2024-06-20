@@ -12,10 +12,10 @@ function Dapproval() {
        backgroundPosition:'center',
         backgroundRepeat:'no-repeat',
         backgroundSize:'cover',
-        height:'800px'
+        
       }}>
        
-        <Patienthead/>
+        <Patienthead/><br/><br/><br/>
     <Box sx={{ width: '80%', margin: 'auto', padding: '20px' ,borderRadius: '8px'}}>
         <h1>Lab Report</h1><hr/><br/><br/>
         </Box>

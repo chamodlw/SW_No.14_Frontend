@@ -4,7 +4,6 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
-import Selecttest from './Selecttest';
 import Dhome from './Dhome';
 import Dapproval from './Dapproval';
 import Contact from './Contact/Contact';
@@ -18,7 +17,7 @@ import UserProfileUpdate from "./Components/UserProfileUpdate";
 import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
-
+import LOfront from "./LabOperator/LOfront"
 import PatientInterface from './Patient/PatientInterface';
 import PViewTest from './Patient/Patient_Component/PViewTest';
 import AViewTest from './Admin/AViewTest';
@@ -36,6 +35,7 @@ function App() {
       <Route path='/AViewTest/:id' element={<AViewTest/>}/>
       <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
+      <Route path='/LabOperator' element={<LOfront/>}/>
 
       
       <Route path='/PViewTest/:id' element={<PViewTest/>}/>
