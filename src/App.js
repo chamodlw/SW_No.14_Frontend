@@ -14,10 +14,10 @@ import UserProfileUpdate from "./Components/UserProfileUpdate";
 import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
-
-import PatientInterface from './Patient/PatientInterface';
+/*import PatientInterface from './Patient/PatientInterface';*/
 import PViewTest from './Patient/Patient_Component/PViewTest';
 import AViewTest from './Admin/AViewTest';
+import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
       <Route path='/AddTest/:id' element={<AddTest/>}/>
       <Route path='/AViewTest/:id' element={<AViewTest/>}/>
       <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
+      <Route path='/PViewAppointment/:id' element={<PViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
 
       

@@ -23,6 +23,7 @@ function BasicSelect() {
   const [patientId, setPatientId] = useState();
   const [patientName, setpatientName] = useState(null); 
   const [state, setState] = useState(null);
+  const [regdate, setRegdate] = useState(null);
   //snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -81,6 +82,7 @@ function BasicSelect() {
       console.log("id is"+jwtDecode(localStorage.getItem("myToken")).id);
       setpatientName("Chamod");
       setState('register_only');
+      setRegdate(new Date());
       // Find the selected test object from the tests array
       const selectedTestObject = tests.find((test) => test.id === selectedTest);
       // Add selected test object to the table
@@ -108,9 +110,10 @@ function BasicSelect() {
     selectTestNames: selectTestNames, 
     patientId: patientId, //patient ID
     patientName: patientName, //name
-    state: state // Include state
+    state: state, // Include state
+    regdate: regdate
   };
-  
+  console.log("date is " + regdate);
   // Show success Snackbar
   setSnackbarMessage('Appointment added successfully');
   setSnackbarOpen(true);
