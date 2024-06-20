@@ -23,6 +23,8 @@ function BasicSelect() {
   const [patientId, setPatientId] = useState();
   const [patientName, setpatientName] = useState(null); 
   const [state, setState] = useState(null);
+  const [regdate, setRegdate] = useState(null);
+  const [billValue, setBillValue] = useState(null);
   //snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -79,8 +81,10 @@ function BasicSelect() {
     if (selectedTest) {
       setPatientId(jwtDecode(localStorage.getItem("myToken")).id);
       console.log("id is"+jwtDecode(localStorage.getItem("myToken")).id);
-      setpatientName("Chamod");
+      setpatientName(jwtDecode(localStorage.getItem("myToken")).username);
       setState('register_only');
+      setRegdate(new Date());
+      setBillValue(1000);
       // Find the selected test object from the tests array
       const selectedTestObject = tests.find((test) => test.id === selectedTest);
       // Add selected test object to the table
@@ -98,9 +102,11 @@ function BasicSelect() {
   const handleFinal = () => {
   
   const selectTestIds = selectedTestsForTable.map(test => test.id);
-  
+  console.log("ids "+selectTestIds);
   const selectTestNames = selectedTestsForTable.map(test => test.name);
-  
+  const testValues = selectedTestsForTable.map(test => test.price);
+  console.log("values "+testValues);
+  const billValue = testValues.reduce((total, value) => total + value, 0);
   // Create a new appointment object
   const newAppointment = {
     
@@ -108,9 +114,11 @@ function BasicSelect() {
     selectTestNames: selectTestNames, 
     patientId: patientId, //patient ID
     patientName: patientName, //name
-    state: state // Include state
+    state: state, // Include state
+    regdate: regdate,
+    billValue: billValue
   };
-  
+  console.log("date is " + regdate);
   // Show success Snackbar
   setSnackbarMessage('Appointment added successfully');
   setSnackbarOpen(true);
