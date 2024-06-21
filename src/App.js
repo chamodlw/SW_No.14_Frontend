@@ -20,8 +20,10 @@ import LabOperator from "./pages/LabOperator";
 import ProtectedRoute from './Admin/Admin_Component/ProtectedRoute';
 import { UserProvider } from './Admin/Admin_Component/UserContext';
 import PatientInterface from './Patient/PatientInterface';
+/*import PatientInterface from './Patient/PatientInterface';*/
 import PViewTest from './Patient/Patient_Component/PViewTest';
 import AViewTest from './Admin/AViewTest';
+import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
       </Route>
       <Route path='/AViewTest/:id' element={<AViewTest/>}/>
       <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
+      <Route path='/PViewAppointment/:id' element={<PViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
 
       
