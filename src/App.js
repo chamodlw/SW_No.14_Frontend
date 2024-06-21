@@ -15,7 +15,6 @@ import UserProfileUpdate from "./Components/UserProfileUpdate";
 import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
-
 import LabAssistant from "./pages/LabAssistant";
 import LabOperator from "./pages/LabOperator";
 import ProtectedRoute from './Admin/Admin_Component/ProtectedRoute';

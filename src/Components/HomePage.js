@@ -1,26 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import Head from "./Head.js";
 import Footer from "./Footer.js";
-import photo1 from '../images/Lab_Assistant_pic.jpg';
+import photo1 from '../images/Lab_Assistant.png';
 //import { AppBar, Tab, Button, Tabs, Typography, Grid } from '@mui/material/';
 import photo2 from '../images/smalllogo.png';
 import photo3 from '../images/labtool1 (3).png';
 import photo4 from '../images/labtool2.png';
 import photo5 from '../images/labtool3.png';
 import photo6 from '../images/Labtool4-removebg-preview.png';
-import photo7 from '../images/X.jpg';
+//import photo7 from '../images/X.jpg';
+import 'intersection-observer'; // Polyfill for Intersection Observer
+import useIntersectionObserver from './useIntersectionObserver';
+import { Element } from 'react-scroll'; // Import Element from react-scroll
 
-export default function HomePage() {
-    const [loaded, setLoaded] = useState(false);
+
+function Counter({ start, end, duration }) {
+    const [count, setCount] = useState(start);
 
     useEffect(() => {
-        // Simulate loading delay
-        const timeout = setTimeout(() => {
-            setLoaded(true);
-        }, 400);
+        const increment = (end - start) / (duration / 100);
+        const handle = setInterval(() => {
+            setCount((prev) => {
+                if (prev >= end) {
+                    clearInterval(handle);
+                    return end;
+                }
+                return prev + increment;
+            });
+        }, 100);
 
-        return () => clearTimeout(timeout);
-    }, []);
+        return () => clearInterval(handle);
+    }, [start, end, duration]);
+
+    return (
+        <div style={{ fontSize: '40px', fontWeight: 'bold', color: '#101754' }}>
+            {Math.floor(count)}
+        </div>
+    );
+}
+
+export default function HomePage() {
+    const [loadedSections, setLoadedSections] = useState({
+        intro: false,
+        services: false,
+        about: false,
+    });
+
+    const introRef = useRef();
+    const servicesRef = useRef();
+    const aboutRef = useRef();
+
+    useIntersectionObserver(introRef, () => setLoadedSections((prev) => ({ ...prev, intro: true })), {});
+    useIntersectionObserver(servicesRef, () => setLoadedSections((prev) => ({ ...prev, services: true })), {});
+    useIntersectionObserver(aboutRef, () => setLoadedSections((prev) => ({ ...prev, about: true })), {});
+
 
     const boxStyle = {
         width: '250px',
@@ -44,16 +77,18 @@ export default function HomePage() {
     
 
     return (
-        <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+        <div>
             <Head />
-
+{/* section 1 */}
+<Element name="section1">
+        <div ref={introRef} style={{ opacity: loadedSections.intro ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             {/* Image on the left */}
-            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#FFFFFF', padding: '40px', marginTop: '20px' }}>
-                <img
-                    src={photo1}
-                    alt="Detailing"
-                    style={{ maxWidth: '45%', height: 'auto' }}
-                />
+            <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#E0F7FA', padding: '40px', marginTop: '10px', borderRadius: '50px', border: '30px solid #FFFFFF', borderBottom: '0px' }}>
+    <img
+        src={photo1}
+        alt="Detailing"
+        style={{ maxWidth: '35%', height: 'auto', marginRight: '30px'}}
+    />
 
                 {/* Right-aligned text */}
                 <div style={{ flex: 1, textAlign: 'left', paddingLeft: '40px', paddingRight: '5%' }}>
@@ -62,15 +97,25 @@ export default function HomePage() {
                     <span style={{ color: '#101754' }}>Expert Laboratory Services</span>
                         <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '50%', borderBottom: '2px solid #101754', padding: '20px' }}></span>
                     </p>
-                    <p style={{ fontSize: '18px', margin: 0, fontFamily: 'Helvetica', paddingTop: '50px' }}>We prioritize your <span style={{ color: '#101754', fontWeight: 'bold' }}>comfort</span> and <span style={{ color: '#101754', fontWeight: 'bold' }}>safety</span>, employing the latest techniques to make the process as painless and efficient as possible.</p>
+                    <p style={{ fontSize: '18px', margin: 0, fontFamily: 'Helvetica', paddingTop: '50px' }}>We prioritize your comfirt and safety, employing the latest techniques to make the process as painless and efficient as possible.</p>
+                    <a href="#services" style={{ textDecoration: 'none' }}>
+                        <button style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#101754', color: '#FFFFFF', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                        Learn More About Us<span style={{ marginLeft: '10px' }}>→</span>
+                        </button>
+                    </a>
                 </div>
             </div>
+        </div>
+    </Element>
 
+{/* Section 2 */}
+<Element name="services">
+<div ref={servicesRef} style={{ opacity: loadedSections.services ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <h1 style={{ color: '#101754', marginBottom: '10px' }}>Services</h1>
             </div>
 
-{/* Service healine and the underline with the small logo */}
+{/* Service headline and the underline with the small logo */}
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
     <div style={{ borderBottom: '1px solid #101754', width: '4cm' }}></div>
     <div style={{ marginRight: '20px', marginLeft: '20px' }}>
@@ -121,13 +166,17 @@ export default function HomePage() {
         </div>
     </div>
 </div>
+</div>
+</Element>
 
-
+{/* Section 3 */}
+<Element name="aboutus">
+<div ref={aboutRef} style={{ opacity: loadedSections.about ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <h1 style={{ color: '#101754', marginBottom: '10px' }}>About us</h1>
             </div>
 
-{/* About us healine and the underline with the small logo */}
+{/* About us headline and the underline with the small logo */}
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
     <div style={{ borderBottom: '1px solid #101754', width: '4cm' }}></div>
     <div style={{ marginRight: '20px', marginLeft: '20px' }}>
@@ -139,9 +188,38 @@ export default function HomePage() {
 <div style={{ textAlign: 'center', margin: '30px' }}>
 <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Discover Unparalleled Excellence with Our Expert Team</p>
             <p style={{ fontSize: '18px' }}>Welcome to HealthLab Inc. where we are dedicated to redefining excellence in blood drawing and diagnostic testing. With a commitment to advancing healthcare through cutting-edge technology and compassionate care, our laboratory stands at the forefront of precision diagnostics. Our highly skilled team of phlebotomists ensures a seamless and comfortable blood collection experience, while our state-of-the-art facilities empower us to deliver a comprehensive range of tests with unparalleled accuracy.</p>
-            <img src={photo7} alt="Detailing" style={{ maxWidth: '60%', height: 'auto', borderRadius: '0%', margin: '40px' }} />
+            {/* <img src={photo7} alt="Detailing" style={{ maxWidth: '60%', height: 'auto', borderRadius: '0%', margin: '40px' }} /> */}
 
+           <div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '70px' }}>
+                    <div>
+                        <Counter start={0} end={100} duration={3000} />
+                        <p style={{ fontSize: '18px' }}>100+ Patients Registered</p>
+                    </div>
+                    <div>
+                        <Counter start={0} end={1000} duration={3000} />
+                        <p style={{ fontSize: '18px' }}>1000+ Reports Generated</p>
+                    </div>
+                    <div>
+                        <Counter start={0} end={6} duration={3000} />
+                        <p style={{ fontSize: '18px' }}>6+ Years of Service</p>
+                    </div>
+                    </div>                
+                    <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '70px' }}>
+                    <div>
+                        <Counter start={0} end={5} duration={3000} />
+                        <p style={{ fontSize: '18px' }}>5+ Service Centers</p>
+                    </div>
+                    <div>
+                        <Counter start={0} end={10} duration={3000} />
+                        <p style={{ fontSize: '18px' }}>10+ Types of Tests Facilities</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</Element>
 
             <Footer />
         </div>
