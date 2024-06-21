@@ -1,7 +1,5 @@
-// src/Lab_operator/TestTube.js
-
 import React, { useEffect, useState } from 'react';
-import { Box } from "@mui/material";
+import { Box, Container, Grid, Paper } from "@mui/material";
 import TestTubeForm from './TestTubeForm';
 import Head from "../Head"; 
 import Footer from '../Footer';
@@ -106,23 +104,39 @@ const TestTube = () => {
     return (
         <Box>
             <Head />
-            <TestTubeForm 
-                addTestTube={addTestTube}
-                updateTestTube={updateTestTube}
-                submitted={submitted}
-                data={selectedTestTube}
-                isEdit={isEdit}
-            />
-            <SearchTestTubeForm onSearch={handleSearch} />
-            <TestTubesTable 
-                rows={filteredTestTubes}
-                selectedTestTube={data => {
-                    setSelectedTestTube(data);
-                    setIsEdit(true);
-                }}
-                deleteTestTube={data => window.confirm('Are you sure?') && deleteTestTube(data)}
-                generatePDF={handleGeneratePDF}
-            />
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <TestTubeForm 
+                                addTestTube={addTestTube}
+                                updateTestTube={updateTestTube}
+                                submitted={submitted}
+                                data={selectedTestTube}
+                                isEdit={isEdit}
+                            />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <SearchTestTubeForm onSearch={handleSearch} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <TestTubesTable 
+                                rows={filteredTestTubes}
+                                selectedTestTube={data => {
+                                    setSelectedTestTube(data);
+                                    setIsEdit(true);
+                                }}
+                                deleteTestTube={data => window.confirm('Are you sure?') && deleteTestTube(data)}
+                                generatePDF={handleGeneratePDF}
+                            />
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Container>
             <Footer />
         </Box>
     );
