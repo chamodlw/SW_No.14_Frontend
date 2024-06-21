@@ -13,12 +13,12 @@ const SelectTable = ({ tests }) => {
     <TableContainer component={Paper} sx={{ marginTop: '20px' }}>
       <Table aria-label="simple table" sx={{ minWidth: 650 }}>
       <TableHead sx={{ backgroundColor: '#101754'}}>
-  <TableRow>
-    <TableCell sx={{  color: '#FFFFFF' }}>ID</TableCell>
-    <TableCell sx={{  color: '#FFFFFF' }}>Name</TableCell>
-    <TableCell sx={{  color: '#FFFFFF' }}>Description</TableCell>
-  </TableRow>
-</TableHead>
+        <TableRow>
+          <TableCell sx={{  color: '#FFFFFF' }}>ID</TableCell>
+          <TableCell sx={{  color: '#FFFFFF' }}>Name</TableCell>
+          <TableCell sx={{  color: '#FFFFFF' }}>Description</TableCell>
+        </TableRow>
+      </TableHead>
 
 
         <TableBody>

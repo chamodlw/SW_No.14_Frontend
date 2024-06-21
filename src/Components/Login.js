@@ -1,4 +1,4 @@
-//Login.js
+//Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -61,6 +61,12 @@ function Login() {
           case 'DOCTOR':
             //console.log('Redirecting to Doctor page');
             navigate(`/Doctor/${userId}`);
+          case 'LABASSISTANT':
+            //console.log('Redirecting to LabAssistant page');
+            navigate(`/LabAssistant/${userId}`);
+          case 'LABOPERATOR':
+              //console.log('Redirecting to Lab Operator page');
+              navigate(`/LabOperator/${userId}`);
             break;
           default:
             // Handle unrecognized roles or default redirection
