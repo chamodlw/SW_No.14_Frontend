@@ -1,10 +1,8 @@
-.Selecttest {
-    background-image: url('./../images/1.jpeg');
-    background-size:cover;  /* You can use 'contain' or other values depending on your needs */
+body {
+    background-image: url('../images/2.png');
+    background-size: cover;  
     background-repeat: no-repeat;
     background-position: center center;
     /* Optionally, you can set a background color as a fallback */
     background-color: rgb(106, 174, 233);
-  }
-  
-  
+}
