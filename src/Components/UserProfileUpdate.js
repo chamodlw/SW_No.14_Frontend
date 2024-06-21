@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Grid, Avatar, Typography, TextField, Button, Paper } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Container, Grid, Avatar, Typography, TextField, Button, Paper, Modal, Slider } from '@mui/material';
 import { styled } from '@mui/system';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import Cropper from 'react-easy-crop';
+import { getCroppedImg } from './cropImage'; // Ensure this is the correct path
 
-// Styled components for consistent styling
 const Root = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
   marginTop: theme.spacing(4),
@@ -14,7 +15,6 @@ const AvatarWrapper = styled('div')({
   cursor: 'pointer',
   width: '120px',
   height: '120px',
-  display: 'inline-block',
   '&:hover .label': {
     display: 'flex',
   },
@@ -27,22 +27,23 @@ const AvatarImage = styled(Avatar)(({ theme }) => ({
 
 const Label = styled('div')({
   position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.8)',
   zIndex: 10000,
   color: '#ffffff',
   transition: 'background-color 0.2s ease-in-out',
   borderRadius: '50%',
-  padding: '8px',
   display: 'none',
   alignItems: 'center',
   justifyContent: 'center',
+  flexDirection: 'column',
 });
 
 const CameraIcon = styled(CameraAltIcon)({
-  marginRight: '4px',
+  marginBottom: '4px',
 });
 
 const TextFieldStyled = styled(TextField)(({ theme }) => ({
@@ -59,9 +60,8 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
 }));
 
 const UserProfileUpdate = ({ userData, onClose }) => {
-  // Initialize state with user details
   const [user, setUser] = useState({
-    id: '',
+    _id: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -69,18 +69,22 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     phonenumber: '',
     nationalID: '',
     username: '',
-    profilePic: null, // Adding a profilePic field to hold the uploaded image
+    profilePic: null,
+    profilePicUrl: '',
   });
 
-  // Update state with userData when component mounts or userData changes
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppingImage, setCroppingImage] = useState(false);
+
   useEffect(() => {
     if (userData) {
-      setUser(userData);
+      setUser({ ...userData, profilePicUrl: userData.profilePic });
       console.log('User data set:', userData);
     }
   }, [userData]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -90,67 +94,131 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     console.log('Updated user data:', { ...user, [name]: value });
   };
 
-  // Handle file input change
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    setUser({
-      ...user,
-      profilePic: file,
-    });
-    console.log('Selected profile picture:', file);
+    if (file) {
+      const fileUrl = URL.createObjectURL(file);
+      console.log('Selected profile picture URL:', fileUrl);
+      setUser({
+        ...user,
+        profilePic: file,
+        profilePicUrl: fileUrl,
+      });
+      setCroppingImage(true);
+      console.log('Selected profile picture:', file);
+    }
   };
 
-  // Handle form submission
+  const handleAvatarClick = () => {
+    document.getElementById('avatarInput').click();
+  };
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+    console.log('Crop complete:', croppedArea, croppedAreaPixels);
+  }, []);
+
+  const handleSaveCroppedImage = useCallback(async () => {
+    try {
+      console.log('Cropping image with URL:', user.profilePicUrl);
+      const croppedImage = await getCroppedImg(user.profilePicUrl, croppedAreaPixels);
+      console.log('Cropped Image Blob:', croppedImage);
+
+      const file = new File([croppedImage], 'profile.jpg', { type: 'image/jpeg' });
+      console.log('Cropped Image File:', file);
+
+      const newProfilePicUrl = URL.createObjectURL(file);
+      console.log('New Profile Pic URL:', newProfilePicUrl, user);
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        profilePic: file,
+        profilePicUrl: newProfilePicUrl,
+      }));
+      setCroppingImage(false);
+    } catch (e) {
+      console.error('Error cropping image:', e);
+    }
+  }, [croppedAreaPixels, user.profilePicUrl]);
+
+  useEffect(() => {
+    console.log('Profile Pic URL changed:', user.profilePicUrl);
+  }, [user.profilePicUrl]);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Submitting user data:', user);
-    try {
-      const formData = new FormData();
-      formData.append('profilePic', user.profilePic); // Append the profile picture file to FormData
+  
+    // Extracting userId from user object
+    const { id, _id } = user;
+    const userId = id || _id;
+    //console.log('Extracted userId:', userId);
 
-      // Append other user data to FormData
+    // Checking if userId is valid
+    if (!userId) {
+      console.error('User ID is missing or invalid:', user);
+      return;
+    }
+  
+    try {
+      // Creating a FormData object to send data via multipart/form-data
+      const formData = new FormData();
+      
+      // Appending profilePic to formData
+      if (user.profilePic) {
+        formData.append('profilePic', user.profilePic);
+      } else {
+        console.error('Profile picture is missing');
+      }
+      
+      // Appending other user fields to formData
       Object.keys(user).forEach((key) => {
-        if (key !== 'profilePic') {
+        if (key !== 'profilePic' && key !== 'profilePicUrl') {
           formData.append(key, user[key]);
         }
       });
-
+  
+      // Append additional property (e.g., userId)
+      formData.append('userId', userId);
+      console.log('FormData content:', Array.from(formData.entries()));
+  
+      // Sending POST request to update user profile
       const response = await fetch('http://localhost:3100/api/router_login/updateuser', {
-        method: 'POST', //POST request to the Backend endpoint with the updated details
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-        // body: JSON.stringify(user),  // Send user data including id
-        body: formData, // Send FormData instead of JSON. Cuz JSON does not support file inputs.
+        //const response = await fetch('http://localhost:3100/api/updateuser', {
+        method: 'POST',
+        body: formData,
       });
+  
+      // Checking if the request was successful
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Failed to update profile:', errorText);
         throw new Error('Failed to update profile');
       }
-      // Handle success
+  
+      // Parsing JSON response from the server
       const responseData = await response.json();
       console.log('Profile updated successfully:', responseData);
-      onClose(); // Close the dialog after saving changes
+      
+      // Closing the dialog or performing other actions after successful update
+      onClose();
+
     } catch (error) {
+      // Handling any errors that occur during the fetch or parsing
       console.error('Error updating profile:', error);
     }
   };
-
-  const handleAvatarClick = () => {
-    // Open the file dialog when clicking on the avatar
-    document.getElementById('avatarInput').click();
-  };
-
+  
+  
   return (
     <Container component={Root}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4} md={3} style={{ textAlign: 'center' }}>
           <AvatarWrapper onClick={handleAvatarClick}>
-            <AvatarImage src={userData.profilePic} alt="User Profile" />
+            <AvatarImage src={user.profilePicUrl} alt="User Profile" />
             <Label className="label">
               <CameraIcon />
-              Change Image
+              <div>Change Image</div>
             </Label>
           </AvatarWrapper>
           <input id="avatarInput" type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
@@ -158,8 +226,6 @@ const UserProfileUpdate = ({ userData, onClose }) => {
         </Grid>
         <Grid item xs={12} sm={8}>
           <form onSubmit={handleSubmit}>
-            {/* File input for profile picture */}
-            <input id="avatarInput" type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
             <TextFieldStyled fullWidth label="First Name" name="firstname" variant="outlined" value={user.firstname} onChange={handleChange} />
             <TextFieldStyled fullWidth label="Last Name" name="lastname" variant="outlined" value={user.lastname} onChange={handleChange} />
             <TextFieldStyled fullWidth label="Email" name="email" variant="outlined" value={user.email} onChange={handleChange} />
@@ -173,6 +239,34 @@ const UserProfileUpdate = ({ userData, onClose }) => {
           </form>
         </Grid>
       </Grid>
+
+      <Modal open={croppingImage} onClose={() => setCroppingImage(false)}>
+        <div style={{ position: 'absolute', top: '10%', left: '10%', width: '80%', height: '80%', backgroundColor: '#fff', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <Cropper
+              image={user.profilePicUrl}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={onCropComplete}
+            />
+          </div>
+          <div style={{ marginTop: '20px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Slider
+              value={zoom}
+              min={1}
+              max={3}
+              step={0.1}
+              aria-labelledby="Zoom"
+              onChange={(e, zoom) => setZoom(zoom)}
+              style={{ width: '80%' }}
+            />
+            <ButtonStyled onClick={handleSaveCroppedImage}>Save</ButtonStyled>
+          </div>
+        </div>
+      </Modal>
     </Container>
   );
 };
