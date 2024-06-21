@@ -1,3 +1,5 @@
+//src/Lab_operator/TestTubeTable.js',
+
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
@@ -18,7 +20,6 @@ const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Tube ID</TableCell>
                         <TableCell>Tube Type</TableCell>
                         <TableCell>Description</TableCell>
                         <TableCell>Expiration Date</TableCell>
@@ -28,8 +29,7 @@ const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
                 </TableHead>
                 <TableBody>
                     {rows && rows.map((row) => (
-                        <TableRow key={row.tube_id}>
-                            <TableCell>{row.tube_id}</TableCell>
+                        <TableRow key={row._id}>
                             <TableCell>{row.tube_type}</TableCell>
                             <TableCell>{row.description}</TableCell>
                             <TableCell>{row.expire_date}</TableCell>

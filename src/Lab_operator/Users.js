@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from "@mui/material";
-import UserForm from "./UserForm";
-import UsersTable from "./UsersTable";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import Axios from 'axios'; 
 import Head from "../Head"; 
 import Footer from '../Footer';
+import UsersTable from "./UsersTable";
+import UserForm from './UserForm';  // Import UserForm
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [submitted, setSubmitted] = useState(false); 
     const [isEdit, setIsEdit] = useState(false);
-    const [selectedUser, setSelectedUser] = useState({})
+    const [selectedUser, setSelectedUser] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUsers();
@@ -23,8 +25,8 @@ const Users = () => {
             })
             .catch(error => {
                 console.error("Axios Error : ", error);
-            })
-    }
+            });
+    };
 
     const addUser = (data) => {
         const payload = {
@@ -42,7 +44,7 @@ const Users = () => {
         .then(() => {
             getUsers();
             setSubmitted(false);
-            isEdit(false);
+            setIsEdit(false);
         })
         .catch(error => {
             console.error("Axios Error : ", error);
@@ -69,8 +71,7 @@ const Users = () => {
         .catch(error => {
             console.error("Axios Error : ", error);
         });
-
-    }
+    };
 
     const deleteUser = (data) => {
         Axios.delete('http://localhost:3100/api/delete-testing-user', { data })
@@ -80,12 +81,25 @@ const Users = () => {
         .catch(error => {
             console.error("Axios Error : ", error);
         });
-    }
-    
+    };
+
+    const redirectToUserForm = () => {
+        navigate('/lab-operator/user-form');
+    };
 
     return (
         <Box>
             <Head /> {/* Include the Head component here */}
+            <Grid container spacing={2} sx={{ padding: '20px' }}>
+                <Grid item xs={12}>
+                    <Typography variant="h4">Users Management</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" onClick={redirectToUserForm}>
+                        Add New User
+                    </Button>
+                </Grid>
+            </Grid>
             <UserForm 
                 addUser={addUser}
                 updateUser={updateUser}

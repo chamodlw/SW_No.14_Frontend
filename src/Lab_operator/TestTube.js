@@ -1,3 +1,5 @@
+// src/Lab_operator/TestTube.js
+
 import React, { useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import TestTubeForm from './TestTubeForm';
@@ -29,21 +31,12 @@ const TestTube = () => {
     };
 
     const addTestTube = (data) => {
-        const payload = {
-            tube_id: data.tube_id,
-            tube_type: data.tube_type,
-            description: data.description,
-            expire_date: data.expire_date,
-            location: data.location,
-        };
-
-        console.log('Payload:', payload); // Log payload data
-
-        Axios.post('http://localhost:3100/api/createtest_tubes', payload)
-            .then(() => {
+        return Axios.post('http://localhost:3100/api/createtest_tubes', data)
+            .then(response => {
                 getTestTubes();
                 setSubmitted(false);
                 setIsEdit(false);
+                return response.data; // Return the response data to handle barcode
             })
             .catch(error => {
                 console.error("Axios Error : ", error);
@@ -52,35 +45,25 @@ const TestTube = () => {
 
     const updateTestTube = (data) => {
         setSubmitted(true);
-
-        const payload = {
-            tube_id: data.tube_id,
-            tube_type: data.tube_type,
-            description: data.description,
-            expire_date: data.expire_date,
-            location: data.location,
-        };
-
-        Axios.post('http://localhost:3100/api/updatetest_tubes', payload)
-            .then(() => {
+        Axios.post('http://localhost:3100/api/updatetest_tubes', data)
+            .then(response => {
                 getTestTubes();
                 setSubmitted(false);
             })
             .catch(error => {
                 console.error("Axios Error : ", error);
             });
-
     };
 
     const deleteTestTube = (data) => {
         Axios.delete('http://localhost:3100/api/deletetest_tubes', { data })
-        .then(() => {
-            getTestTubes();
-        })
-        .catch(error => {
-            console.error("Axios Error : ", error);
-        });
-    }
+            .then(response => {
+                getTestTubes();
+            })
+            .catch(error => {
+                console.error("Axios Error : ", error);
+            });
+    };
 
     return (
         <Box>
@@ -92,8 +75,6 @@ const TestTube = () => {
                 data={selectedTestTube}
                 isEdit={isEdit}
             />
-            {/* {testTubes.length > 0 && <TestTubesTable rows={testTubes} />} */}
-
             <TestTubesTable 
                 rows={testTubes}
                 selectedTestTube={data => {
@@ -102,10 +83,9 @@ const TestTube = () => {
                 }}
                 deleteTestTube={data => window.confirm('Are you sure?') && deleteTestTube(data)}
             />
-
             <Footer />
         </Box>
     );
-}
+};
 
 export default TestTube;

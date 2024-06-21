@@ -44,6 +44,15 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
         }
     };
 
+    const fetchScannedTestTubeId = async () => {
+        try {
+            const response = await axios.get('http://localhost:3100/api/getScannedTestTubeId');
+            setTestTubeId(response.data.testTubeId);
+        } catch (error) {
+            console.error('Error fetching scanned Test Tube ID:', error);
+        }
+    };
+
     const validateForm = () => {
         let tempErrors = {};
         tempErrors.name = name ? '' : 'Name is required.';
@@ -137,7 +146,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
                         error={!!errors.selectedTube}
                     >
                         {testTubes.map((tube) => (
-                            <MenuItem key={tube.tube_id} value={tube.tube_type}>{tube.tube_type}</MenuItem>
+                            <MenuItem key={tube._id} value={tube.tube_type}>{tube.tube_type}</MenuItem>
                         ))}
                     </Select>
                     <Typography variant="caption" color="error">{errors.selectedTube}</Typography>
@@ -157,26 +166,42 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-            <FormControl fullWidth variant="outlined">
-                <InputLabel>Blood Type</InputLabel> {/* Ensure the tag is closed properly here */}
-                <Select
-                    value={bloodType}
-                    onChange={(e) => setBloodType(e.target.value)}
-                    label="Blood Type"
-                    error={!!errors.bloodType}
+                <Button
+                    variant="contained"
+                    sx={{
+                        backgroundColor: '#00c6e6',
+                        color: '#ffffff',
+                        '&:hover': {
+                            backgroundColor: '#0099b8',
+                        },
+                    }}
+                    onClick={fetchScannedTestTubeId}
                 >
-                    <MenuItem value=""><em>None</em></MenuItem>
-                    <MenuItem value="A+">A+</MenuItem>
-                    <MenuItem value="A-">A-</MenuItem>
-                    <MenuItem value="B+">B+</MenuItem>
-                    <MenuItem value="B-">B-</MenuItem>
-                    <MenuItem value="AB+">AB+</MenuItem>
-                    <MenuItem value="AB-">AB-</MenuItem>
-                    <MenuItem value="O+">O+</MenuItem>
-                    <MenuItem value="O-">O-</MenuItem>
-                </Select>
-                <Typography variant="caption" color="error">{errors.bloodType}</Typography>
-            </FormControl>
+                    Fetch Scanned Test Tube ID
+                </Button>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+                <FormControl fullWidth variant="outlined">
+                    <InputLabel>Blood Type</InputLabel>
+                    <Select
+                        value={bloodType}
+                        onChange={(e) => setBloodType(e.target.value)}
+                        label="Blood Type"
+                        error={!!errors.bloodType}
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="A+">A+</MenuItem>
+                        <MenuItem value="A-">A-</MenuItem>
+                        <MenuItem value="B+">B+</MenuItem>
+                        <MenuItem value="B-">B-</MenuItem>
+                        <MenuItem value="AB+">AB+</MenuItem>
+                        <MenuItem value="AB-">AB-</MenuItem>
+                        <MenuItem value="O+">O+</MenuItem>
+                        <MenuItem value="O-">O-</MenuItem>
+                    </Select>
+                    <Typography variant="caption" color="error">{errors.bloodType}</Typography>
+                </FormControl>
             </Grid>
 
             <Grid item xs={12}>

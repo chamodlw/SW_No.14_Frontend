@@ -1,21 +1,26 @@
+// src/Lab_operator/TestTubeForm.js
+
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography, TextField, Button, Snackbar } from "@mui/material";
+import { Grid, Typography, TextField, Button, Snackbar, Card, CardContent, CardMedia } from "@mui/material";
 
 const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
     const [tubeId, setTubeId] = useState('');
     const [tubeType, setTubeType] = useState('');
     const [description, setDescription] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
+    const [manufacturer, setManufacturer] = useState('');
     const [location, setLocation] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [errors, setErrors] = useState({});
+    const [barcode, setBarcode] = useState(null);
 
     useEffect(() => {
         if (isEdit && data) {
-            setTubeId(data.tube_id || '');
+            setTubeId(data._id || '');
             setTubeType(data.tube_type || '');
             setDescription(data.description || '');
+            setManufacturer(data.manufacturer || '');
             setLocation(data.location || '');
             setExpirationDate(data.expire_date ? new Date(data.expire_date).toISOString().split('T')[0] : '');
         }
@@ -23,10 +28,10 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
 
     const validate = () => {
         let tempErrors = {};
-        tempErrors.tubeId = tubeId ? '' : 'Tube ID is required.';
         tempErrors.tubeType = tubeType ? '' : 'Tube Type is required.';
         tempErrors.description = description.length >= 10 ? '' : 'Description must be at least 10 characters long.';
         tempErrors.expirationDate = expirationDate ? '' : 'Expiration Date is required.';
+        tempErrors.manufacturer = manufacturer ? '' : 'Manufacturer is required.';
         tempErrors.location = location ? '' : 'Location is required.';
         setErrors(tempErrors);
         
@@ -37,21 +42,24 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
         event.preventDefault();
         if (!validate()) return;
 
-        const formData = { tube_id: tubeId, tube_type: tubeType, description, expire_date: expirationDate, location };
+        const formData = { _id: tubeId, tube_type: tubeType, description, expire_date: expirationDate, manufacturer, location };
         if (isEdit) {
             updateTestTube(formData);
         } else {
-            addTestTube(formData);
+            addTestTube(formData)
+                .then(response => {
+                    setBarcode(response.barcode); // Set the barcode data
+                    setSnackbarMessage('Test tube was successfully registered');
+                });
         }
 
-        setSnackbarMessage(isEdit ? 'Test tube was successfully updated' : 'Test tube was successfully registered');
         setSnackbarOpen(true);
 
         if (!isEdit) {
-            setTubeId('');
             setTubeType('');
             setDescription('');
             setExpirationDate('');
+            setManufacturer('');
             setLocation('');
         }
     };
@@ -65,16 +73,6 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
             </Grid>
             <Grid item xs={12}>
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        id="tubeId"
-                        label="Tube ID"
-                        fullWidth
-                        value={tubeId}
-                        onChange={(e) => setTubeId(e.target.value)}
-                        error={Boolean(errors.tubeId)}
-                        helperText={errors.tubeId}
-                        sx={{ mb: 2 }}
-                    />
                     <TextField
                         id="tubeType"
                         label="Tube Type"
@@ -110,6 +108,16 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
                         sx={{ mb: 2 }}
                     />
                     <TextField
+                        id="manufacturer"
+                        label="Manufacturer"
+                        fullWidth
+                        value={manufacturer}
+                        onChange={(e) => setManufacturer(e.target.value)}
+                        error={Boolean(errors.manufacturer)}
+                        helperText={errors.manufacturer}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
                         id="location"
                         label="Location"
                         fullWidth
@@ -130,6 +138,20 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
                     </Button>
                 </form>
             </Grid>
+            {barcode && (
+                <Grid item xs={12}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">Generated Barcode</Typography>
+                            <CardMedia
+                                component="img"
+                                image={barcode}
+                                alt="Generated Barcode"
+                            />
+                        </CardContent>
+                    </Card>
+                </Grid>
+            )}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
