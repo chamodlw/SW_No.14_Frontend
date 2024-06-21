@@ -1,22 +1,12 @@
-//src/Lab_operator/TestTubeTable.js',
+// src/Lab_operator/TestTubesTable.js
 
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Paper } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon, PictureAsPdf as PictureAsPdfIcon } from '@mui/icons-material';
 
-const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
-    const handleEditTube = (tubeId, tubeType, description, expireDate, location) => {
-        // Pass individual attributes to the selectedTestTube function
-        selectedTestTube({ tube_id: tubeId, tube_type: tubeType, description: description, expire_date: expireDate, location: location });
-    };
-
-    const handleDeleteTube = (id) => {
-        console.log(`Deleting tube with ID ${id}`);
-        deleteTestTube({ tube_id: id }); // Call deleteTestTube function with the tube ID
-    };
-
+const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube, generatePDF }) => {
     return (
-        <TableContainer component={Paper} sx={{ marginTop: '50px' }}>
+        <TableContainer>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -28,25 +18,21 @@ const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows && rows.map((row) => (
+                    {rows.map((row) => (
                         <TableRow key={row._id}>
                             <TableCell>{row.tube_type}</TableCell>
                             <TableCell>{row.description}</TableCell>
                             <TableCell>{row.expire_date}</TableCell>
                             <TableCell>{row.location}</TableCell>
                             <TableCell>
-                                <IconButton
-                                    color="primary"
-                                    onClick={() => handleEditTube(row.tube_id, row.tube_type, row.description, row.expire_date, row.location)}
-                                    style={{ marginRight: '10px' }}
-                                >
-                                    <Edit />
+                                <IconButton onClick={() => selectedTestTube(row)}>
+                                    <EditIcon />
                                 </IconButton>
-                                <IconButton
-                                    color="secondary"
-                                    onClick={() => window.confirm('Are you sure?') && handleDeleteTube(row.tube_id)}
-                                >
-                                    <Delete /> 
+                                <IconButton onClick={() => deleteTestTube(row)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton onClick={() => generatePDF(row)}>
+                                    <PictureAsPdfIcon />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
@@ -55,6 +41,6 @@ const TestTubesTable = ({ rows, selectedTestTube, deleteTestTube }) => {
             </Table>
         </TableContainer>
     );
-}
+};
 
 export default TestTubesTable;

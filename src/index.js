@@ -24,6 +24,7 @@ root.render(
       <Route path='/user/payment' element={<PaymentGateway />} />
       <Route path='/lab-operator/user-form' element={<UserForm />} />
       <Route path='/scan' element={<BarcodeScanner />} />
+
     </Routes>
   </BrowserRouter>
 );

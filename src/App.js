@@ -13,6 +13,7 @@ function App() {
         <Route path='/Selecttest' element={<Selecttest />} />
         <Route path='/UserForm' element={<UserForm />} />
         <Route path='/scan' element={<BarcodeScanner />} />
+
       </Routes>
     </BrowserRouter>
   );

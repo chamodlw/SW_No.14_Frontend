@@ -1,10 +1,11 @@
 // src/Lab_operator/TestTubeForm.js
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Grid, Typography, TextField, Button, Snackbar, Card, CardContent, CardMedia } from "@mui/material";
+import jsPDF from 'jspdf';
 
 const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
-    const [tubeId, setTubeId] = useState('');
     const [tubeType, setTubeType] = useState('');
     const [description, setDescription] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
@@ -15,14 +16,16 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
     const [errors, setErrors] = useState({});
     const [barcode, setBarcode] = useState(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (isEdit && data) {
-            setTubeId(data._id || '');
             setTubeType(data.tube_type || '');
             setDescription(data.description || '');
             setManufacturer(data.manufacturer || '');
             setLocation(data.location || '');
             setExpirationDate(data.expire_date ? new Date(data.expire_date).toISOString().split('T')[0] : '');
+            setBarcode(data.barcode || '');
         }
     }, [data, isEdit]);
 
@@ -42,8 +45,10 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
         event.preventDefault();
         if (!validate()) return;
 
-        const formData = { _id: tubeId, tube_type: tubeType, description, expire_date: expirationDate, manufacturer, location };
+        const formData = { tube_type: tubeType, description, expire_date: expirationDate, manufacturer, location };
         if (isEdit) {
+            formData._id = data._id;
+            formData.barcode = barcode; // Ensure the barcode is passed
             updateTestTube(formData);
         } else {
             addTestTube(formData)
@@ -63,6 +68,7 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
             setLocation('');
         }
     };
+
 
     return (
         <Grid container spacing={2} sx={{ backgroundColor: '#ffffff', margin: '30px', padding: '20px' }}>
@@ -136,6 +142,8 @@ const TestTubeForm = ({ addTestTube, updateTestTube, data = {}, isEdit }) => {
                     >
                         {isEdit ? 'Update' : 'Register'}
                     </Button>
+
+
                 </form>
             </Grid>
             {barcode && (

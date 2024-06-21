@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button, Card, CardContent, Typography, Box, TextField, Snackbar, Alert, CircularProgress } from '@mui/material';
 import axios from 'axios';
-import './CheckoutForm.css'; // Ensure this file has your custom CSS
+import './CheckoutForm.css';
 
 const cardElementOptions = {
   style: {
@@ -26,6 +26,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [amount, setAmount] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -55,7 +56,8 @@ const CheckoutForm = () => {
     try {
       const { data } = await axios.post('http://localhost:5000/api/payment', {
         paymentMethodId: paymentMethod.id,
-        amount: parseInt(amount)
+        amount: parseInt(amount),
+        phoneNumber: phoneNumber // Include phone number in the request
       });
 
       setMessage(data.success ? 'Payment successful!' : `Payment failed: ${data.message}`);
@@ -94,6 +96,17 @@ const CheckoutForm = () => {
                 startAdornment: <Typography variant="h6" sx={{ marginRight: 1 }}>₹</Typography>
               }}
             />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Phone Number"
+              variant="outlined"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+              sx={{ mb: 2 }}
+              type="tel"
+            />
             <Box sx={{ mb: 2, border: '1px solid #ced4da', borderRadius: '4px', padding: '6px 12px' }}>
               <CardElement options={cardElementOptions} />
             </Box>
@@ -114,17 +127,17 @@ const CheckoutForm = () => {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Center the Snackbar at the top
-        sx={{ width: '100%' }} // Ensure it spans the full width at smaller screens
-        >
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ width: '100%' }}
+      >
         <Alert
-            onClose={handleCloseSnackbar}
-            severity="info"
-            sx={{ width: '100%', fontSize: '1.1rem', '.MuiAlert-message': { fontSize: '1rem' } }} // Increase font size
+          onClose={handleCloseSnackbar}
+          severity="info"
+          sx={{ width: '100%', fontSize: '1.1rem', '.MuiAlert-message': { fontSize: '1rem' } }}
         >
-            {message}
+          {message}
         </Alert>
-        </Snackbar>
+      </Snackbar>
     </Box>
   );
 };
