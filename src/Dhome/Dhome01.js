@@ -1,30 +1,26 @@
 import * as React from 'react';
 
-
-
 function Dhome01() { 
-    const backgroundImageStyle = {
-        backgroundImage: `url('./images/1.jpeg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+   
 
-    };
+    return (
+      
+            <div style={{  maxWidth: '800px', alignItems:'right', marginLeft:'700px',color:'#101754' }}>
+                <h1 style={{ fontSize: '3rem', fontWeight: 'bold', fontStyle: 'italic', letterSpacing: '2px' }}>
+                    "The Laboratory System Doctor"
+                </h1>
+                <p style={{ fontSize: '1.5rem' }}>
+                    As the ultimate approver of lab reports, plays a pivotal role in ensuring the accuracy and reliability
+                    of diagnostic results, serving as a critical safeguard for patient care.
+                </p>
+                <ul style={{ fontSize: '1.5rem', textAlign: 'left' }}>
+                    <li>View Reports</li>
+                    <li>Give Recommendations</li>
+                    <li>Approve Reports</li>
+                </ul>
+            </div>
+       
+    );
+}
 
-  return (
-    <div style={{ position: 'relative', width: '100%', height: '50vh'}}  >
-      <p style={{  margin: '20px', fontSize: '18px' }}>
-   <h1 >"The laboratory system doctor, as the ultimate approver of lab reports, plays
-     a pivotal role in ensuring the accuracy and reliability
-     of diagnostic results, serving as a critical safeguard for patient care."</h1>
-     <ul style={{ fontSize: '30px',display: 'inline-block', textAlign: 'left' }}>
-      <li>View Reports</li>
-      <li>Give Recommendations</li>
-      <li>Approve Reports</li>
-     </ul>
-     </p>
-     <br/>
-</div>
-
-       );
-  }
-  export default Dhome01;
+export default Dhome01;
