@@ -4,6 +4,9 @@ import Head from './Components/Head';
 import HomePage from './Components/HomePage';
 import Signin from "./Components/Signin";
 import Login from "./Components/Login";
+import Dhome from './Dhome';
+import Dapproval from './Dapproval';
+import Contact from './Contact/Contact';
 import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
 import ForgotPassword from './Components/ForgotPassword';
@@ -37,7 +40,6 @@ import BarcodeScanner from './Lab_operator/BarcodeScanner';
 function App() {
   return (
     <div>
-    {/* <Signin></Signin> */}
     <BrowserRouter>
     <Routes>
     <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
@@ -51,11 +53,15 @@ function App() {
       <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
       <Route path='/PViewAppointment/:id' element={<PViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
-
+      
+      
       
       <Route path='/PViewTest/:id' element={<PViewTest/>}/>
 
       <Route path='/Selecttest' element={<Selecttest/>}/>
+      <Route path='/Dhome' element={<Dhome/>}/>
+      <Route path='/Dapproval' element={<Dapproval/>}/>
+      <Route path='/Contact' element={<Contact/>}/>
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path="/forgetpassword" element={<ForgotPassword />} />
