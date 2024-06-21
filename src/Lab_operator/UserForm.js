@@ -44,14 +44,6 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
         }
     };
 
-    const fetchScannedTestTubeId = async () => {
-        try {
-            const response = await axios.get('http://localhost:3100/api/getScannedTestTubeId');
-            setTestTubeId(response.data.testTubeId);
-        } catch (error) {
-            console.error('Error fetching scanned Test Tube ID:', error);
-        }
-    };
 
     const validateForm = () => {
         let tempErrors = {};
@@ -165,21 +157,6 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
                 />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-                <Button
-                    variant="contained"
-                    sx={{
-                        backgroundColor: '#00c6e6',
-                        color: '#ffffff',
-                        '&:hover': {
-                            backgroundColor: '#0099b8',
-                        },
-                    }}
-                    onClick={fetchScannedTestTubeId}
-                >
-                    Fetch Scanned Test Tube ID
-                </Button>
-            </Grid>
 
             <Grid item xs={12} sm={6}>
                 <FormControl fullWidth variant="outlined">

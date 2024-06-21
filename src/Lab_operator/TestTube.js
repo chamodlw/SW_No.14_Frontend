@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from "@mui/material";
 import TestTubeForm from './TestTubeForm';
-import Head from "../Head"; 
-import Footer from '../Footer';
+import Patienthead from '../Components/Patienthead';
+import Footer from '../Components/Footer'; 
 import TestTubesTable from './TestTubesTable';
 import SearchTestTubeForm from './SearchTestTubeForm';
 import Axios from 'axios';
@@ -105,7 +105,7 @@ const TestTube = () => {
 
     return (
         <Box>
-            <Head />
+            <Patienthead />
             <TestTubeForm 
                 addTestTube={addTestTube}
                 updateTestTube={updateTestTube}

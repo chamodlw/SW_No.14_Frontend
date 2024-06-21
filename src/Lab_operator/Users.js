@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Paper } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios'; 
-import Head from "../Head"; 
-import Footer from '../Footer';
+import Patienthead from '../Components/Patienthead';
+import Footer from '../Components/Footer'; 
 import UsersTable from "./UsersTable";
 import UserForm from './UserForm';  // Import UserForm
+import SearchUserForm from './SearchUserForm';  // Import SearchUserForm
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [submitted, setSubmitted] = useState(false); 
     const [isEdit, setIsEdit] = useState(false);
     const [selectedUser, setSelectedUser] = useState({});
@@ -22,9 +24,10 @@ const Users = () => {
         Axios.get('http://localhost:3100/api/testing-users')
             .then(response => {
                 setUsers(response.data?.response || []);
+                setFilteredUsers(response.data?.response || []);
             })
             .catch(error => {
-                console.error("Axios Error : ", error);
+                console.error("Error fetching users:", error);
             });
     };
 
@@ -83,38 +86,51 @@ const Users = () => {
         });
     };
 
-    const redirectToUserForm = () => {
-        navigate('/lab-operator/user-form');
+    const handleSearch = (searchTerm) => {
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        const filtered = users.filter(user =>
+            String(user.id).toLowerCase().includes(lowerCaseSearchTerm) ||
+            String(user.name).toLowerCase().includes(lowerCaseSearchTerm) ||
+            String(user.test).toLowerCase().includes(lowerCaseSearchTerm)
+        );
+        setFilteredUsers(filtered);
     };
 
     return (
         <Box>
-            <Head /> {/* Include the Head component here */}
-            <Grid container spacing={2} sx={{ padding: '20px' }}>
-                <Grid item xs={12}>
-                    <Typography variant="h4">Users Management</Typography>
+            <Patienthead /> {/* Include the Head component here */}
+            <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <UserForm 
+                                addUser={addUser}
+                                updateUser={updateUser}
+                                submitted={submitted}
+                                data={selectedUser}
+                                isEdit={isEdit}
+                            />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <SearchUserForm onSearch={handleSearch} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} sx={{ p: 2 }}>
+                            <UsersTable 
+                                rows={filteredUsers} 
+                                selectedUser={data => {
+                                    setSelectedUser(data);
+                                    setIsEdit(true);
+                                }}
+                                deleteUser={data => window.confirm('Are you sure?') && deleteUser(data)}
+                            />
+                        </Paper>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Button variant="contained" color="primary" onClick={redirectToUserForm}>
-                        Add New User
-                    </Button>
-                </Grid>
-            </Grid>
-            <UserForm 
-                addUser={addUser}
-                updateUser={updateUser}
-                submitted={submitted}
-                data={selectedUser}
-                isEdit={isEdit}
-            />
-            <UsersTable 
-                rows={users} 
-                selectedUser={data => {
-                    setSelectedUser(data);
-                    setIsEdit(true);
-                }}
-                deleteUser={data => window.confirm('Are you sure?') && deleteUser(data)}
-            />
+            </Container>
             <Footer />
         </Box>
     );

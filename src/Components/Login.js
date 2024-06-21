@@ -58,9 +58,11 @@ function Login() {
           case 'DOCTOR':
             //console.log('Redirecting to Doctor page');
             navigate(`/Doctor/${userId}`);
+            break;
           case 'LABASSISTANT':
             //console.log('Redirecting to LabAssistant page');
             navigate(`/LabAssistant/${userId}`);
+            break;
           case 'LABOPERATOR':
               //console.log('Redirecting to Lab Operator page');
               navigate(`/LabOperator/${userId}`);
