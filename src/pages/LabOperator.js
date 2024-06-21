@@ -1,7 +1,9 @@
 import React from "react";
+import laboperatorInterface from "../Lab_operator/laboperatorInterface";
 
 export default function LabOperator() {
     return (
-     <div>LabOperator</div>
+        <laboperatorInterface/>
     )
 }
+
