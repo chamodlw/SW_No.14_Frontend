@@ -58,12 +58,6 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                                     blood_type: row.blood_type,
                                                 }
                                             )} // Fix here: changed user.id to row.id
-                                        sx={{
-                                            color: 'blue',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(0, 0, 255, 0.1)',
-                                            },
-                                        }}
                                         style={{ marginRight: '10px' }}
                                     >
                                         <Edit />
@@ -71,12 +65,6 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                     <IconButton
                                         color="secondary"
                                         onClick={() => window.confirm('Are you sure?') && deleteUser({ id: row.id })}
-                                        sx={{
-                                            color: 'red',
-                                            '&:hover': {
-                                                backgroundColor: 'rgba(255, 0, 0, 0.1)',
-                                            },
-                                        }}
                                     >
                                         <Delete />
                                     </IconButton>

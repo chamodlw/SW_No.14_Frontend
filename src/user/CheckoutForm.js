@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { Button, Typography, Box, TextField, Snackbar, Alert, CircularProgress, Grid, Container } from '@mui/material';
+import { Button, Card, CardContent, Typography, Box, TextField, Snackbar, Alert, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import './CheckoutForm.css';
 
@@ -12,7 +12,8 @@ const cardElementOptions = {
       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
       "::placeholder": {
         color: "#aab7c4"
-      }
+      },
+      padding: '10px 14px',
     },
     invalid: {
       color: "#fa755a",
@@ -60,12 +61,6 @@ const CheckoutForm = () => {
       });
 
       setMessage(data.success ? 'Payment successful!' : `Payment failed: ${data.message}`);
-      if (data.success) {
-        // Clear the form inputs
-        setAmount('');
-        setPhoneNumber('');
-        cardElement.clear();
-      }
     } catch (error) {
       setMessage('Server error: ' + error.message);
       console.error('Payment API error:', error);
@@ -80,62 +75,54 @@ const CheckoutForm = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Box sx={{ boxShadow: 3, p: 4, borderRadius: 2, backgroundColor: '#fff' }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-          Secure Payment
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Amount"
-                variant="outlined"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                required
-                sx={{ mb: 2 }}
-                type="number"
-                InputProps={{
-                  startAdornment: <Typography variant="h6" sx={{ marginRight: 1 }}>₹</Typography>
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Phone Number"
-                variant="outlined"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                required
-                sx={{ mb: 2 }}
-                type="tel"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ mb: 2, border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
-                <CardElement options={cardElementOptions} />
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={!stripe || loading}
-                sx={{ py: 1.5, mt: 2, mb: 2, fontWeight: 'bold' }}
-              >
-                {loading ? <CircularProgress size={24} color="inherit" /> : 'Pay Now'}
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f4f6f8' }}>
+      <Card raised sx={{ maxWidth: 480, width: '100%', mx: 2, boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)' }}>
+        <CardContent>
+          <Typography variant="h5" component="h1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+            Secure Payment
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Amount"
+              variant="outlined"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+              sx={{ mb: 2 }}
+              type="number"
+              InputProps={{
+                startAdornment: <Typography variant="h6" sx={{ marginRight: 1 }}>₹</Typography>
+              }}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Phone Number"
+              variant="outlined"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+              sx={{ mb: 2 }}
+              type="tel"
+            />
+            <Box sx={{ mb: 2, border: '1px solid #ced4da', borderRadius: '4px', padding: '6px 12px' }}>
+              <CardElement options={cardElementOptions} />
+            </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={!stripe || loading}
+              sx={{ py: 1.5, mt: 2, mb: 2, fontWeight: 'bold' }}
+            >
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Pay Now'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
@@ -151,7 +138,7 @@ const CheckoutForm = () => {
           {message}
         </Alert>
       </Snackbar>
-    </Container>
+    </Box>
   );
 };
 
