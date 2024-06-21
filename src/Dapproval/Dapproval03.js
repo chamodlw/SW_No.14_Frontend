@@ -11,6 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -87,11 +88,12 @@ const FixedContainer = () => {
       });
 
       console.log('Approval Response:', response);
-      setAlertMessage('Approval email sent successfully!');
+      
+      setAlertMessage('Approval request sent successfully!');
     } catch (error) {
       console.error('Error approving report:', error);
       if (error.response) {
-        setAlertMessage(`Error: ${error.response.data.message || 'Failed to send approval email'}`);
+        setAlertMessage(`Error: ${error.response.data.message || 'Failed to send approval request'}`);
       } else if (error.request) {
         setAlertMessage('Error: No response from the server');
       } else {
@@ -115,17 +117,17 @@ const FixedContainer = () => {
                 />
               </LocalizationProvider>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={2}>
               <TextField
-                style={{ marginRight: '15px' }}
                 value={rid}
                 onChange={(e) => setRid(e.target.value)}
                 id="outlined-required"
                 label="Report Id"
                 required
               />
+            </Grid>
+            <Grid item xs={2}>
               <TextField
-                style={{ marginRight: '15px' }}
                 value={pid}
                 onChange={(e) => setPid(e.target.value)}
                 id="outlined-required"
@@ -133,8 +135,9 @@ const FixedContainer = () => {
                 required
                 disabled // Make it read-only
               />
+            </Grid>
+            <Grid item xs={2}>
               <TextField
-                style={{ marginRight: '15px' }}
                 value={nm}
                 onChange={(e) => setNm(e.target.value)}
                 id="outlined"
@@ -142,7 +145,7 @@ const FixedContainer = () => {
                 required
               />
             </Grid>
-            <Grid item xs={1} sx={{ marginTop: '10px' }}>
+            <Grid item xs={4} >
               <Button
                 variant="contained"
                 style={{ color: '#FFFFFF', background: '#101754', width: '200px', height: '50px' }}

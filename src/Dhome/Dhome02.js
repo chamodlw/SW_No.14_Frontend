@@ -7,6 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function Dhome02() {
@@ -16,6 +17,7 @@ export default function Dhome02() {
   const handleClick = () => {
     if (!selectedDate || reportId.trim() === '') {
       alert("DatePicker and Report ID cannot be null");
+      console.log("id is"+jwtDecode(localStorage.getItem("myToken")).id);
     } else {
       const date = selectedDate.format('YYYY-MM-DD');
       window.location.href = `/Dapproval?date=${date}&reportId=${reportId}`;
