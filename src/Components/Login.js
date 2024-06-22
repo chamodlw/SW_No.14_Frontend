@@ -59,6 +59,14 @@ function Login() {
             //console.log('Redirecting to Doctor page');
             navigate(`/Doctor/${userId}`);
             break;
+            case 'LABASSISTANT':
+              //console.log('Redirecting to LabAssistant page');
+              navigate('/LabAssistant/${userId}');
+              break;
+            case 'LABOPERATOR':
+                //console.log('Redirecting to Lab Operator page');
+                navigate('/LabOperator/${userId}');
+                break;
           default:
             // Handle unrecognized roles or default redirection
             //console.log('Redirecting to Home page');
