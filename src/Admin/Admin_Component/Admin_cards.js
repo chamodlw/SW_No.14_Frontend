@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Button, Typography, Grid, Modal } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
