@@ -1,0 +1,88 @@
+/* General form styling for a clean and modern look */
+body {
+    font-family: 'Roboto', sans-serif; /* Ensures consistent font throughout */
+    background-color: #f4f6f8; /* Light grey background for a soft appearance */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Card styling for the payment form */
+.payment-card {
+    background-color: white; /* Bright background for the form area */
+    border-radius: 8px; /* Rounded corners for the card */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding around the content */
+    max-width: 480px; /* Maximum width of the form */
+    margin: auto; /* Centers the card in the view */
+}
+
+/* Typography for headers and labels */
+.payment-header {
+    color: #333; /* Dark grey color for contrast */
+    font-size: 1.5rem; /* Larger font size for headers */
+    font-weight: 500; /* Medium weight for readability */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Input and CardElement styles */
+input, .StripeElement {
+    height: 40px; /* Fixed height for all input fields */
+    width: 100%; /* Full width to fill the form */
+    margin-top: 10px; /* Margin top for spacing */
+    padding: 10px 12px; /* Padding inside the inputs */
+    font-size: 1rem; /* Comfortable font size for reading */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded borders for the input fields */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Inner shadow for depth */
+}
+
+/* Button styles for the payment action */
+button {
+    width: 100%; /* Full width button */
+    background-color: #00C853; /* Green color for a go-action feel */
+    color: white; /* White text for contrast */
+    padding: 12px; /* Padding for a larger click area */
+    border: none; /* No border for a clean look */
+    border-radius: 4px; /* Rounded corners for the button */
+    margin-top: 20px; /* Top margin for spacing from the last input */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Legible font size */
+    font-weight: bold; /* Bold font for emphasis */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+button:hover {
+    background-color: #007C40; /* Darker green on hover for feedback */
+}
+
+/* Additional styles for different states and responsiveness */
+@media (max-width: 600px) {
+    .payment-card {
+        padding: 15px; /* Smaller padding on smaller screens */
+    }
+}
+
+/* Ensures the input fields and buttons are responsive and visually appealing on all devices */
+.StripeElement--focus, input:focus {
+    border-color: #80bdff; /* Blue border in focus for visibility */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Glowing effect on focus */
+}
+
+/* Error handling styles */
+.StripeElement--invalid, input:invalid {
+    border-color: #fa755a; /* Red border for errors */
+}
+
+.MuiSnackbar-root {
+    top: 20px; /* Lower the Snackbar a bit from the very top of the viewport */
+  }
+  
+  .MuiAlert-standardInfo {
+    background-color: #2196f3; /* Bright blue background for info alerts */
+    color: white; /* White text for better contrast and visibility */
+    padding: 16px 24px; /* Increased padding for a larger alert box */
+    border-radius: 8px; /* Rounded corners for a softer look */
+  }
+  
