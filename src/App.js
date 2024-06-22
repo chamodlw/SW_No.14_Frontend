@@ -28,6 +28,7 @@ import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 
 function App() {
   return (
+    <UserProvider>
     <div>
     {/* <Signin></Signin> */}
     <BrowserRouter>
@@ -71,9 +72,11 @@ function App() {
     </Routes>
   </BrowserRouter>
     </div>
+    </UserProvider>
     );
 
 }
+
 
 export default App;
 //

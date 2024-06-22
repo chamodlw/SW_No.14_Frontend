@@ -7,7 +7,9 @@ import { useUser } from './UserContext';
 const ProtectedRoute = ({ allowedRoles }) => {
   const {user, isReady} = useUser();
   
-  if(!isReady){
+  console.log('ProtectedRoute - User:', user);
+  if (!isReady) {
+    console.log('ProtectedRoute - Checking authentication status...');
     return <h1>Fetching user data</h1>;
   }
   
@@ -21,6 +23,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
     // If user is not available, redirect to home
     if (user== null) {
+      // if (!user) {
       console.log('ProtectedRoute - No user, redirecting to home');
       return <Navigate to="/" replace />;
     }

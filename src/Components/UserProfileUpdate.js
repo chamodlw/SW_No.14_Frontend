@@ -59,8 +59,11 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   },
 }));
 
+//main component
+//userData contains initial user data
 const UserProfileUpdate = ({ userData, onClose }) => {
   const [user, setUser] = useState({
+    //user: Holds the user data, including the profile picture.
     _id: '',
     firstname: '',
     lastname: '',
@@ -73,11 +76,17 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     profilePicUrl: '',
   });
 
+// crop: Manages the cropping area position.
+// zoom: Manages the zoom level for cropping.
+// croppedAreaPixels: Stores the pixels of the cropped area.
+// croppingImage: Boolean to manage the cropping modal's visibility.
+
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppingImage, setCroppingImage] = useState(false);
 
+  //useEffect: Runs when userData changes, updating the user state and logging the data.
   useEffect(() => {
     if (userData) {
       setUser({ ...userData, profilePicUrl: userData.profilePic });
@@ -145,6 +154,7 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     console.log('Profile Pic URL changed:', user.profilePicUrl);
   }, [user.profilePicUrl]);
   
+  //If the User ID is missing, Check the handleSubmit Method to make sure the user ID is being appended to the FormData object correctly.
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Submitting user data:', user);
@@ -152,7 +162,7 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     // Extracting userId from user object
     const { id, _id } = user;
     const userId = id || _id;
-    //console.log('Extracted userId:', userId);
+    console.log('Extracted userId:', userId);
 
     // Checking if userId is valid
     if (!userId) {
@@ -202,7 +212,6 @@ const UserProfileUpdate = ({ userData, onClose }) => {
       
       // Closing the dialog or performing other actions after successful update
       onClose();
-
     } catch (error) {
       // Handling any errors that occur during the fetch or parsing
       console.error('Error updating profile:', error);
