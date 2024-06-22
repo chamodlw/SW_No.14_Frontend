@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { Button, Typography, Box, TextField, Snackbar, Alert, CircularProgress, Grid, Container } from '@mui/material';
 import axios from 'axios';
+import backgroundImage from '../images/2.png';  // Import the background image
 import './CheckoutForm.css';
 
 const cardElementOptions = {
@@ -80,81 +81,89 @@ const CheckoutForm = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Box sx={{ boxShadow: 3, p: 4, borderRadius: 2, backgroundColor: '#fff' }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-          Secure Payment
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Amount"
-                variant="outlined"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                required
-                sx={{ mb: 2 }}
-                type="number"
-                InputProps={{
-                  startAdornment: <Typography variant="h6" sx={{ marginRight: 1 }}>₹</Typography>
-                }}
-              />
+    <Box sx={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Container maxWidth="sm" sx={{ mt: 8 }}>
+        <Box sx={{ boxShadow: 3, p: 4, borderRadius: 2, backgroundColor: '#fff' }}>
+          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+            Secure Payment
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Amount"
+                  variant="outlined"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                  sx={{ mb: 2 }}
+                  type="number"
+                  InputProps={{
+                    startAdornment: <Typography variant="h6" sx={{ marginRight: 1 }}>₹</Typography>
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Phone Number"
+                  variant="outlined"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  required
+                  sx={{ mb: 2 }}
+                  type="tel"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ mb: 2, border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
+                  <CardElement options={cardElementOptions} />
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={!stripe || loading}
+                  sx={{ py: 1.5, mt: 2, mb: 2, fontWeight: 'bold' }}
+                >
+                  {loading ? <CircularProgress size={24} color="inherit" /> : 'Pay Now'}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label="Phone Number"
-                variant="outlined"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                required
-                sx={{ mb: 2 }}
-                type="tel"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ mb: 2, border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
-                <CardElement options={cardElementOptions} />
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={!stripe || loading}
-                sx={{ py: 1.5, mt: 2, mb: 2, fontWeight: 'bold' }}
-              >
-                {loading ? <CircularProgress size={24} color="inherit" /> : 'Pay Now'}
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        sx={{ width: '100%' }}
-      >
-        <Alert
+          </form>
+        </Box>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
           onClose={handleCloseSnackbar}
-          severity="info"
-          sx={{ width: '100%', fontSize: '1.1rem', '.MuiAlert-message': { fontSize: '1rem' } }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          sx={{ width: '100%' }}
         >
-          {message}
-        </Alert>
-      </Snackbar>
-    </Container>
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity="info"
+            sx={{ width: '100%', fontSize: '1.1rem', '.MuiAlert-message': { fontSize: '1rem' } }}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+      </Container>
+    </Box>
   );
 };
 
 export default CheckoutForm;
-
-//

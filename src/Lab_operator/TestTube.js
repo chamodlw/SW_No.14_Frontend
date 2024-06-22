@@ -11,6 +11,8 @@ import Axios from 'axios';
 import jsPDF from 'jspdf';
 import JsBarcode from 'jsbarcode';
 import { createCanvas } from 'canvas';
+import backgroundImage from '../images/2.png';  // Import the background image
+
 
 const TestTube = () => {
     const [testTubes, setTestTubes] = useState([]);
@@ -104,7 +106,12 @@ const TestTube = () => {
     };
 
     return (
-        <Box>
+        <Box sx={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+        }}>
             <Patienthead />
             <TestTubeForm 
                 addTestTube={addTestTube}
