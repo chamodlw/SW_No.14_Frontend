@@ -27,6 +27,9 @@ import PatientInterface from './Patient/PatientInterface';
 import PViewTest from './Patient/Patient_Component/PViewTest';
 import AViewTest from './Admin/AViewTest';
 import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
+import Reportview from './Labasisstence/LabasisstencePages/Reportview';
+import ReportUI from './Labasisstence/LabasisstenceComponent/ReportUI';
+
 
 import Users from './Lab_operator/Users';
 import TestTube from './Lab_operator/TestTube';
@@ -92,6 +95,15 @@ function App() {
       {/* default loading path - Homepage*/}
       <Route path='*' element={<HomePage />} /> 
       {/* Redirect to HomePage for any unknown routes */}
+
+
+  {/* Lab asisstence IF  */}
+ 
+  <Route path= '/labasisstence' element={<LabAssistant/>}/>
+  <Route path= '/Reportview' element={<Reportview/>}/>
+  <Route path= '/ReportUI' element={<ReportUI/>}/>
+  
+        
     </Routes>
   </BrowserRouter>
     </div>
