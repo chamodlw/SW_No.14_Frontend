@@ -7,6 +7,8 @@ import Footer from '../Components/Footer';
 import UsersTable from "./UsersTable";
 import UserForm from './UserForm';  // Import UserForm
 import SearchUserForm from './SearchUserForm';  // Import SearchUserForm
+import backgroundImage from '../images/2.png';  // Import the background image
+
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -97,12 +99,15 @@ const Users = () => {
     };
 
     return (
-        <Box>
+            <Box sx={{
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '100vh',
+            }}>
             <Patienthead /> {/* Include the Head component here */}
             <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <Paper elevation={3} sx={{ p: 2 }}>
                             <UserForm 
                                 addUser={addUser}
                                 updateUser={updateUser}
@@ -110,15 +115,7 @@ const Users = () => {
                                 data={selectedUser}
                                 isEdit={isEdit}
                             />
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Paper elevation={3} sx={{ p: 2 }}>
                             <SearchUserForm onSearch={handleSearch} />
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Paper elevation={3} sx={{ p: 2 }}>
                             <UsersTable 
                                 rows={filteredUsers} 
                                 selectedUser={data => {
@@ -127,8 +124,6 @@ const Users = () => {
                                 }}
                                 deleteUser={data => window.confirm('Are you sure?') && deleteUser(data)}
                             />
-                        </Paper>
-                    </Grid>
                 </Grid>
             </Container>
             <Footer />

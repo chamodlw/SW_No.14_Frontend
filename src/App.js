@@ -19,7 +19,7 @@ import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
 import LabAssistant from "./pages/LabAssistant";
-import LabOperator from "./pages/LabOperator";
+import LabOperator from './pages/LabOperator';
 import ProtectedRoute from './Admin/Admin_Component/ProtectedRoute';
 import { UserProvider } from './Admin/Admin_Component/UserContext';
 import PatientInterface from './Patient/PatientInterface';
@@ -38,6 +38,8 @@ import BloodTesting from './Lab_assistant/BloodTesting';
 import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
+
+
 
 
 function App() {
