@@ -28,14 +28,17 @@ function Login() {
 
     //Receive the response from the backend
     try {
+      
       const response = await axios.post('http://localhost:3100/api/router_login/login', { username, password });
       console.log('Login response:', response.data);
       const userData = response.data; //making an Object called userData
       console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
       // console.log('User data type:', typeof userData); //Checking whether the userData is an object.
       if (userData.message!=="Success") {
+        
         toast.error(userData.error);
       } else {
+        console.log("enter");
         localStorage.setItem("myToken", response.data.data);
         const userId = jwtDecode(localStorage.getItem("myToken")).id;
         console.log("user id is="+userId);
@@ -59,14 +62,14 @@ function Login() {
             //console.log('Redirecting to Doctor page');
             navigate(`/Doctor/${userId}`);
             break;
-            case 'LABASSISTANT':
-              //console.log('Redirecting to LabAssistant page');
-              navigate('/LabAssistant/${userId}');
-              break;
-            case 'LABOPERATOR':
-                //console.log('Redirecting to Lab Operator page');
-                navigate('/LabOperator/${userId}');
-                break;
+          case 'LABASSISTANT':
+            //console.log('Redirecting to LabAssistant page');
+            navigate(`/LabAssistant/${userId}`);
+            break;
+          case 'LABOPERATOR':
+              //console.log('Redirecting to Lab Operator page');
+              navigate(`/LabOperator/${userId}`);
+            break;
           default:
             // Handle unrecognized roles or default redirection
             //console.log('Redirecting to Home page');

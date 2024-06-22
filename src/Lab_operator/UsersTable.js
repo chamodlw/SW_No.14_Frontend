@@ -29,6 +29,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                         <TableCell>Name</TableCell>
                         <TableCell>Test</TableCell>
                         <TableCell>Test Tubes</TableCell>
+                        <TableCell>Test Tube ID</TableCell>
                         <TableCell>Blood Type</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
@@ -41,6 +42,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.test}</TableCell>
                                 <TableCell>{row.test_tubes}</TableCell>
+                                <TableCell>{row.test_tube_id}</TableCell>
                                 <TableCell>{row.blood_type}</TableCell>
                                 <TableCell>
                                     <IconButton
@@ -52,9 +54,16 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                                     name: row.name,
                                                     test: row.test,
                                                     test_tubes: row.test_tubes,
+                                                    test_tube_id: row.test_tube_id,
                                                     blood_type: row.blood_type,
                                                 }
                                             )} // Fix here: changed user.id to row.id
+                                        sx={{
+                                            color: 'blue',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                                            },
+                                        }}
                                         style={{ marginRight: '10px' }}
                                     >
                                         <Edit />
@@ -62,6 +71,12 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
                                     <IconButton
                                         color="secondary"
                                         onClick={() => window.confirm('Are you sure?') && deleteUser({ id: row.id })}
+                                        sx={{
+                                            color: 'red',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                            },
+                                        }}
                                     >
                                         <Delete />
                                     </IconButton>

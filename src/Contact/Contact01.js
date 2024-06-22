@@ -26,9 +26,9 @@ export default function Contact01() {
    
     <FormProvider {...form}>
       
-      <Box sx={{ width: '80%',paddingLeft:'2rem'}}>
+      <Box sx={{ width: '80%',paddingLeft:'2rem',color:''}}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <h1>Contact Us</h1><hr/>
+       
 
         <div style={{margin:'3rem'}}>
         <h4>Name</h4>
@@ -44,7 +44,7 @@ export default function Contact01() {
         <MessageField/>
         <br/><br/>
         
-        <Button type="submit" variant="contained" color="primary">
+        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'200px',height:'50px'}}>
           Submit
         </Button>
         </div>
@@ -123,7 +123,7 @@ const MessageField = () => {
       error={!!errors.message} // set the error prop to true if there is an error in the message field
       helperText={errors.message?.message} // set the helperText prop to the error message if there is an error in the message field
       multiline // set the multiline prop to true to make it a text area
-      rows={4} // set the rows prop to 4 to adjust the height of the text area
+      rows={6} // set the rows prop to 4 to adjust the height of the text area
       maxLength={500} // set the maxLength prop to 500 to limit the number of characters in the message
       {...register("message", { // use the register function to register the message field with validation rules
         maxLength: { value: 500, message: "Message must be no more than 500 characters long" }, // set the maximum length rule and message

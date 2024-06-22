@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@mui/styles';
-import { Card, CardContent, Button, Typography, Grid, Modal } from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardContent, Button, Typography, Grid, Modal } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FastForwardIcon from '@mui/icons-material/FastForward';
-import LibraryAddSharpIcon from '@mui/icons-material/LibraryAddSharp';
-import FormatListNumberedSharpIcon from '@mui/icons-material/FormatListNumberedSharp';
-import ListAltSharpIcon from '@mui/icons-material/ListAltSharp';
-import Groups2SharpIcon from '@mui/icons-material/Groups2Sharp';
+import WysiwygTwoToneIcon from '@mui/icons-material/WysiwygTwoTone';
+import AddToPhotosTwoToneIcon from '@mui/icons-material/AddToPhotosTwoTone';
+import PlagiarismTwoToneIcon from '@mui/icons-material/PlagiarismTwoTone';
+import FactCheckTwoToneIcon from '@mui/icons-material/FactCheckTwoTone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(2),
     minHeight: 190,
     minWidth: 330,
+    maxWidth: 350,
     display: 'inline-block',
     margin: theme.spacing(3),
-    transition: 'transform 0.5s ease, opacity 0.7s ease', // Add opacity transition
-    cursor: 'pointer', // Add cursor pointer for better UX
-    boxShadow: '10px 15px 15px rgba(0, 0, 0, 1)', // Add shadow
+    transition: 'transform 0.5s ease, opacity 0.7s ease', 
+    cursor: 'pointer', 
+    boxShadow: '10px 15px 15px rgba(0, 0, 0, 1)', 
   },
   button: {
     textTransform: 'none',
@@ -42,11 +43,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     paddingRight:'4%', 
     paddingLeft:'2%',
-    // Increased padding
-    borderRadius: theme.spacing(1.5), // Rounded border
+    borderRadius: theme.spacing(1.5),
     transform: 'scale(1.5)', // Increase size by 1.5
     outline: 'none',
-    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.5)', // Add shadow
+    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.5)', 
   },
   clicked: { // Add new style for clicked card
     transform: 'translate(-50%, -50%) scale(0.8)',
@@ -80,19 +80,14 @@ const CardSlider = ({ cards }) => {
   };
 
   const handleAction = () => {
-    // Define actions based on the selected card
+    
     if (selectedCard) {
-      if (selectedCard.title === 'ADD NEW') {
-        navigate(`/AddTest/:id`);
-      } else if (selectedCard.title === 'AVAILABLE TESTS') {
-        navigate(`/AViewTest/:id`);
+      if (selectedCard.title === 'Add Test Tubes') {
+        navigate(`/lab-operator/test-tube`);
+      } else if (selectedCard.title === 'Add Blood Testings') {
+        navigate(`/lab-operator/users`);
       } 
-      else if (selectedCard.title === 'APPOINTMENTS') {
-        navigate(`/ViewAppointment/:id`);
-      } 
-      else if (selectedCard.title === 'PATIENTS') {
-        navigate(`/ViewPatient/:id`);
-      } 
+
     }
     handleCloseModal();
   };
@@ -153,11 +148,9 @@ const CardSlider = ({ cards }) => {
 // Usage
 const MyComponent = () => {
   const cards = [
-    { title: 'ADD NEW', content: 'Add new tests to the system' , icon:LibraryAddSharpIcon},
-    { title: 'AVAILABLE TESTS', content: 'View currently available test types' ,icon:FormatListNumberedSharpIcon},
-    { title: 'APPOINTMENTS', content: 'Patient appointments to blood tests' , icon:ListAltSharpIcon},
-    { title: 'PATIENTS', content: 'Patient already registered to the system' , icon:Groups2SharpIcon},
-    
+    { title: 'Add Test Tubes', content: 'View current appointmentssssssss' , icon:WysiwygTwoToneIcon},
+    { title: 'Add Blood Testings', content: 'Add new blood tests appoinments ssss' ,icon:AddToPhotosTwoToneIcon},
+
   ];
 
   return <CardSlider cards={cards} />;
