@@ -90,7 +90,7 @@ const CardSlider = ({ cards }) => {
       else if (selectedCard.title === 'APPOINTMENTS') {
         navigate(`/ViewAppointment/:id`);
       } 
-      else if (selectedCard.title === 'PATIENTS') {
+      else if (selectedCard.title === 'USERS') {
         navigate(`/ViewPatient/:id`);
       } 
     }
@@ -156,7 +156,7 @@ const MyComponent = () => {
     { title: 'ADD NEW', content: 'Add new tests to the system' , icon:LibraryAddSharpIcon},
     { title: 'AVAILABLE TESTS', content: 'View currently available test types' ,icon:FormatListNumberedSharpIcon},
     { title: 'APPOINTMENTS', content: 'Patient appointments to blood tests' , icon:ListAltSharpIcon},
-    { title: 'PATIENTS', content: 'Patient already registered to the system' , icon:Groups2SharpIcon},
+    { title: 'USERS', content: 'Users already registered to the system' , icon:Groups2SharpIcon},
     
   ];
 
