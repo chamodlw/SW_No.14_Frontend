@@ -6,7 +6,7 @@ import { Card, CardContent, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Selectrole from './Selectrole';
 
-export default function PatientSearch({ rows }) {
+export default function PatientSearch({ rows , selectedRole, handleChange}) {
   const [searchValue, setSearchValue] = useState('');
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [showCard, setShowCard] = useState(false);
@@ -29,7 +29,7 @@ export default function PatientSearch({ rows }) {
   return (
     <div style={{ position: 'relative', width: '50%', margin: '0 auto', paddingBottom: '20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Selectrole/>
+        <Selectrole selectedRole={selectedRole}  handleChange={handleChange}/>
         <Autocomplete
           freeSolo
           options={rows}
@@ -43,7 +43,7 @@ export default function PatientSearch({ rows }) {
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Search for a patient"
+              label={`Search for a ${selectedRole}`}
               variant="outlined"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
