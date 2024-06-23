@@ -33,10 +33,10 @@ export default function PatientSearch({ rows , selectedRole, handleChange}) {
         <Autocomplete
           freeSolo
           options={rows}
-          getOptionLabel={(row) => row?.firstname || ''}
+          getOptionLabel={(row) => row?.firstname + ' ' + row?.lastname || ''}
           filterOptions={(options, { inputValue }) =>
             options.filter((option) =>
-              option?.firstname?.toLowerCase().includes(inputValue.toLowerCase())
+              (option?.firstname + ' ' + option?.lastname)?.toLowerCase().includes(inputValue.toLowerCase())
             )
           }
           onChange={(event, value) => setSelectedPatient(value)}
@@ -104,7 +104,7 @@ export default function PatientSearch({ rows , selectedRole, handleChange}) {
             >
               <CardContent>
                 <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                  {selectedPatient?.fullname}
+                {selectedPatient?.firstname + " " + selectedPatient?.lastname}
                 </Typography>
                 <Typography variant="body1">
                   {selectedPatient && (

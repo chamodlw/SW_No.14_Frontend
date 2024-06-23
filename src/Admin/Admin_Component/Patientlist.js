@@ -9,8 +9,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 
-
-
 function StickyHeadTable({ setRows, selectedRole, handleChange }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -18,7 +16,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
 
   const columns = [
     { id: 'nationalID', label: 'National ID', minWidth: 170 },
-    { id: 'firstname', label: `${selectedRole} Name`, minWidth: 100 },
+    { id: 'name', label: `${selectedRole} Name`, minWidth: 20 },
     {
       id: 'email',
       label: 'Email',
@@ -78,7 +76,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.nationalID}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = column.id === 'name' ? `${row.firstname} ${row.lastname}` : row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {value}
