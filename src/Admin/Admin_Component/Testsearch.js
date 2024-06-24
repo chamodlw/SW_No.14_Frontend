@@ -143,7 +143,7 @@ export default function Testsearch({ rows }) {
                       <li><strong>Test ID:</strong> {selectedTest?.id}</li>
                       <li><strong>Test Name:</strong> {selectedTest?.name}</li>
                       <li><strong>Test Description:</strong> <br/>{selectedTest?.description}</li>
-                      <li><strong>Default Range:</strong> {"("+selectedTest?.min+" - "+selectedTest?.max+")"}</li>
+                      <li><strong>Default Range:</strong> {"("+selectedTest?.min+" - "+selectedTest?.max+")"+selectedTest?.unit}</li>
                       <li>
                         <strong>Test Price:</strong>
                         {isEditing ? (
@@ -155,7 +155,7 @@ export default function Testsearch({ rows }) {
                             sx={{ marginLeft: 1 }}
                           />
                         ) : (
-                          "LKR " + selectedTest?.price
+                          " LKR " + selectedTest?.price
                         )}
                       </li>
                     </ul>

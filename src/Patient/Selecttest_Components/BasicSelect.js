@@ -80,7 +80,7 @@ function BasicSelect() {
       
     if (selectedTest) {
       setPatientId(jwtDecode(localStorage.getItem("myToken")).id);
-      setpatientName(jwtDecode(localStorage.getItem("myToken")).username);
+      setpatientName(jwtDecode(localStorage.getItem("myToken")).name);
       setState('register_only');
       setRegdate(new Date());
       setBillValue(1000);
