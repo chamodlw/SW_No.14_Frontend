@@ -59,12 +59,20 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   },
 }));
 
-//main component
-//userData contains initial user data
+const Notification = styled(Paper)(({ theme }) => ({
+  position: 'fixed',
+  bottom: theme.spacing(2),
+  right: theme.spacing(2),
+  padding: theme.spacing(2),
+  backgroundColor: '#4caf50',
+  color: '#fff',
+  zIndex: 10000,
+  display: 'none', // Initially hide the notification
+}));
+
 const UserProfileUpdate = ({ userData, onClose }) => {
   const [user, setUser] = useState({
-    //user: Holds the user data, including the profile picture.
-    _id: '',
+    id: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -76,17 +84,12 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     profilePicUrl: '',
   });
 
-// crop: Manages the cropping area position.
-// zoom: Manages the zoom level for cropping.
-// croppedAreaPixels: Stores the pixels of the cropped area.
-// croppingImage: Boolean to manage the cropping modal's visibility.
-
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppingImage, setCroppingImage] = useState(false);
+  const [showNotification, setShowNotification] = useState(false); // State for showing the notification
 
-  //useEffect: Runs when userData changes, updating the user state and logging the data.
   useEffect(() => {
     if (userData) {
       setUser({ ...userData, profilePicUrl: userData.profilePic });
@@ -96,11 +99,10 @@ const UserProfileUpdate = ({ userData, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({
-      ...user,
+    setUser(prevUser => ({
+      ...prevUser,
       [name]: value,
-    });
-    console.log('Updated user data:', { ...user, [name]: value });
+    }));
   };
 
   const handleFileChange = async (e) => {
@@ -153,72 +155,56 @@ const UserProfileUpdate = ({ userData, onClose }) => {
   useEffect(() => {
     console.log('Profile Pic URL changed:', user.profilePicUrl);
   }, [user.profilePicUrl]);
-  
-  //If the User ID is missing, Check the handleSubmit Method to make sure the user ID is being appended to the FormData object correctly.
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Submitting user data:', user);
-  
-    // Extracting userId from user object
-    const { id, _id } = user;
-    const userId = id || _id;
-    console.log('Extracted userId:', userId);
 
-    // Checking if userId is valid
-    if (!userId) {
-      console.error('User ID is missing or invalid:', user);
-      return;
+    const formData = new FormData();
+
+    if (user.profilePic) {
+      formData.append('profilePic', user.profilePic);
     }
-  
-    try {
-      // Creating a FormData object to send data via multipart/form-data
-      const formData = new FormData();
-      
-      // Appending profilePic to formData
-      if (user.profilePic) {
-        formData.append('profilePic', user.profilePic);
-      } else {
-        console.error('Profile picture is missing');
+
+    Object.keys(user).forEach((key) => {
+      if (key !== 'profilePic' && key !== 'profilePicUrl') {
+        formData.append(key, user[key]);
       }
-      
-      // Appending other user fields to formData
-      Object.keys(user).forEach((key) => {
-        if (key !== 'profilePic' && key !== 'profilePicUrl') {
-          formData.append(key, user[key]);
-        }
-      });
-  
-      // Append additional property (e.g., userId)
-      formData.append('userId', userId);
-      console.log('FormData content:', Array.from(formData.entries()));
-  
-      // Sending POST request to update user profile
-      const response = await fetch('http://localhost:3100/api/router_login/updateuser', {
-        //const response = await fetch('http://localhost:3100/api/updateuser', {
+    });
+
+    console.log('FormData content:', Array.from(formData.entries()));
+
+    // Add your API endpoint and headers here
+    const apiUrl = 'http://localhost:3100/api/router_login/updateuser';
+
+    try {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         body: formData,
+        credentials: 'include',
+        // headers: {
+        //   'Authorization': `Bearer ${token}`,
+        // },
       });
-  
-      // Checking if the request was successful
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Failed to update profile:', errorText);
         throw new Error('Failed to update profile');
       }
-  
-      // Parsing JSON response from the server
+
       const responseData = await response.json();
       console.log('Profile updated successfully:', responseData);
-      
-      // Closing the dialog or performing other actions after successful update
+
+            // Show notification on successful update
+            setShowNotification(true);
+
       onClose();
     } catch (error) {
-      // Handling any errors that occur during the fetch or parsing
       console.error('Error updating profile:', error);
     }
   };
-  
-  
+
   return (
     <Container component={Root}>
       <Grid container spacing={3}>

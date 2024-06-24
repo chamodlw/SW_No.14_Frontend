@@ -17,14 +17,13 @@ function AdminInterface() {
         if (res.data === "success") {
           console.log("Successed"); // Or any other function or state update
         } else {
+          console.log("User not authenticated as admin");
           handleNavigate('/');
         }
       })
       .catch(err => console.log(err));
       console.error("Error checking admin authentication:");
   }, [handleNavigate]);
-
-
 
   return (
     <div className="AdminInterface">

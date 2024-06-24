@@ -10,8 +10,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
   console.log('ProtectedRoute - User:', user);
   if (!isReady) {
     console.log('ProtectedRoute - Checking authentication status...');
-    return <h1>Fetching user data</h1>;
-  }
+    return;  }
   
   // Log the user object
   console.log('ProtectedRoute - User:', user);
