@@ -38,7 +38,7 @@ import BloodTesting from './Lab_assistant/BloodTesting';
 import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
-
+import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
 
 
 
@@ -104,6 +104,9 @@ function App() {
   <Route path= '/labasisstence' element={<LabAssistant/>}/>
   <Route path= '/Reportview' element={<Reportview/>}/>
   <Route path= '/ReportUI' element={<ReportUI/>}/>
+
+  {/* Invoice Route */}
+  <Route path='/invoice' element = {<AppoinmentInvoice/>}/>
   
         
     </Routes>
@@ -112,6 +115,7 @@ function App() {
     );
 
 }
+
 
 export default App;
 //

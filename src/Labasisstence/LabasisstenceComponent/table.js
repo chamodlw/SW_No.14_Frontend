@@ -55,9 +55,9 @@ const navigate = useNavigate();
   return (
 
     <TableRow>
-      <TableCell>{props.record._id} </TableCell>
-      <TableCell>{props.record.nationalID}</TableCell>
-      <TableCell>{props.record.fullname}</TableCell>
+      <TableCell>{props.record.id} </TableCell>
+      <TableCell>{props.record.pname}</TableCell>
+      <TableCell>{props.record.pid}</TableCell>
 
       <TableCell>
         <Button variant="contained" color="primary" onClick={() => HandleGenerate(props.record)}>
@@ -114,9 +114,9 @@ return(
         <TableHead>
           <TableRow>
             <TableCell>ReportID </TableCell>
-            <TableCell>NationalID</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Genarate</TableCell>
+            <TableCell>Pation ID</TableCell>
+            <TableCell>Vive report</TableCell>
           </TableRow>
         </TableHead>
 
