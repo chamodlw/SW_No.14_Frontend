@@ -14,11 +14,9 @@ function AdminInterface() {
   useEffect(() => {
     axios.get('http://localhost:3100/api/AdminInterface')
       .then(res => {
-        console.log('AdminInterface - Response:', res.data);
         if (res.data === "success") {
           console.log("Successed"); // Or any other function or state update
         } else {
-          console.log("User not authenticated as admin");
           handleNavigate('/');
         }
       })
