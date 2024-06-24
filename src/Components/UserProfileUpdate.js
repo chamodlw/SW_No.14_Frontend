@@ -59,13 +59,14 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   },
 }));
 
+//Notification Component
 const Notification = styled(Paper)(({ theme }) => ({
   position: 'fixed',
   bottom: theme.spacing(2),
   right: theme.spacing(2),
   padding: theme.spacing(2),
-  backgroundColor: '#4caf50',
-  color: '#fff',
+  backgroundColor: '#808080',
+  color: '#FFFFFF',
   zIndex: 10000,
   display: 'none', // Initially hide the notification
 }));
@@ -88,7 +89,7 @@ const UserProfileUpdate = ({ userData, onClose }) => {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppingImage, setCroppingImage] = useState(false);
-  const [showNotification, setShowNotification] = useState(false); // State for showing the notification
+  const [showNotification, setShowNotification] = useState(false); // State for showing the notification. State variable to manage the display of the notification.
 
   useEffect(() => {
     if (userData) {
@@ -199,6 +200,11 @@ const UserProfileUpdate = ({ userData, onClose }) => {
             // Show notification on successful update
             setShowNotification(true);
 
+                  // Hide notification after 2 seconds
+      setTimeout(() => {
+        setShowNotification(false);
+      }, 2000); //Timer setting
+
       onClose();
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -262,6 +268,12 @@ const UserProfileUpdate = ({ userData, onClose }) => {
           </div>
         </div>
       </Modal>
+
+            {/* Notification for changes updated */}
+            <Notification style={{ display: showNotification ? 'block' : 'none' }}>
+        Changes Updated
+      </Notification>
+
     </Container>
   );
 };
