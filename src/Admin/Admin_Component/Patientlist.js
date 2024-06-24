@@ -8,34 +8,32 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
-import Selectrole from './Selectrole';
 
-const columns = [
-  { id: 'nationalID', label: 'National ID', minWidth: 170 },
-  { id: 'fullname', label: 'Full Name', minWidth: 100 },
-  {
-    id: 'email',
-    label: 'email',
-    minWidth: 170,
-    align: 'right',
-  }
-];
 
-function StickyHeadTable({ setRows }) {
+
+function StickyHeadTable({ setRows, selectedRole, handleChange }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setLocalRows] = useState([]);
-  const Set = (value)=>{
-    return value;
-  }
+
+  const columns = [
+    { id: 'nationalID', label: 'National ID', minWidth: 170 },
+    { id: 'firstname', label: `${selectedRole} Name`, minWidth: 100 },
+    {
+      id: 'email',
+      label: 'Email',
+      minWidth: 170,
+      align: 'right',
+    }
+  ];
 
   useEffect(() => {
     axios.get('http://localhost:3100/api/router_login/users')
       .then(response => {
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
-          // Filter users by role 
-          const patientUsers = responseData.filter(user => user/*.role === <Selectrole callback= {Set}/>*/);
+          // Filter users by role
+          const patientUsers = responseData.filter(user => user.role === selectedRole);
           setLocalRows(patientUsers);
           setRows(patientUsers); // Update the parent component's state
         } else {
@@ -45,8 +43,7 @@ function StickyHeadTable({ setRows }) {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [setRows]);
-  
+  }, [selectedRole, setRows]); // Include selectedRole in the dependency array
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
