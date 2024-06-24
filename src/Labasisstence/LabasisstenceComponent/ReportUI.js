@@ -77,6 +77,7 @@ const tableData = tests.map((test) => ({
   testName: test.testName,
   min: testsDB.find((dbTest) => dbTest.id === test.testId)?.min || "no data",
   max: testsDB.find((dbTest) => dbTest.id === test.testId)?.max || "no data",
+  unit: testsDB.find((dbTest) => dbTest.id === test.testId)?.unit || "no data",
 }));
 
 
@@ -193,15 +194,11 @@ const tableData = tests.map((test) => ({
             {/* Table body */}
             <TableBody>
               {tableData.map((row) => (
-
-
-
-
                 <TableRow key={row.testId}>
                   <TableCell>{row.testName}</TableCell>
                   <TableCell>{row.result}</TableCell>
                   <TableCell>{row.min} - {row.max}</TableCell>
-                  <TableCell>{}</TableCell>
+                  <TableCell>{row.unit}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
