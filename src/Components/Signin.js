@@ -3,25 +3,24 @@ import { Grid, Typography, TextField, Button, Select, FormControl, InputLabel, M
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import photo from '../images/HealthLabLogo.jpg';
+import { toast, Toaster } from 'react-hot-toast';
 
 const Signin = () => {
   const [data, setData] = useState({
-    firstname:'',
-    lastname:'',
-    email:'',
-    address:'',
-    nationalID:'',
-    phonenumber:'',
-    role:'',
-    username:'',
-    password:''
-  });  
+    firstname: '',
+    lastname: '',
+    email: '',
+    address: '',
+    nationalID: '',
+    phonenumber: '',
+    role: '',
+    username: '',
+    password: ''
+  });
 
-  const [confirmPassword, setConfirmPassword] = useState(''); // State variable for confirm password
-
-  const [error, setError] = useState({ field: '', message: '' }); // Initialize error as an object //state variable
-
-  const navigate = useNavigate(); //To navigate after Signin
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState({ field: '', message: '' });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -34,52 +33,54 @@ const Signin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-      // Password confirmation check
-      if (data.password !== confirmPassword) {
-        setError({ field: 'confirmPassword', message: 'Confirm Password does not match' });
-        return;
-      }
+    if (data.password !== confirmPassword) {
+      setError({ field: 'confirmPassword', message: 'Confirm Password does not match' });
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
       console.log('Server response:', response);
 
-      if(response.data.error === false){
-        //console.log('Setting error:', `User with this ${response.data.message} already exists.`);
-        //setError(`User with this ${response.data.message} already exists.`);
-        console.log('Error field:', response.data.field);
-        console.log('Error message:', response.data.message);
+      if (response.data.error === false) {
         setError({ field: response.data.field, message: response.data.message });
       } else {
-        // Reset the error state if no error
-          setError({ field: '', message: '' });
-          setData({
-            firstname:'',
-            lastname:'',
-            email:'',
-            address:'',
-            nationalID:'',
-            phonenumber:'',
-            role:'',
-            username:'',
-            password:''
-          });
+        setError({ field: '', message: '' });
+        setData({
+          firstname: '',
+          lastname: '',
+          email: '',
+          address: '',
+          nationalID: '',
+          phonenumber: '',
+          role: '',
+          username: '',
+          password: ''
+        });
+
+        const successMessage = data.role === 'PATIENT' ? 'User Registered Successfully' : 'Registration Pending';
+        console.log('Displaying toast message:', successMessage);
+        toast.success(successMessage, {
+          duration: 3000, // Toast duration set to 4 seconds
+        });
+
+        setTimeout(() => {
           navigate('/HomePage');
+        }, 3000); // Navigate to HomePage after 400 milliseconds
       }
     } catch (error) {
       console.error('Error registering user:', error);
       if (error.response && error.response.status === 409) {
-        console.log('Error field:', error.response.data.field);
-        console.log('Error message:', error.response.data.message);
         setError({ field: error.response.data.field, message: error.response.data.message });
       } else {
         setError({ field: '', message: 'Error registering user: ' + error.message });
       }
     }
   };
-  console.log('Error state:', error);
+
   return (
     <Grid container justifyContent="center">
+      <Toaster />
       <form
         onSubmit={handleSubmit}
         style={{
@@ -134,9 +135,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
-
           </Grid>
-
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -158,7 +157,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
-            </Grid>
+          </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -184,8 +183,8 @@ const Signin = () => {
                 <MenuItem value="PATIENT">Patient</MenuItem>
                 <MenuItem value="DOCTOR">Doctor</MenuItem>
                 <MenuItem value="ADMIN">Admin</MenuItem>
-                <MenuItem value="LABOPERATOR">LabOperator</MenuItem>
-                <MenuItem value="LABASSISTANT">LabAssistant</MenuItem>
+                <MenuItem value="LABOPERATOR">Lab Operator</MenuItem>
+                <MenuItem value="LABASSISTANT">Lab Assistant</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -199,7 +198,7 @@ const Signin = () => {
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
             />
-            </Grid>
+          </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -214,13 +213,13 @@ const Signin = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-            fullWidth
-            label="Confirm Password"
-            variant="outlined"
-            type="password"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange} //Added value and onChange props for the "Confirm Password" field:
-            style={{ marginBottom: "20px" }}
+              fullWidth
+              label="Confirm Password"
+              variant="outlined"
+              type="password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              style={{ marginBottom: "20px" }}
             />
           </Grid>
 
@@ -236,7 +235,7 @@ const Signin = () => {
           Already have an account? <Link to="/Login">Login</Link>
         </Typography>
 
-        <Button 
+        <Button
           type='submit'
           sx={{ variant: 'contained', color: '#FFFFFF', background: '#101754', width: '100%', height: '50px' }}
         >
@@ -248,5 +247,3 @@ const Signin = () => {
 };
 
 export default Signin;
-
-// 2307261097
