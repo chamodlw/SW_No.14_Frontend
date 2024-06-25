@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, TextField, Button } from "@mui/material";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import EmailIcon from '@mui/icons-material/Email'; // Import Email Icon from MUI
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -57,16 +58,28 @@ const ForgotPassword = () => {
       >
         {step === 1 ? (
           <>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+              <EmailIcon style={{ fontSize: 48, marginRight: '10px', color: '#0085FF' }} />
+              <Typography
+                variant="h5"
+                style={{
+                  marginBottom: "7%",
+                  marginTop: "3%",
+                  color: "#0085FF",
+                  fontWeight: "bold",
+                }}
+              >
+                Forgot Password
+              </Typography>
+            </div>
             <Typography
-              variant="h5"
+              variant="subtitle1"
               style={{
-                marginBottom: "7%",
-                marginTop: "3%",
-                color: "#0085FF",
-                fontWeight: "bold",
+                marginBottom: "20px",
+                color: "#333",
               }}
             >
-              Forgot Password
+              Enter your email address to reset your password
             </Typography>
             <TextField
               fullWidth
@@ -76,7 +89,7 @@ const ForgotPassword = () => {
               onChange={(e) => setEmail(e.target.value)}
               style={{ marginBottom: "25px" }}
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: '20px' }}>
               Send Verification Code
             </Button>
           </>
@@ -110,7 +123,7 @@ const ForgotPassword = () => {
               onChange={(e) => setNewPassword(e.target.value)}
               style={{ marginBottom: "25px" }}
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: '20px' }}>
               Reset Password
             </Button>
           </>
