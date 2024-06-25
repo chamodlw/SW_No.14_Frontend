@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const useIntersectionObserver = (ref, callback, options) => {
   useEffect(() => {

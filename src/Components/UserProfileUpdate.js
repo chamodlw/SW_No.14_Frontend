@@ -1,3 +1,4 @@
+//UserProfileUpdate.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Grid, Avatar, Typography, TextField, Button, Paper, Modal, Slider } from '@mui/material';
 import { styled } from '@mui/system';
@@ -106,6 +107,7 @@ const UserProfileUpdate = ({ userData, onClose }) => {
     }));
   };
 
+  //user.profilePic is set to the selected File object, and user.profilePicUrl to the URL for preview purposes.
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -183,9 +185,6 @@ const UserProfileUpdate = ({ userData, onClose }) => {
         method: 'POST',
         body: formData,
         credentials: 'include',
-        // headers: {
-        //   'Authorization': `Bearer ${token}`,
-        // },
       });
 
       if (!response.ok) {

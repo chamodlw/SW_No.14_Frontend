@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
 import ForgotPassword from './Components/ForgotPassword';
+import ChangePassword from './Components/ChangePassword';
 import ViewPatient from './Admin/ViewPatients';
 import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
@@ -52,7 +53,7 @@ function App() {
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path="/forgetpassword" element={<ForgotPassword />} />
-
+      <Route path="/change-password" element={<ChangePassword />} />
       <Route path='/Signin' element={<Signin/>}/>
       <Route path='/HomePage/*' element={<HomePage/>}/>
       <Route path='/Patient/:id' element={<Patient/>}/> 
