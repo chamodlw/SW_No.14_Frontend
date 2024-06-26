@@ -29,7 +29,7 @@ import AViewTest from './Admin/AViewTest';
 import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 import Reportview from './Labasisstence/LabasisstencePages/Reportview';
 import ReportUI from './Labasisstence/LabasisstenceComponent/ReportUI';
-
+import TestResult from './Lab_operator/TestResult';
 
 import Users from './Lab_operator/Users';
 import TestTube from './Lab_operator/TestTube';
@@ -83,7 +83,7 @@ function App() {
 
       <Route path='/UserProfile/:id' element={<UserProfile/>}/>
       <Route path='/UserProfileUpdate/:id' element={<UserProfileUpdate/>}/>
-
+      <Route path='/lab-operator/test-result' element={<TestResult />} />
       <Route path='/lab-operator/users' element={<Users />} />
       <Route path='/lab-operator/test-tube' element={<TestTube />} />
       <Route path='/lab-operator/manage-test-tubes' element={<ManageTestTube />} />
