@@ -42,7 +42,7 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
         } catch (error) {
             console.error('Error fetching test tubes:', error);
         }
-    };
+    }; 
 
 
     const validateForm = () => {

@@ -10,6 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { jwtDecode } from 'jwt-decode';
 
 
 function useQuery() {
@@ -82,7 +83,7 @@ const FixedContainer = () => {
     try {
       const response = await axios.post('http://localhost:3100/api/approve', {
         reportId: rid,
-        doctorName: nm,
+        doctorName: jwtDecode(localStorage.getItem("myToken")).username,
         recommendation: msg,
         patientId: pid,
       });
@@ -138,7 +139,7 @@ const FixedContainer = () => {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                value={nm}
+                value={jwtDecode(localStorage.getItem("myToken")).username}
                 onChange={(e) => setNm(e.target.value)}
                 id="outlined"
                 label="Doctor name"

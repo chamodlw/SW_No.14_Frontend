@@ -86,6 +86,8 @@ const CardSlider = ({ cards }) => {
         navigate(`/lab-operator/test-tube`);
       } else if (selectedCard.title === 'Add Blood Testings') {
         navigate(`/lab-operator/users`);
+      } else if (selectedCard.title === 'Add Test Results') {
+        navigate(`/lab-operator/test-result`);
       } 
 
     }
@@ -150,7 +152,8 @@ const MyComponent = () => {
   const cards = [
     { title: 'Add Test Tubes', content: 'View current appointmentssssssss' , icon:WysiwygTwoToneIcon},
     { title: 'Add Blood Testings', content: 'Add new blood tests appoinments ssss' ,icon:AddToPhotosTwoToneIcon},
-
+    { title: 'Add Test Results', content: 'Add new test results' ,icon:AddToPhotosTwoToneIcon},
+    { title: 'Veiw Reports', content: 'Veiw tset reports' ,icon:AddToPhotosTwoToneIcon},
   ];
 
   return <CardSlider cards={cards} />;

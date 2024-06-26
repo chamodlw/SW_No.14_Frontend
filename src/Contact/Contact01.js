@@ -26,7 +26,7 @@ export default function Contact01() {
    
     <FormProvider {...form}>
       
-      <Box sx={{ width: '80%',paddingLeft:'2rem',color:''}}>
+      
       <form onSubmit={form.handleSubmit(onSubmit)}>
        
 
@@ -43,13 +43,13 @@ export default function Contact01() {
        <h4> Message</h4>
         <MessageField/>
         <br/><br/>
-        
-        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'200px',height:'50px'}}>
+        <br/><br/>
+        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'300px',height:'50px'}}>
           Submit
         </Button>
         </div>
       </form>
-      </Box>
+    
       
     </FormProvider>
     
@@ -62,6 +62,7 @@ const NameField = () => {
 
   return (
  <TextField
+ sx={{ width: '75%' }}
       label="Name"
       name="name"
       required
@@ -82,6 +83,7 @@ const EmailField = () => {
   );
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Email"
       name="email"
       required 
@@ -99,6 +101,7 @@ const PhoneNumberField = () => {
   const [value, setValue] = React.useState();
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Phone Number"
       name="phone_number"
       required 
@@ -117,6 +120,7 @@ const MessageField = () => {
   const { register, formState: { errors } } = useFormContext(); // use the useFormContext hook to access the form methods and values
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Message"
       name="message"
       required // set the required prop to true
