@@ -1,12 +1,12 @@
-
+// src/Lab_operator/laboperatorInterface.js
+import React from 'react';
 import Patienthead from '../Components/Patienthead';
 import Footer from '../Components/Footer';
 import { Grid } from '@mui/material';
 import '../maincss/Class.css';
-import LabOperatorCards from './labOperator_Component/labOperator_cards'
+import LabOperatorCards from './labOperator_component/labOperator_card';
 
 function LaboperatorInterface() {
-
   return (
     <div className="Class">
       <Patienthead />

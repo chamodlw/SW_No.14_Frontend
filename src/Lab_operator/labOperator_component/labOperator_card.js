@@ -1,3 +1,4 @@
+// src/Lab_operator/labOperator_component/labOperator_card.js
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Button, Typography, Grid, Modal } from '@material-ui/core';
@@ -7,8 +8,6 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FastForwardIcon from '@mui/icons-material/FastForward';
 import WysiwygTwoToneIcon from '@mui/icons-material/WysiwygTwoTone';
 import AddToPhotosTwoToneIcon from '@mui/icons-material/AddToPhotosTwoTone';
-import PlagiarismTwoToneIcon from '@mui/icons-material/PlagiarismTwoTone';
-import FactCheckTwoToneIcon from '@mui/icons-material/FactCheckTwoTone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -80,7 +78,6 @@ const CardSlider = ({ cards }) => {
   };
 
   const handleAction = () => {
-    
     if (selectedCard) {
       if (selectedCard.title === 'Add Test Tubes') {
         navigate(`/lab-operator/test-tube`);
@@ -94,7 +91,6 @@ const CardSlider = ({ cards }) => {
     handleCloseModal();
   };
 
-  // Inside the CardSlider component
   const IconComponent = selectedCard && selectedCard.icon;
 
   return (
@@ -119,7 +115,7 @@ const CardSlider = ({ cards }) => {
                   <Typography color="textSecondary">
                     {card.content}
                   </Typography>
-                  <Typography >
+                  <Typography>
                     {<card.icon/>}
                   </Typography>
                 </CardContent>
@@ -139,7 +135,7 @@ const CardSlider = ({ cards }) => {
         <div className={classes.paper}>
           <h2>{selectedCard && selectedCard.title}</h2>
           <p>{selectedCard && selectedCard.content}</p>
-          <IconComponent sx={{paddingBottom:'10%'}}/>
+          {IconComponent && <IconComponent sx={{paddingBottom:'10%'}}/>}
           <Button onClick={handleAction} color="primary">CLICK<FastForwardIcon/></Button>
         </div>
       </Modal>
@@ -147,8 +143,7 @@ const CardSlider = ({ cards }) => {
   );
 };
 
-// Usage
-const MyComponent = () => {
+const LabOperatorCards = () => {
   const cards = [
     { title: 'Add Test Tubes', content: 'View current appointmentssssssss' , icon:WysiwygTwoToneIcon},
     { title: 'Add Blood Testings', content: 'Add new blood tests appoinments ssss' ,icon:AddToPhotosTwoToneIcon},
@@ -159,4 +154,4 @@ const MyComponent = () => {
   return <CardSlider cards={cards} />;
 };
 
-export default MyComponent;
+export default LabOperatorCards;

@@ -19,7 +19,7 @@ import Patient  from "./pages/Patient";
 import Doctor from "./pages/Doctor";
 import UserProfile from "./Components/UserProfile";
 import LabAssistant from "./pages/LabAssistant";
-import LabOperator from "./pages/LabOperator";
+import LabOperator from './pages/LabOperator';
 import ProtectedRoute from './Admin/Admin_Component/ProtectedRoute';
 import { UserProvider } from './Admin/Admin_Component/UserContext';
 import PatientInterface from './Patient/PatientInterface';
@@ -27,7 +27,10 @@ import PatientInterface from './Patient/PatientInterface';
 import PViewTest from './Patient/Patient_Component/PViewTest';
 import AViewTest from './Admin/AViewTest';
 import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
+import Reportview from './Labasisstence/LabasisstencePages/Reportview';
+import ReportUI from './Labasisstence/LabasisstenceComponent/ReportUI';
 import TestResult from './Lab_operator/TestResult';
+
 import Users from './Lab_operator/Users';
 import TestTube from './Lab_operator/TestTube';
 import ManageTestTube from './Lab_operator/ManageTestTube';
@@ -35,6 +38,8 @@ import BloodTesting from './Lab_assistant/BloodTesting';
 import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
+import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
+
 
 
 function App() {
@@ -92,12 +97,25 @@ function App() {
       {/* default loading path - Homepage*/}
       <Route path='*' element={<HomePage />} /> 
       {/* Redirect to HomePage for any unknown routes */}
+
+
+  {/* Lab asisstence IF  */}
+ 
+  <Route path= '/labasisstence' element={<LabAssistant/>}/>
+  <Route path= '/Reportview' element={<Reportview/>}/>
+  <Route path= '/ReportUI' element={<ReportUI/>}/>
+
+  {/* Invoice Route */}
+  <Route path='/invoice' element = {<AppoinmentInvoice/>}/>
+  
+        
     </Routes>
   </BrowserRouter>
     </div>
     );
 
 }
+
 
 export default App;
 //
