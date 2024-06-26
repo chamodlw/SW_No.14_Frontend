@@ -10,9 +10,9 @@ function LaboperatorInterface() {
   return (
     <div className="Class">
       <Patienthead />
-      <Grid sx={{ paddingTop: '13%', paddingBottom: '10%', alignItems: 'center' }}>
-        <LabOperatorCards sx={{ alignItems: 'center' }} />
-      </Grid>
+      <Grid sx={{paddingTop:'13%', paddingBottom:'10%', alignitems:'center'}}>
+        <LabOperatorCards sx ={{ alignitems:'center'}}/>
+      </Grid>    
       <Footer />
     </div>
   );
