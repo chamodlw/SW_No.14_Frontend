@@ -39,7 +39,7 @@ import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
 import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
-
+import PPendViewAppointment from './Patient/Patient_Component/PPendViewAppointment';
 
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
       <Route path='/ViewAppointment/:id' element={<ViewAppointment/>}/>
       <Route path='/PViewAppointment/:id' element={<PViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
-      
+      <Route path='/PPendViewAppointment/:id' element={<PPendViewAppointment/>}/>
       
       
       <Route path='/PViewTest/:id' element={<PViewTest/>}/>

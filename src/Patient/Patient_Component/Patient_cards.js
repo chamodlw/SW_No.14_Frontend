@@ -83,12 +83,12 @@ const CardSlider = ({ cards }) => {
     
     if (selectedCard) {
       if (selectedCard.title === 'PENDING') {
-        navigate(`/PViewAppointment/:id`);
+        navigate(`/PPendViewAppointment/:id`);
       } else if (selectedCard.title === 'NEW APPOINTMENT') {
         navigate(`/Selecttest`);
       } 
       else if (selectedCard.title === 'HISTORY') {
-        navigate(`/ViewAppointment/:id`);
+        navigate(`/PViewAppointment/:id`);
       } 
       else if (selectedCard.title === 'TYPES') {
         navigate(`/PViewTest/:id`);

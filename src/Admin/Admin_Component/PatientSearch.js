@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Card, CardContent, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Selectrole from './Selectrole';
+import { height } from '@mui/system';
 
 export default function PatientSearch({ rows , selectedRole, handleChange}) {
   const [searchValue, setSearchValue] = useState('');
@@ -27,7 +28,7 @@ export default function PatientSearch({ rows , selectedRole, handleChange}) {
   };
 
   return (
-    <div style={{ position: 'relative', width: '50%', margin: '0 auto', paddingBottom: '20px' }}>
+    <div style={{ position: 'relative', maxWidth: '50%', margin: '0 auto', paddingBottom: '20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Selectrole selectedRole={selectedRole}  handleChange={handleChange}/>
         <Autocomplete
@@ -52,11 +53,11 @@ export default function PatientSearch({ rows , selectedRole, handleChange}) {
                 type: 'search',
                 sx: { borderRadius: '20px' },
               }}
-              style={{ width: '400px' }} // Adjust width as needed
+              style={{ width: '500px' }} // Adjust width as needed
             />
           )}
         />
-        <IconButton onClick={handleSearch}>
+        <IconButton onClick={handleSearch} sx={{ width: '2cm' }}>
           <SearchIcon sx={{ color: 'action.active', ml: 1.5 }} />
         </IconButton>
       </div>

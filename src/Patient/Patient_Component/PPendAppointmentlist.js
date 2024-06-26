@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,32 +8,28 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
-function StickyHeadTable({ setRows, selectedRole, handleChange }) {
+const columns = [
+  { id: 'id', label: 'Appointment ID', minWidth: 170 },
+  { id: 'regdate', label: 'Registered Date', minWidth: 100 },
+  { id: 'billvalue', label: 'Bill Value', minWidth: 170, align: 'right' },
+];
+
+export default function StickyHeadTable({ setRows }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setLocalRows] = useState([]);
 
-  const columns = [
-    { id: 'nationalID', label: 'National ID', minWidth: 170 },
-    { id: 'name', label: `${selectedRole} Name`, minWidth: 20 },
-    {
-      id: 'email',
-      label: 'Email',
-      minWidth: 170,
-      align: 'right',
-    }
-  ];
-
   useEffect(() => {
-    axios.get('http://localhost:3100/api/router_login/users')
+    axios.get('http://localhost:3100/api/appointments')
       .then(response => {
-        const responseData = response.data && response.data.response;
+        const responseData = response.data && response.data.response; // Accessing the 'response' key
         if (Array.isArray(responseData)) {
-          // Filter users by role
-          const patientUsers = responseData.filter(user => user.role === selectedRole);
-          setLocalRows(patientUsers);
-          setRows(patientUsers); // Update the parent component's state
+          const filteredData = responseData.filter(item => (item.state === 'register_only' && item.pid === jwtDecode(localStorage.getItem("myToken")).id) );
+          setLocalRows(filteredData);
+          setRows(filteredData); // Update parent component's rows state
         } else {
           console.error('Data received is not an array:', responseData);
         }
@@ -41,7 +37,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [selectedRole, setRows]); // Include selectedRole in the dependency array
+  }, [setRows]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -54,7 +50,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 400, minHeight: 300 }}>
+      <TableContainer sx={{ maxHeight: 420, minHeight: 390 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -72,25 +68,25 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.nationalID}>
-                    {columns.map((column) => {
-                      const value = column.id === 'name' ? `${row.firstname} ${row.lastname}` : row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+              .map((row) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number'
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        style={{ backgroundColor: '#D9D9D9', maxHeight: 80}}
+        style={{ backgroundColor: '#D9D9D9' }}
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
         count={rows.length}
@@ -102,5 +98,3 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
     </Paper>
   );
 }
-
-export default StickyHeadTable;

@@ -60,7 +60,7 @@ export default function Testsearch({ rows }) {
   };
 
   return (
-    <div style={{ position: 'relative', width: '50%', margin: '0 auto', paddingBottom: '20px' }}>
+    <div style={{ position: 'relative', maxWidth: '50%', margin: '0 auto', paddingBottom: '20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Autocomplete
           freeSolo
@@ -87,7 +87,7 @@ export default function Testsearch({ rows }) {
             />
           )}
         />
-        <IconButton onClick={handleSearch}>
+        <IconButton onClick={handleSearch} sx={{ width: '2cm' }}>
           <SearchIcon sx={{ color: 'action.active', ml: 1.5 }} />
         </IconButton>
       </div>
