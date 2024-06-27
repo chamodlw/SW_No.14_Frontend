@@ -9,15 +9,20 @@ import Patientlist from './Admin_Component/Patientlist';
 function ViewTest() {
   const [rows, setRows] = useState([]);
 
+  const [selectedRole, setSelectedRole] = useState('PATIENT');
+
+  const handleChange = (event, newValue) => {
+    setSelectedRole(newValue);
+  };
+
   return (
     <div className="Class" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Patienthead />
       <Grid sx={{ flex: 1, paddingTop: '12%', paddingBottom: '3%' }}>
         <Grid sx={{ paddingTop: '2%', paddingBottom: '3%' }}>
-          
-          <PatientSearch rows={rows} />
+          <PatientSearch rows={rows} selectedRole ={selectedRole} handleChange={handleChange}/>
         </Grid>
-        <Patientlist setRows={setRows} />
+        <Patientlist setRows={setRows} selectedRole={selectedRole} handleChange={handleChange}/>
       </Grid>
       <Footer />
     </div>

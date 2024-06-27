@@ -26,9 +26,9 @@ export default function Contact01() {
    
     <FormProvider {...form}>
       
-      <Box sx={{ width: '80%',paddingLeft:'2rem'}}>
+      
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <h1>Contact Us</h1><hr/>
+       
 
         <div style={{margin:'3rem'}}>
         <h4>Name</h4>
@@ -43,13 +43,13 @@ export default function Contact01() {
        <h4> Message</h4>
         <MessageField/>
         <br/><br/>
-        
-        <Button type="submit" variant="contained" color="primary">
+        <br/><br/>
+        <Button type="submit"sx={{variant:'contained' ,color:'#FFFFFF', background:'#101754',width:'300px',height:'50px'}}>
           Submit
         </Button>
         </div>
       </form>
-      </Box>
+    
       
     </FormProvider>
     
@@ -62,6 +62,7 @@ const NameField = () => {
 
   return (
  <TextField
+ sx={{ width: '75%' }}
       label="Name"
       name="name"
       required
@@ -82,6 +83,7 @@ const EmailField = () => {
   );
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Email"
       name="email"
       required 
@@ -99,6 +101,7 @@ const PhoneNumberField = () => {
   const [value, setValue] = React.useState();
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Phone Number"
       name="phone_number"
       required 
@@ -117,13 +120,14 @@ const MessageField = () => {
   const { register, formState: { errors } } = useFormContext(); // use the useFormContext hook to access the form methods and values
   return (
     <TextField
+    sx={{ width: '75%' }}
       label="Message"
       name="message"
       required // set the required prop to true
       error={!!errors.message} // set the error prop to true if there is an error in the message field
       helperText={errors.message?.message} // set the helperText prop to the error message if there is an error in the message field
       multiline // set the multiline prop to true to make it a text area
-      rows={4} // set the rows prop to 4 to adjust the height of the text area
+      rows={6} // set the rows prop to 4 to adjust the height of the text area
       maxLength={500} // set the maxLength prop to 500 to limit the number of characters in the message
       {...register("message", { // use the register function to register the message field with validation rules
         maxLength: { value: 500, message: "Message must be no more than 500 characters long" }, // set the maximum length rule and message

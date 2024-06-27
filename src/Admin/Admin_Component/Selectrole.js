@@ -1,19 +1,11 @@
-//Selectrole.js
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Select as BaseSelect, selectClasses } from '@mui/base/Select';
 import { Option as BaseOption, optionClasses } from '@mui/base/Option';
 import { styled } from '@mui/system';
 import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 
-export default function SimpleSelect() {
-  const [selectedRole, setSelectedRole] = useState('');
-
-  const handleChange = (event, newValue) => {
-    setSelectedRole(newValue);
-    console.log(newValue);
-  };
-
+export default function SimpleSelect({ selectedRole, handleChange }) {
   return (
     <Select value={selectedRole} onChange={handleChange} placeholder="Role">
       <Option value="DOCTOR">DOCTOR</Option>
@@ -24,6 +16,11 @@ export default function SimpleSelect() {
     </Select>
   );
 }
+
+SimpleSelect.propTypes = {
+  selectedRole: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
 
 const Select = React.forwardRef(function CustomSelect(props, ref) {
   return <BaseSelect {...props} ref={ref} slots={{ root: StyledButton, listbox: Listbox }} />;
