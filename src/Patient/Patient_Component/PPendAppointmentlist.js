@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode'; // Changed import statement
 
 const columns = [
   { id: 'id', label: 'Appointment ID', minWidth: 170 },
@@ -27,7 +27,12 @@ export default function StickyHeadTable({ setRows }) {
       .then(response => {
         const responseData = response.data && response.data.response; // Accessing the 'response' key
         if (Array.isArray(responseData)) {
-          const filteredData = responseData.filter(item => (item.state === 'register_only' && item.pid === jwtDecode(localStorage.getItem("myToken")).id) );
+          const filteredData = responseData.filter(item => (
+            item.state === 'register_only' && item.pid === jwtDecode(localStorage.getItem("myToken")).id
+          )).map(item => ({
+            ...item,
+            regdate: item.regdate.slice(0, 10) // Slice the first 10 characters of regdate
+          }));
           setLocalRows(filteredData);
           setRows(filteredData); // Update parent component's rows state
         } else {

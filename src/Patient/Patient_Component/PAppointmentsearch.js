@@ -65,7 +65,7 @@ return (
             <Autocomplete
                 freeSolo
                 options={rows}
-                getOptionLabel={(row) => row?.id ? 'App.No. '+String(row.id) + ' - ' + row?.pname : ''}
+                getOptionLabel={(row) => row?.id ? 'No. '+String(row.id) + ' - ' + 'Date: '+ row?.regdate.slice(0, 10) : ''}
                 filterOptions={(options, { inputValue }) =>
                     options.filter((option) =>
                         String(option?.id)?.includes(inputValue) || option?.pname?.toLowerCase().includes(inputValue.toLowerCase())
@@ -135,7 +135,7 @@ return (
                     >
                         <CardContent>
                             <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                                {"Appointment No." + selectedAppointment?.id +" : "+selectedAppointment?.pname}
+                                {"Appointment No." + selectedAppointment?.id +" : "+selectedAppointment?.regdate.slice(0, 10)}
                             </Typography>
                             <Typography variant="body1">
                                 {selectedAppointment && (

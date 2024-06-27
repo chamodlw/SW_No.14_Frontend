@@ -4,15 +4,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
 import { Card, CardContent, Typography, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import axios from 'axios';
+import { color } from '@mui/system';
 
 export default function Appointmentsearch({ rows }) {
   const [searchValue, setSearchValue] = useState('');
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showCard, setShowCard] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedBillvalue, setEditedBillvalue] = useState('');
 
   const handleSearch = () => {
     if (selectedAppointment) {
@@ -27,37 +25,7 @@ export default function Appointmentsearch({ rows }) {
     setShowCard(false);
     setShowOverlay(false);
     setSelectedAppointment(null);
-    setIsEditing(false);
-    setEditedBillvalue('');
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setEditedBillvalue(selectedAppointment?.billvalue);
-  };
-
-  const handleSaveClick = () => {
-    // Update the price of the selected test (assuming `rows` can be updated)
-    const updatedRows = rows.map(row =>
-      row.id === selectedAppointment.id ? { ...row, billvalue: editedBillvalue } : row
-    );
-    setSelectedAppointment({ ...selectedAppointment, billvalue: editedBillvalue });
-    setIsEditing(false);
-    console.log("Updated rows: ", updatedRows);
-    console.log("new billvalue " + editedBillvalue);
-    axios.post('http://localhost:3100/api/updateappointment', { id: selectedAppointment.id, billvalue: editedBillvalue })
-      .then(response => {
-        // Handle the response if needed
-        console.log(response.data);
-        // Update the selectedTest price
-        setSelectedAppointment({ ...selectedAppointment, billvalue: editedBillvalue });
-      })
-      .catch(error => {
-        // Handle the error if needed
-        console.error(error);
-      });
-    // You might need to update the rows in the parent component or state if required
-  };
+  };  
 
 return (
     <div style={{ position: 'relative', maxWidth: '50%', margin: '0 auto', paddingBottom: '20px' }}>
@@ -146,47 +114,14 @@ return (
                                         <li><strong>Blood Tests:</strong> <br />{selectedAppointment?.selectTests.map(test => <ul>{test.testName}</ul>)}</li>
                                         <li><strong>Registered Date:</strong> <br />{selectedAppointment?.regdate.slice(0, 10)}</li>
                                         <li><strong>Appointment Current State:</strong> {selectedAppointment?.state}</li>
-                                        <li>
-                                            <strong>Appointment Billvalue:</strong>
-                                            {isEditing ? (
-                                                <TextField
-                                                    value={editedBillvalue}
-                                                    onChange={(e) => setEditedBillvalue(e.target.value)}
-                                                    variant="outlined"
-                                                    size="small"
-                                                    sx={{ marginLeft: 1 }}
-                                                />
-                                            ) : (
-                                                " LKR " + selectedAppointment?.billvalue
-                                            )}
-                                        </li>
+                                        <li><strong>Appointment Billvalue:</strong>{" LKR " + selectedAppointment?.billvalue}</li>                              
                                     </ul>
                                 )}
                             </Typography>
                             <Typography>
-                                {isEditing ? (
-                                    <div>
-                                        <Button
-                                            onClick={handleSaveClick}
-                                            sx={{ backgroundColor: '#101754', color: 'white', padding: '5px 10px', borderRadius: '7px', width: '80px', marginRight: '10px' }}
-                                        >
-                                            Save
-                                        </Button>
-                                        <Button
-                                            onClick={() => setIsEditing(false)}
-                                            sx={{ backgroundColor: 'grey', color: 'white', padding: '5px 10px', borderRadius: '7px', width: '80px' }}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <Button
-                                        onClick={handleEditClick}
-                                        sx={{ backgroundColor: '#D9D9D9', color: 'black', padding: '5px 10px', borderRadius: '7px', width: '80px' }}
-                                    >
-                                        Edit
-                                    </Button>
-                                )}
+                                <Button style={{color:'#101754', backgroundColor: '#D9D9D9', border: '1px solid #101754', borderRadius: '5px', padding: '5px 10px' , maxWidth:'150px'}}>
+                                    Preview
+                                </Button>
                             </Typography>
                         </CardContent>
                     </Card>

@@ -8,16 +8,13 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
-import { useEffect , useState} from 'react';
-import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState } from 'react';
+import {jwtDecode} from 'jwt-decode';
 
 const columns = [
-  { id: 'id', label: 'id', minWidth: 170 },
-  { id: 'regdate', label: 'registereddate', minWidth: 100, format: (value) => value.slice(0, -5) },
-  { 
-    id: 'state', label: 'state', minWidth: 170, align: 'right',
-  }
-  
+  { id: 'id', label: 'Report ID', minWidth: 170 },
+  { id: 'regdate', label: 'Registered Date', minWidth: 100, format: (value) => value.slice(0, 10) },
+  { id: 'state', label: 'Current State', minWidth: 170, align: 'right' }
 ];
 
 export default function StickyHeadTable() {
@@ -55,15 +52,15 @@ export default function StickyHeadTable() {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 420 , minHeight:390}}>
+      <TableContainer sx={{ maxHeight: 420, minHeight: 390 }}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead >
+          <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , fontWeight: 'bold',backgroundColor:'#D9D9D9'}}
+                  style={{ minWidth: column.minWidth, fontWeight: 'bold', backgroundColor: '#D9D9D9' }}
                 >
                   {column.label}
                 </TableCell>
@@ -80,9 +77,15 @@ export default function StickyHeadTable() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
+                          {column.id === 'id' ? (
+                            <a href={`/report/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
+                              {value}
+                            </a>
+                          ) : (
+                            column.format && typeof value === 'string'
+                              ? column.format(value)
+                              : value
+                          )}
                         </TableCell>
                       );
                     })}
@@ -93,8 +96,8 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <TablePagination
-        style={{ backgroundColor:'#D9D9D9' }}
-        rowsPerPageOptions={[5,10, 25, 100]}
+        style={{ backgroundColor: '#D9D9D9' }}
+        rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

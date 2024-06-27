@@ -61,6 +61,7 @@ function BasicTextFields({ handleChange, formData }) {
           padding: '30px',
           paddingLeft:'5px',
           paddingRight:'5px',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.7)', 
         }}
         noValidate
         autoComplete="off"
