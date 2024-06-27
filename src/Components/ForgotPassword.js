@@ -1,9 +1,8 @@
-// ForgotPassword.js
 import React, { useState } from 'react';
 import { Grid, Typography, TextField, Button } from "@mui/material";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import EmailIcon from '@mui/icons-material/Email'; // Import Email Icon from MUI
+import forgotPasswordImage from '../images/forgotpassword.png'; // Adjust path as per your project structure
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -46,7 +45,7 @@ const ForgotPassword = () => {
         style={{
           borderRadius: "15px",
           padding: "20px",
-          backgroundColor: "#D3E9FE",
+          backgroundColor: "#FFFFFF",
           width: "90%",
           maxWidth: "800px",
           marginTop: "10%",
@@ -54,33 +53,24 @@ const ForgotPassword = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          border: "10px solid #A6D1F2 " // Blue border
         }}
       >
         {step === 1 ? (
           <>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-              <EmailIcon style={{ fontSize: 48, marginRight: '10px', color: '#0085FF' }} />
+            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+              <img src={forgotPasswordImage} alt="Forgot Password" style={{ width: "200px", marginBottom: "10px" }} />
               <Typography
                 variant="h5"
                 style={{
-                  marginBottom: "7%",
-                  marginTop: "3%",
                   color: "#0085FF",
                   fontWeight: "bold",
+                  marginBottom: "10px",
                 }}
               >
-                Forgot Password
+                Enter your email address to reset your password
               </Typography>
             </div>
-            <Typography
-              variant="subtitle1"
-              style={{
-                marginBottom: "20px",
-                color: "#333",
-              }}
-            >
-              Enter your email address to reset your password
-            </Typography>
             <TextField
               fullWidth
               label="Email"
@@ -89,7 +79,7 @@ const ForgotPassword = () => {
               onChange={(e) => setEmail(e.target.value)}
               style={{ marginBottom: "25px" }}
             />
-            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: '20px' }}>
+            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: "20px" }}>
               Send Verification Code
             </Button>
           </>
@@ -123,7 +113,7 @@ const ForgotPassword = () => {
               onChange={(e) => setNewPassword(e.target.value)}
               style={{ marginBottom: "25px" }}
             />
-            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: '20px' }}>
+            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: "20px" }}>
               Reset Password
             </Button>
           </>
