@@ -14,6 +14,7 @@ import {jwtDecode} from 'jwt-decode'; // Changed import statement
 const columns = [
   { id: 'id', label: 'Appointment ID', minWidth: 170 },
   { id: 'regdate', label: 'Registered Date', minWidth: 100 },
+  { id: 'selectTests', label: 'Tests', minWidth: 100 },
   { id: 'billvalue', label: 'Bill Value', minWidth: 170, align: 'right' },
 ];
 
@@ -31,7 +32,10 @@ export default function StickyHeadTable({ setRows }) {
             item.state === 'register_only' && item.pid === jwtDecode(localStorage.getItem("myToken")).id
           )).map(item => ({
             ...item,
-            regdate: item.regdate.slice(0, 10) // Slice the first 10 characters of regdate
+            regdate: item.regdate.slice(0, 10), // Slice the first 10 characters of regdate
+            selectTests: Array.isArray(item.selectTests)
+              ? item.selectTests.map(test => test.testName.slice(0, 15)).join(', ') // Join test names with a comma
+              : 'No tests', // Handle the case where selectTests is not an array
           }));
           setLocalRows(filteredData);
           setRows(filteredData); // Update parent component's rows state
@@ -43,6 +47,7 @@ export default function StickyHeadTable({ setRows }) {
         console.error('Error fetching data:', error);
       });
   }, [setRows]);
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
