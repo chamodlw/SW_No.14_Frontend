@@ -17,7 +17,7 @@ import healthLabLogo from "../../LabasisstenceComponent/Labasisstenceimg/Health 
 
 // start Function 
 
-const Invoice = ((id) => {
+const Invoice = (({id}) => {
 
     // State variables 
 
@@ -47,7 +47,7 @@ const Invoice = ((id) => {
 
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:3100/api/appoinments/2`);
+      const response = await fetch(`http://localhost:3100/api/appoinments/${id}`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         window.alert(message);

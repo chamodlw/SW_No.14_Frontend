@@ -79,10 +79,16 @@ export default function StickyHeadTable({ setRows }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
+                          {column.id === 'id' ? (
+                            <a href={`/Invoicepreview/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
+                              {value}
+                            </a>
+                          ) : (
+                            column.format && typeof value === 'string'
+                              ? column.format(value)
+                              : value
+                          )}
+                        </TableCell>
                     );
                   })}
                 </TableRow>

@@ -78,7 +78,7 @@ export default function StickyHeadTable() {
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.id === 'id' ? (
-                            <a href={`/report/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
+                            <a href={`/Reportpreview/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
                               {value}
                             </a>
                           ) : (
