@@ -159,9 +159,9 @@ export default function BasicSelect() {
   };
   
   return (
-    <Box sx={{ width: '80%', margin: 'auto', backgroundColor: '#D9D9D9', padding: '30px 20px', borderRadius: '8px' }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label" sx={{ color: '#101754' }}>
+    <Box sx={{ width: '75%', margin: 'auto', backgroundColor: '#D9D9D9', padding: '30px 20px', borderRadius: '15px' }}>
+      <FormControl fullWidth >
+        <InputLabel id="demo-simple-select-label" sx={{ color: '#101754' }} >
           Blood Test Type
         </InputLabel>
         <Select

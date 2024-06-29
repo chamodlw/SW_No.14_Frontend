@@ -7,14 +7,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Changed import statement
+import { jwtDecode } from 'jwt-decode'; // Changed import statement
 
 const columns = [
   { id: 'id', label: 'Appointment ID', minWidth: 170 },
   { id: 'regdate', label: 'Registered Date', minWidth: 100 },
-  { id: 'selectTests', label: 'Tests', minWidth: 100 },
+  { id: 'selectTests', label: 'Test Types', minWidth: 100 },
   { id: 'billvalue', label: 'Bill Value', minWidth: 170, align: 'right' },
 ];
 
@@ -22,6 +23,8 @@ export default function StickyHeadTable({ setRows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setLocalRows] = useState([]);
+  const [orderBy, setOrderBy] = useState('id');
+  const [order, setOrder] = useState('asc');
 
   useEffect(() => {
     axios.get('http://localhost:3100/api/appointments')
@@ -47,7 +50,6 @@ export default function StickyHeadTable({ setRows }) {
         console.error('Error fetching data:', error);
       });
   }, [setRows]);
-  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,6 +59,20 @@ export default function StickyHeadTable({ setRows }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const handleSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedRows = [...rows].sort((a, b) => {
+    if (orderBy === 'billvalue') {
+      return order === 'asc' ? a.billvalue - b.billvalue : b.billvalue - a.billvalue;
+    } else {
+      return order === 'asc' ? a.id - b.id : b.id - a.id;
+    }
+  });
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
@@ -69,14 +85,21 @@ export default function StickyHeadTable({ setRows }) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth, fontWeight: 'bold', backgroundColor: '#D9D9D9' }}
+                  sortDirection={orderBy === column.id ? order : false}
                 >
-                  {column.label}
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleSort(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {sortedRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
@@ -84,16 +107,16 @@ export default function StickyHeadTable({ setRows }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                          {column.id === 'id' ? (
-                            <a href={`/Invoicepreview/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
-                              {value}
-                            </a>
-                          ) : (
-                            column.format && typeof value === 'string'
-                              ? column.format(value)
-                              : value
-                          )}
-                        </TableCell>
+                        {column.id === 'id' ? (
+                          <a href={`/Invoicepreview/${value}`} style={{ textDecoration: 'underline', color: '#101754' }}>
+                            {value}
+                          </a>
+                        ) : (
+                          column.format && typeof value === 'string'
+                            ? column.format(value)
+                            : value
+                        )}
+                      </TableCell>
                     );
                   })}
                 </TableRow>

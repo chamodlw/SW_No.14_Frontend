@@ -10,9 +10,10 @@ import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 
 const columns = [
-  { id: 'id', label: 'id', minWidth: 170 },
-  { id: 'name', label: 'name', minWidth: 100 },
-  { id: 'description', label: 'description', minWidth: 170, align: 'right' }
+  { id: 'id', label: 'Test Id', minWidth: 100 },
+  { id: 'name', label: 'Test Type', minWidth: 100 },
+  { id: 'description', label: 'Description', minWidth: 100 },
+  { id: 'price', label: 'Price', minWidth: 100, align: 'right' },
 ];
 
 export default function Testlist({ setRows }) {
