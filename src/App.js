@@ -29,7 +29,7 @@ import AViewTest from './Admin/AViewTest';
 import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 import Reportview from './Labasisstence/LabasisstencePages/Reportview';
 import ReportUI from './Labasisstence/LabasisstenceComponent/ReportUI';
-
+import TestResult from './Lab_operator/TestResult';
 
 import Users from './Lab_operator/Users';
 import TestTube from './Lab_operator/TestTube';
@@ -38,7 +38,7 @@ import BloodTesting from './Lab_assistant/BloodTesting';
 import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
-
+import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
 
 
 
@@ -83,7 +83,7 @@ function App() {
 
       <Route path='/UserProfile/:id' element={<UserProfile/>}/>
       <Route path='/UserProfileUpdate/:id' element={<UserProfileUpdate/>}/>
-
+      <Route path='/lab-operator/test-result' element={<TestResult />} />
       <Route path='/lab-operator/users' element={<Users />} />
       <Route path='/lab-operator/test-tube' element={<TestTube />} />
       <Route path='/lab-operator/manage-test-tubes' element={<ManageTestTube />} />
@@ -104,6 +104,9 @@ function App() {
   <Route path= '/labasisstence' element={<LabAssistant/>}/>
   <Route path= '/Reportview' element={<Reportview/>}/>
   <Route path= '/ReportUI' element={<ReportUI/>}/>
+
+  {/* Invoice Route */}
+  <Route path='/invoice' element = {<AppoinmentInvoice/>}/>
   
         
     </Routes>
@@ -112,6 +115,7 @@ function App() {
     );
 
 }
+
 
 export default App;
 //
