@@ -14,7 +14,7 @@ const useIntersectionObserver = (elementRef, callback, options) => {
 
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
-                console.log(`Intersecting: ${entry.target.id}`); // Log when intersecting
+                //console.log(`Intersecting: ${entry.target.id}`); // Log when intersecting
                 callback();
                 observer.unobserve(entry.target); // Unobserve after callback to avoid multiple triggers
             }

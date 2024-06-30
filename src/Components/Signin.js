@@ -30,6 +30,21 @@ const Signin = () => {
     setConfirmPassword(e.target.value);
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10,15}$/; // Adjust the range as needed
+    return phoneRegex.test(phone);
+  };
+
+  const validateNationalID = (id) => {
+    const idRegex = /^[0-9]{8,20}$/; // Adjust the range as needed
+    return idRegex.test(id);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -38,8 +53,23 @@ const Signin = () => {
       return;
     }
 
+    if (!validateEmail(data.email)) {
+      setError({ field: 'email', message: 'Invalid email format' });
+      return;
+    }
+
+    if (!validatePhoneNumber(data.phonenumber)) {
+      setError({ field: 'phonenumber', message: 'Invalid phone number format' });
+      return;
+    }
+
+    if (!validateNationalID(data.nationalID)) {
+      setError({ field: 'nationalID', message: 'Invalid national ID format' });
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:3101/api/router_login/createuser', data);
+      const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
       console.log('Server response:', response);
 
       if (response.data.error === false) {
@@ -61,12 +91,12 @@ const Signin = () => {
         const successMessage = data.role === 'PATIENT' ? 'User Registered Successfully' : 'Registration Pending';
         console.log('Displaying toast message:', successMessage);
         toast.success(successMessage, {
-          duration: 3000, // Toast duration set to 4 seconds
+          duration: 4000, // Toast duration set to 4 seconds
         });
 
         setTimeout(() => {
           navigate('/HomePage');
-        }, 3000); // Navigate to HomePage after 400 milliseconds
+        }, 4000); // Navigate to HomePage after 4 seconds
       }
     } catch (error) {
       console.error('Error registering user:', error);
@@ -112,6 +142,8 @@ const Signin = () => {
               value={data.firstname}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'firstname'}
+              helperText={error.field === 'firstname' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -123,6 +155,8 @@ const Signin = () => {
               value={data.lastname}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'lastname'}
+              helperText={error.field === 'lastname' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -134,6 +168,8 @@ const Signin = () => {
               value={data.email}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'email'}
+              helperText={error.field === 'email' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -145,6 +181,8 @@ const Signin = () => {
               value={data.address}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'address'}
+              helperText={error.field === 'address' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -156,6 +194,8 @@ const Signin = () => {
               value={data.nationalID}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'nationalID'}
+              helperText={error.field === 'nationalID' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -167,6 +207,8 @@ const Signin = () => {
               value={data.phonenumber}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'phonenumber'}
+              helperText={error.field === 'phonenumber' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -179,6 +221,7 @@ const Signin = () => {
                 value={data.role}
                 onChange={handleChange}
                 label="Role"
+                error={error.field === 'role'}
               >
                 <MenuItem value="PATIENT">Patient</MenuItem>
                 <MenuItem value="DOCTOR">Doctor</MenuItem>
@@ -186,6 +229,9 @@ const Signin = () => {
                 <MenuItem value="LABOPERATOR">Lab Operator</MenuItem>
                 <MenuItem value="LABASSISTANT">Lab Assistant</MenuItem>
               </Select>
+              {error.field === 'role' && (
+                <Typography variant="body2" color="error">{error.message}</Typography>
+              )}
             </FormControl>
           </Grid>
           <Grid item xs={6}>
@@ -197,6 +243,8 @@ const Signin = () => {
               value={data.username}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'username'}
+              helperText={error.field === 'username' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -209,6 +257,8 @@ const Signin = () => {
               value={data.password}
               onChange={handleChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'password'}
+              helperText={error.field === 'password' ? error.message : ''}
             />
           </Grid>
           <Grid item xs={6}>
@@ -220,6 +270,8 @@ const Signin = () => {
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
               style={{ marginBottom: "20px" }}
+              error={error.field === 'confirmPassword'}
+              helperText={error.field === 'confirmPassword' ? error.message : ''}
             />
           </Grid>
 
