@@ -27,28 +27,6 @@ const ReportUI = () => {
 // patient registerd tests
   const tests = record.selectTests;
 
-  
-
-
-
-
-
-
-  // fetch data rest result from the test result database
-
-// useEffect(() => {async function getReport() {
-// const response = await fetch(`http://localhost:3100/labreport/testResults:${record.id}`);
-// if (!response.ok) {
-//   const message = `An error occurred: ${response.statusText}`;
-//   window.alert(message);
-//   return;
-// }
-// const records = await response.json();
-// var record = records.report;
-// }
-// getReport();
-// return;
-// },[]);
 
 // fetch data from Test database
 
@@ -165,7 +143,7 @@ const tableData = tests.map((test) => ({
           {record.username}
         </Typography>
         <Typography variant="body1" sx={{ fontSize: "14px" }}>
-          Registered on: 02.31 pm December 2022
+          Registered on: {record.regdate.split("T")[0]}
           <br />
           Collected on: 02.31pm 02 December
           <br />
