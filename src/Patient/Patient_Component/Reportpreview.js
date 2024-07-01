@@ -1,16 +1,16 @@
 // Reportpreview.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ReportUI from '../../Labasisstence/LabasisstenceComponent/ReportUI';
+import PReportUI from './PReportUI';
 
-function Invoicepreview() {
+function Reportpreview() {
   const { id } = useParams();
 
   return (
     <div>
-      <ReportUI id ={id}/>
+      <PReportUI id ={id}/>
     </div>
   );
 }
 
-export default Invoicepreview;
+export default Reportpreview;

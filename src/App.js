@@ -40,6 +40,9 @@ import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
 import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
 import PPendViewAppointment from './Patient/Patient_Component/PPendViewAppointment';
+import Invoicepreview from './Patient/Patient_Component/Invoicepreview';
+import Reportpreview from './Patient/Patient_Component/Reportpreview';
+import PReportUI from './Patient/Patient_Component/PReportUI';
 
 
 function App() {
@@ -107,8 +110,9 @@ function App() {
 
   {/* Invoice Route */}
   <Route path='/invoice' element = {<AppoinmentInvoice/>}/>
-  
-        
+  <Route path="/Invoicepreview/:id" element={<Invoicepreview />} />
+  <Route path="/Reportpreview/:id" element={<Reportpreview/>}/>
+  <Route path="/PReportUI/:id" element={<PReportUI/>}/>
     </Routes>
   </BrowserRouter>
     </div>
