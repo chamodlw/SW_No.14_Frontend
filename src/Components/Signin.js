@@ -36,17 +36,38 @@ const Signin = () => {
   };
 
   const validatePhoneNumber = (phone) => {
-    const phoneRegex = /^[0-9]{10,15}$/; // Adjust the range as needed
+    const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(phone);
   };
 
   const validateNationalID = (id) => {
-    const idRegex = /^[0-9]{8,20}$/; // Adjust the range as needed
-    return idRegex.test(id);
+    const idRegex1 = /^[0-9]{9}V$/i;
+    const idRegex2 = /^[0-9]{12}$/;
+    return idRegex1.test(id) || idRegex2.test(id);
+  };
+
+
+  //Minimum Length: Ensure the password is at least 8 characters long.
+  //Special Characters: Require at least one special character.
+  //Uppercase Letters: Require at least one uppercase letter.
+  //Numbers: Require at least one digit.
+
+  const validatePassword = (password) => {
+    // Password must be at least 8 characters long and contain at least one special character, uppercase letter, and digit
+    const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+    return passwordRegex.test(password);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if any field is empty
+    for (let key in data) {
+      if (data[key] === '') {
+        setError({ field: key, message: 'This field is required' });
+        return;
+      }
+    }
 
     if (data.password !== confirmPassword) {
       setError({ field: 'confirmPassword', message: 'Confirm Password does not match' });
@@ -59,12 +80,17 @@ const Signin = () => {
     }
 
     if (!validatePhoneNumber(data.phonenumber)) {
-      setError({ field: 'phonenumber', message: 'Invalid phone number format' });
+      setError({ field: 'phonenumber', message: 'Phone number must contain exactly 10 digits' });
       return;
     }
 
     if (!validateNationalID(data.nationalID)) {
       setError({ field: 'nationalID', message: 'Invalid national ID format' });
+      return;
+    }
+
+    if (!validatePassword(data.password)) {
+      setError({ field: 'password', message: 'Password must be at least 8 characters long and contain at least one special character, uppercase letter, and digit' });
       return;
     }
 

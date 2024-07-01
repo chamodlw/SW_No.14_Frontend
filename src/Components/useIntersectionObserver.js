@@ -1,3 +1,4 @@
+//useIntersectionObserver.js
 import { useEffect } from 'react';
 
 const useIntersectionObserver = (ref, callback, options) => {

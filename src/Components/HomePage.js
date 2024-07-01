@@ -111,8 +111,8 @@ export default function HomePage() {
                             <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '50%', borderBottom: '2px solid #101754', padding: '20px' }}></span>
                         </p>
                         <p style={{ fontSize: '18px', margin: 0, fontFamily: 'Helvetica', paddingTop: '50px' }}>We prioritize your comfort and safety, employing the latest techniques to make the process as painless and efficient as possible.</p>
-                        <a href="#services" style={{ textDecoration: 'none' }}>
-                            <button style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#101754', color: '#FFFFFF', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                        <a href="#about" style={{ textDecoration: 'none' }}>
+                            <button style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#101754', color: '#FFFFFF', border: 'none', borderRadius: '20px', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center',  width: 'auto' /* Ensure the width fits the content */ }}>
                                 Learn More About Us<span style={{ marginLeft: '10px' }}>→</span>
                             </button>
                         </a>
