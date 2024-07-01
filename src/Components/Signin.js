@@ -41,7 +41,7 @@ const Signin = () => {
       }
 
     try {
-      const response = await axios.post('http://localhost:3101/api/router_login/createuser', data);
+      const response = await axios.post('http://localhost:3100/api/router_login/createuser', data);
       console.log('Server response:', response);
 
       if(response.data.error === false){
