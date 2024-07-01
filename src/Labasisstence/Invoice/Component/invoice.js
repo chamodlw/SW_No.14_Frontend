@@ -1,4 +1,3 @@
-// InvoiceTemplate.js
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -15,59 +14,46 @@ import {
 } from "@mui/material";
 import healthLabLogo from "../../LabasisstenceComponent/Labasisstenceimg/Health lab logo_.png";
 
-// start Function 
-
-const Invoice = ((id) => {
-
-    // State variables 
-
+const Invoice = ({ id }) => {
   const [record, setRecord] = useState(null);
   const [testDB, setTestsDB] = useState(null);
   const [total, srtTotal] = useState("0");
 
-//   function for get tests data
-
   useEffect(() => {
     async function getTestData() {
-      const response = await fetch(`http://localhost:3100/tests`);
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
+      try {
+        const response = await fetch(`http://localhost:3100/tests`);
+        if (!response.ok) {
+          throw new Error(`An error occurred: ${response.statusText}`);
+        }
+        const testData = await response.json();
+        setTestsDB(testData.response);
+      } catch (error) {
+        window.alert(error.message);
       }
-      const testData = await response.json();
-      setTestsDB(testData.response);
     }
     getTestData();
-    return;
   }, []);
-
-// funtion for get patiant appoinment data
-
 
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:3100/api/appoinments/2`);
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
+      try {
+        const response = await fetch(`http://localhost:3100/api/appoinments/${id}`);
+        if (!response.ok) {
+          throw new Error(`An error occurred: ${response.statusText}`);
+        }
+        const records = await response.json();
+        setRecord(records.response);
+      } catch (error) {
+        window.alert(error.message);
       }
-      const records = await response.json();
-      setRecord(records.response);
     }
     getRecords();
   }, [id]);
 
-
-
-
-  if (!record) {
+  if (!record || !testDB) {
     return <Typography>Loading...</Typography>;
   }
-
-
-//   make object for invoice data
 
   const inVoiceData = record.selectTests.map((test) => ({
     testID: test.testId,
@@ -83,8 +69,6 @@ const Invoice = ((id) => {
     (acc, item) => acc + (item.price || 0),
     0
   );
-
-//   invoice display data object
 
   const invoiceDetails = {
     appointmentId: record.id || "INV-001",
@@ -109,9 +93,6 @@ const Invoice = ((id) => {
     { field: "quantity", headerName: "", width: 100 },
     { field: "price", headerName: "Price", width: 100 },
   ];
-
-
-//   Invoice UI rendaring items
 
   return (
     <Container>
@@ -138,7 +119,7 @@ const Invoice = ((id) => {
         <Grid container spacing={2} marginTop={2}>
           <Grid item xs={6}>
             <Typography>
-              <strong>Appoinment ID:</strong> {invoiceDetails.appointmentId}
+              <strong>Appointment ID:</strong> {invoiceDetails.appointmentId}
             </Typography>
             <Typography>
               <strong>Date:</strong> {invoiceDetails.date}
@@ -161,7 +142,7 @@ const Invoice = ((id) => {
             </TableHead>
             <TableBody>
               {inVoiceData.map((item) => (
-                <TableRow key={item.id}>
+                <TableRow key={item.testID}>
                   <TableCell>{item.testName}</TableCell>
                   <TableCell>{item.description}</TableCell>
                   <TableCell>{}</TableCell>
@@ -198,6 +179,6 @@ const Invoice = ((id) => {
       </Paper>
     </Container>
   );
-});
+};
 
 export default Invoice;
