@@ -48,7 +48,7 @@ const ForgotPassword = () => {
           backgroundColor: "#FFFFFF",
           width: "90%",
           maxWidth: "800px",
-          marginTop: "10%",
+          marginTop: "8%",
           boxShadow: "1px 5px 3px -3px rgba(0,0,0,0.44)",
           display: "flex",
           flexDirection: "column",
@@ -59,13 +59,13 @@ const ForgotPassword = () => {
         {step === 1 ? (
           <>
             <div style={{ marginBottom: "20px", textAlign: "center" }}>
-              <img src={forgotPasswordImage} alt="Forgot Password" style={{ width: "200px", marginBottom: "10px" }} />
+              <img src={forgotPasswordImage} alt="Forgot Password" style={{ width: "200px", marginBottom: "20px" }} />
               <Typography
                 variant="h5"
                 style={{
                   color: "#0085FF",
                   fontWeight: "bold",
-                  marginBottom: "10px",
+                  marginBottom: "30px",
                 }}
               >
                 Enter your email address to reset your password
@@ -77,11 +77,17 @@ const ForgotPassword = () => {
               variant="outlined"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ marginBottom: "25px" }}
+              style={{ marginBottom: "60px" }}
             />
-            <Button type="submit" variant="contained" color="primary" style={{ borderRadius: "20px" }}>
-              Send Verification Code
-            </Button>
+<Button 
+  type="submit" 
+  variant="contained" 
+  color="primary" 
+  style={{ borderRadius: "20px", width: "50%", padding: "8px", marginBottom: "20px" }}
+>
+  Send Verification Code
+</Button>
+
           </>
         ) : (
           <>
