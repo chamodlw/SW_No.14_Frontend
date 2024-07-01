@@ -1,16 +1,13 @@
-//Login.js
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Grid, Typography, TextField, Button } from "@mui/material";
 import photo1 from "../images/HealthLabLogo.jpg";
-import photo2 from "../images/BloodDraw.webp";
 import axios from 'axios';
-import { useSetUser } from '../Admin/Admin_Component/UserContext';
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate();
-  const setUserContext  = useSetUser(); // Use the setUser function from UserContext. Using the useSetUser hook to obtain the setUser function from your context. This function is responsible for updating the user state in the context.
   const [data, setData] = useState({
     username: '',
     password: ''
@@ -23,7 +20,6 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Login: Form submitted with data:', data);
     setError(''); // Clear error state before making a new request
     const { username, password } = data;
 
@@ -34,35 +30,28 @@ function Login() {
       const userData = response.data; //making an Object called userData
       console.log('User data:', userData); // After parsing/having response data, adding this console log to check if it is having all information
       // console.log('User data type:', typeof userData); //Checking whether the userData is an object.
-
-      if (userData.error) {
-        console.log('Login: Error from backend:', userData.error);
+      if (userData.message !== "Success") {
         toast.error(userData.error);
       } else {
+        console.log("enter");
+        localStorage.setItem("myToken", response.data.data);
+        const userId = jwtDecode(localStorage.getItem("myToken")).id;
+        console.log("user id is=" + userId);
         setData({ username: '', password: '' }); // Clear input fields
         const { user } = userData; // destructuring  to extract the user property from the userData object. - userData is an object that contains a user property.
-        
-        setUser(user); // Set user data in local state. Declared in line 19
-        setUserContext(user); // Set user data in context. Declared in line 13
-        const role = user.role; // Extract role from response data
-        const userId = user.id; // Extract user ID from response data
-        console.log('Login: User role:', role);
-        //console.log('Navigating to:', `/AdminInterface/${userId}`); // Debug: Log the navigation path
+        setUser(user); // Set user data in context
+        const role = jwtDecode(localStorage.getItem("myToken")).role; // Extract role from response data
 
-        // Additional logging for debugging
-      //console.log('Navigating to:', `/${role}Interface/${userId}`);
-
+        console.log('User role:', role);
         // Redirect based on role
         switch (role) {
           case 'PATIENT':
             //console.log('Redirecting to Patient page');
             navigate(`/Patient/${userId}`);
-            console.log('Navigation done');
             break;
           case 'ADMIN':
-            console.log('Redirecting to Admin page');
+            //console.log('Redirecting to Admin page');
             navigate(`/AdminInterface/${userId}`);
-            //console.log('Navigation done');
             break;
           case 'DOCTOR':
             //console.log('Redirecting to Doctor page');
@@ -73,12 +62,12 @@ function Login() {
             navigate(`/LabAssistant/${userId}`);
             break;
           case 'LABOPERATOR':
-            //console.log('Redirecting to LabOperator page');
+            //console.log('Redirecting to Lab Operator page');
             navigate(`/LabOperator/${userId}`);
             break;
           default:
             // Handle unrecognized roles or default redirection
-            console.log('Redirecting to Home page');
+            //console.log('Redirecting to Home page');
             navigate('/HomePage');
         }
       }
@@ -108,29 +97,37 @@ function Login() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6} style={{ textAlign: 'center' }}>
             <img
-              src={photo2}
-              style={{ width: "100%", maxWidth: "450px", marginTop: "15px" }}
-              alt="Blood Draw"
+              src={photo1}
+              style={{ width: "100%", maxWidth: "300px", marginTop: "10px" }}
+              alt="HealthLab Logo"
             />
+            <Typography
+              variant="h4"
+              style={{
+                marginBottom: "7%",
+                marginTop: "10%",
+                color: "#0085FF",
+                fontWeight: "bold",
+              }}
+            >
+              Login
+            </Typography>
           </Grid>
 
-          <Grid item xs={12} md={6} style={{ paddingLeft: "20px", textAlign: 'center' }}>
+          <Grid item xs={12} md={6} style={{ textAlign: 'center' }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: 'center' }}>
-              <img
-                src={photo1}
-                style={{ width: "100%", maxWidth: "300px", marginTop: "10px" }}
-                alt="HealthLab Logo"
-              />
               <Typography
-                variant="h5"
+                variant="body1"
                 style={{
-                  marginBottom: "7%",
-                  marginTop: "3%",
-                  color: "#0085FF",
-                  fontWeight: "bold",
+                  marginBottom: "20px",
+                  fontFamily: "Inter",
+                  fontWeight: "500",
+                  fontSize: "12px",
+                  lineHeight: "24px",
+                  color: "#9C1C1C",
                 }}
               >
-                Login
+                <Link to="/Signin" style={{ color: '#9C1C1C' }}>Doesn't have an account yet?</Link>
               </Typography>
 
               <TextField
@@ -177,10 +174,10 @@ function Login() {
                   color: "#9C1C1C",
                 }}
               >
-                <Link to="/forget-password" style={{ color: '#9C1C1C' }}>Forgot Password?</Link>
+                <Link to="/forgetpassword" style={{ color: '#9C1C1C' }}>Forgot Password?</Link>
               </Typography>
 
-              <Button type="submit" sx={{ variant: 'contained', color: '#FFFFFF', background: '#101754', width: '100%', height: '50px'  }}>
+              <Button type="submit" sx={{ variant: 'contained', color: '#FFFFFF', background: '#101754', width: '100%', height: '50px' }}>
                 Login
               </Button>
 
@@ -195,7 +192,6 @@ function Login() {
                   Welcome, {user.username}!
                 </Typography>
               )}
-
             </div>
           </Grid>
         </Grid>
