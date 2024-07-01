@@ -83,7 +83,10 @@ const CardSlider = ({ cards }) => {
         navigate(`/lab-operator/test-tube`);
       } else if (selectedCard.title === 'Add Blood Testings') {
         navigate(`/lab-operator/users`);
-      }
+      } else if (selectedCard.title === 'Add Test Results') {
+        navigate(`/lab-operator/test-result`);
+      } 
+
     }
     handleCloseModal();
   };
@@ -142,8 +145,10 @@ const CardSlider = ({ cards }) => {
 
 const LabOperatorCards = () => {
   const cards = [
-    { title: 'Add Test Tubes', content: 'Register Test Tubes and Generate Bar Codes', icon: WysiwygTwoToneIcon },
-    { title: 'Add Blood Testings', content: 'Register Patients for Blood Testing', icon: AddToPhotosTwoToneIcon },
+    { title: 'Add Test Tubes', content: 'View current appointments' , icon:WysiwygTwoToneIcon},
+    { title: 'Add Blood Testings', content: 'Add new blood tests appoinments' ,icon:AddToPhotosTwoToneIcon},
+    { title: 'Add Test Results', content: 'Add new test results' ,icon:AddToPhotosTwoToneIcon},
+    { title: 'Veiw Reports', content: 'Veiw tset reports' ,icon:AddToPhotosTwoToneIcon},
   ];
 
   return <CardSlider cards={cards} />;
