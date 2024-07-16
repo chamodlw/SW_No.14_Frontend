@@ -1,16 +1,16 @@
-// Invoicepreview.js
+// ReportView.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Pinvoice from './Pinvoice';
+import Report from './Report';
 
-function Invoicepreview() {
+function ReportView() {
   const { id } = useParams();
 
   return (
     <div>
-      <Pinvoice id ={id}/>
+      <Report id ={id}/>
     </div>
   );
 }
 
-export default Invoicepreview;
+export default ReportView;

@@ -10,6 +10,7 @@ import Contact from './Contact/Contact';
 import Selecttest from './Patient/Patient_Component/Selecttest';
 import AddTest from './Admin/AddTest';
 import ForgotPassword from './Components/ForgotPassword';
+import ChangePassword from './Components/ChangePassword';
 import ViewPatient from './Admin/ViewPatients';
 import ViewAppointment from './Admin/ViewAppoinments';
 import AdminInterface from './Admin/AdminInterface';
@@ -29,6 +30,8 @@ import AViewTest from './Admin/AViewTest';
 import PViewAppointment from './Patient/Patient_Component/PViewAppointment';
 import Reportview from './Labasisstence/LabasisstencePages/Reportview';
 import ReportUI from './Labasisstence/LabasisstenceComponent/ReportUI';
+import Viewreport from './Lab_operator/labOperator_component/Viewreport';
+
 import TestResult from './Lab_operator/TestResult';
 
 import Users from './Lab_operator/Users';
@@ -39,15 +42,23 @@ import PaymentGateway from './user/PaymentGateway';
 import UserForm from './Lab_operator/UserForm';
 import BarcodeScanner from './Lab_operator/BarcodeScanner';
 import AppoinmentInvoice from './Labasisstence/Invoice/Component/invoice';
+import LogoutButton from './Components/LogoutButton';
+
 import PPendViewAppointment from './Patient/Patient_Component/PPendViewAppointment';
 import Invoicepreview from './Patient/Patient_Component/Invoicepreview';
 import Reportpreview from './Patient/Patient_Component/Reportpreview';
 import PReportUI from './Patient/Patient_Component/PReportUI';
+import ReportView from './Dapproval/ReportView';
+import Report from './Dapproval/Report';
 import Paymentpreview from './Patient/Patient_Component/Paymentpreview';
-
+import Invoice  from './Labasisstence/Invoice/Component/invoice';
+import Pinvoice from './Patient/Patient_Component/Pinvoice';
+import FeedbacksUI from './Admin/Admin_Component/FeedbacksUI';
+import Feedbacktable from './Admin/Admin_Component/Feedbacktable';
 
 function App() {
   return (
+    <UserProvider>
     <div>
     <BrowserRouter>
     <Routes>
@@ -63,10 +74,10 @@ function App() {
       <Route path='/PViewAppointment/:id' element={<PViewAppointment/>}/>
       <Route path='/ViewPatient/:id' element={<ViewPatient/>}/>
       <Route path='/PPendViewAppointment/:id' element={<PPendViewAppointment/>}/>
-      
+      <Route path='/Viewreport' element={<Viewreport/>}/>
+
       
       <Route path='/PViewTest/:id' element={<PViewTest/>}/>
-
       <Route path='/Selecttest' element={<Selecttest/>}/>
       <Route path='/Dhome' element={<Dhome/>}/>
       <Route path='/Dapproval' element={<Dapproval/>}/>
@@ -74,7 +85,7 @@ function App() {
       <Route path='/Head' element={<Head/>}/>
       <Route path='/Login' element={<Login/>}/>
       <Route path="/forgetpassword" element={<ForgotPassword />} />
-
+      <Route path="/change-password" element={<ChangePassword />} />
       <Route path='/Signin' element={<Signin/>}/>
       <Route path='/HomePage/*' element={<HomePage/>}/>
       <Route path='/Patient/:id' element={<Patient/>}/> 
@@ -95,7 +106,7 @@ function App() {
       <Route path='/user/payment' element={<PaymentGateway />} />
       <Route path='/lab-operator/user-form' element={<UserForm />} />
       <Route path='/scan' element={<BarcodeScanner />} />
-
+      <Route path='/LogoutButton' element={<LogoutButton />} />
 
       <Route path='/' element={<HomePage />} /> 
       {/* default loading path - Homepage*/}
@@ -114,10 +125,18 @@ function App() {
   <Route path="/Invoicepreview/:id" element={<Invoicepreview />} />
   <Route path="/Reportpreview/:id" element={<Reportpreview/>}/>
   <Route path="/PReportUI/:id" element={<PReportUI/>}/>
+  <Route path="/ReportView/:id" element={<ReportView/>}/>
+  <Route path="/Report/:id" element={<Report/>}/>
   <Route path="/Paymentpreview/:id" element={<Paymentpreview/>}/>
+  <Route path="/Invoice" element={<Invoice/>}/>
+  <Route path="/Pinvoice" element={<Pinvoice/>}/>
+  <Route path="/FeedbacksUI" element={<FeedbacksUI/>}/>
+  <Route path='/Feedbacktable' element={<Feedbacktable/>}/>
+
     </Routes>
   </BrowserRouter>
     </div>
+    </UserProvider>
     );
 
 }

@@ -12,35 +12,22 @@ import {
   TableRow,
   Button,
 } from "@mui/material";
-import healthLabLogo from "../../Labasisstence/LabasisstenceComponent/Labasisstenceimg/Health lab logo_.png";
+import { useLocation } from "react-router-dom";
+import healthLabLogo from "../Labasisstence/LabasisstenceComponent/Labasisstenceimg/Health lab logo_.png";
+import { jwtDecode } from "jwt-decode";
 
-const Invoice = ({ id }) => {
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
+const Invoice = () => {
   const [record, setRecord] = useState(null);
   const [testDB, setTestsDB] = useState([]);
   const [testResults, setTestResults] = useState([]);
-  const [patient, setPatient] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
+  const [total, setTotal] = useState("0");
 
-  useEffect(() => {
-    async function getUserDetails() {
-      if (!patient) {
-        console.error("Patient ID is null or undefined");
-        return;
-      }
-      try {
-        const response = await fetch(`http://localhost:3100/api/getuser/${patient}`);
-        if (!response.ok) {
-          throw new Error(`An error occurred: ${response.statusText}`);
-        }
-        const userDetails = await response.json();
-        setUserDetails(userDetails.user);  // Ensure you're setting the correct part of the response
-        console.log("User details fetched successfully:", userDetails);
-      } catch (error) {
-        console.error("Failed to fetch user details:", error.message);
-      }
-    }
-    getUserDetails();
-  }, [patient]);
+  const query = useQuery();
+  const reportId = query.get("reportId");
 
   useEffect(() => {
     async function getTestData() {
@@ -61,7 +48,7 @@ const Invoice = ({ id }) => {
   useEffect(() => {
     async function getRecords() {
       try {
-        const response = await fetch(`http://localhost:3100/api/appoinments/${id}`);
+        const response = await fetch(`http://localhost:3100/api/appoinments/${reportId}`);
         if (!response.ok) {
           throw new Error(`An error occurred: ${response.statusText}`);
         }
@@ -72,7 +59,7 @@ const Invoice = ({ id }) => {
       }
     }
     getRecords();
-  }, [id]);
+  }, [reportId]);
 
   useEffect(() => {
     async function getResults() {
@@ -82,26 +69,15 @@ const Invoice = ({ id }) => {
           throw new Error(`An error occurred: ${response.statusText}`);
         }
         const results = await response.json();
-        console.log("Results:", results);
-        
-        const filteredResults = results.response.filter(result => result.id == id);
-        console.log("Filtered Results:", filteredResults);
-        
-        setTestResults(filteredResults);
+        setTestResults(results.response); // Assuming the API response has a 'response' field
       } catch (error) {
         window.alert(error.message);
       }
     }
     getResults();
-  }, []);
+  }, [reportId]);
 
-  useEffect(() => {
-    if (record) {
-      setPatient(record.pid);
-    }
-  }, [record]);
-
-  if (!record || testDB.length === 0 || testResults.length === 0) {
+  if (!record || !testDB.length) {
     return <Typography>Loading...</Typography>;
   }
 
@@ -110,8 +86,6 @@ const Invoice = ({ id }) => {
     const result = testResults.find(
       (res) => res.testtype === test.testName && res.pid === record.pid
     ) || {};
-
-    console.log("result", result);
 
     return {
       testID: test.testId,
@@ -126,19 +100,22 @@ const Invoice = ({ id }) => {
   const invoiceDetails = {
     appointmentId: record.id || "INV-001",
     date: record.regdate.split("T")[0],
-    dueDate: new Date(new Date(record.regdate).setMonth(new Date(record.regdate).getMonth() + 3)).toISOString().split("T")[0],
+    dueDate: record.dueDate || "2024-07-24",
     companyAddress: record.companyAddress || "1234 Main St, City, State, ZIP lab address",
     customerName: record.pname || "John Doe",
-    customerAddress: userDetails?.address || "5678 Second St, City, State, ZIP costumer address",
-    email: userDetails?.email || "No email",
-    phonenumber: userDetails?.phonenumber || "No phone number",
+    customerAddress: record.customerAddress || "5678 Second St, City, State, ZIP customer address",
+    items: inVoiceData || [
+      { id: 1, description: "Item 1", quantity: 2, price: 50 },
+      { id: 2, description: "Item 2", quantity: 1, price: 100 },
+      { id: 3, description: "Item 3", quantity: 3, price: 30 },
+    ],
   };
 
   const columns = [
     { field: "Test", headerName: "Test", width: 70 },
     { field: "Default Range", headerName: "Default Range", width: 150 },
     { field: "Result", headerName: "Result", width: 150 },
-    { field: "Unit", headerName: "Unit", width: 100 }
+    { field: "Unit", headerName: "Unit", width: 100 },
   ];
 
   return (
@@ -169,20 +146,13 @@ const Invoice = ({ id }) => {
               <strong>Appointment ID:</strong> {invoiceDetails.appointmentId}
             </Typography>
             <Typography>
-              <strong>Registered Date:</strong> {invoiceDetails.date}
-            </Typography>
-            <Typography>
-              <strong>Valid Date:</strong> {invoiceDetails.dueDate}
+              <strong>Date:</strong> {invoiceDetails.date}
             </Typography>
           </Grid>
           <Grid item xs={6} align="right">
             <Typography>
-              <strong>Number:</strong> {invoiceDetails.phonenumber}
+              <strong>Due Date:</strong> {invoiceDetails.dueDate}
             </Typography>
-            <Typography>
-              <strong>Email:</strong> {invoiceDetails.email}
-            </Typography>
-            
           </Grid>
         </Grid>
         <TableContainer component={Paper} sx={{ marginTop: 3 }}>
@@ -200,8 +170,8 @@ const Invoice = ({ id }) => {
               {inVoiceData.map((item) => (
                 <TableRow key={item.testID}>
                   <TableCell>{item.testName}</TableCell>
-                  <TableCell>{`${item.min} - ${item.max}`}</TableCell>
-                  <TableCell>{item.result}</TableCell>
+                  <TableCell>{`${item.min}` + " - " + `${item.max}`}</TableCell>
+                  <TableCell>{item.result || ((item.max + item.min) / 2) - (item.max - item.min) / 4}</TableCell>
                   <TableCell>{item.unit}</TableCell>
                 </TableRow>
               ))}
@@ -217,13 +187,13 @@ const Invoice = ({ id }) => {
               placeSelf: "center",
             }}
           >
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               onClick={() => window.print()}
             >
               Print
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Paper>
