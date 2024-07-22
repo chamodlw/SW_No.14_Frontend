@@ -9,34 +9,26 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 
-function StickyHeadTable({ setRows, selectedRole, handleChange }) {
+const columns = [
+  { id: 'id', label: 'Test Id', minWidth: 100 },
+  { id: 'name', label: 'Test Type', minWidth: 100 },
+  { id: 'description', label: 'Description', minWidth: 100 },
+  { id: 'price', label: 'Price', minWidth: 100, align: 'right' },
+];
+
+export default function Testlist({ setRows }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setLocalRows] = useState([]);
 
-  const columns = [
-    { id: 'nationalID', label: 'National ID', minWidth: 80 },
-    { id: 'name', label: `${selectedRole} Name`, minWidth: 50 },
-    { id: 'phonenumber', label: 'phonenumber', minWidth: 50 },
-    {
-      id: 'email',
-      label: 'Email',
-      minWidth: 80,
-      align: 'right',
-    },
-    
-
-  ];
-
   useEffect(() => {
-    axios.get('http://localhost:3100/api/router_login/users')
+    axios.get('http://localhost:3100/api/tests')
       .then(response => {
+        console.log('Response data:', response.data);
         const responseData = response.data && response.data.response;
         if (Array.isArray(responseData)) {
-          // Filter users by role
-          const patientUsers = responseData.filter(user => user.role === selectedRole);
-          setLocalRows(patientUsers);
-          setRows(patientUsers); // Update the parent component's state
+          setLocalRows(responseData);
+          setRows(responseData);
         } else {
           console.error('Data received is not an array:', responseData);
         }
@@ -44,7 +36,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [selectedRole, setRows]); // Include selectedRole in the dependency array
+  }, [setRows]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -57,7 +49,7 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
 
   return (
     <Paper sx={{ width: '80%', overflow: 'hidden', margin: 'auto', textAlign: 'center' }}>
-      <TableContainer sx={{ maxHeight: 400, minHeight: 300 }}>
+      <TableContainer sx={{ maxHeight: 420, minHeight: 390 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -73,27 +65,25 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.nationalID}>
-                    {columns.map((column) => {
-                      const value = column.id === 'name' ? `${row.firstname} ${row.lastname}` : row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        style={{ backgroundColor: '#D9D9D9', maxHeight: 80}}
+        style={{ backgroundColor: '#D9D9D9' }}
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
         count={rows.length}
@@ -105,5 +95,3 @@ function StickyHeadTable({ setRows, selectedRole, handleChange }) {
     </Paper>
   );
 }
-
-export default StickyHeadTable;
